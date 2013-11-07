@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Created with JetBrains WebStorm.
  * User: nolan
@@ -14,7 +15,7 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
         }
 
         Tab.prototype.getHref = function(){
-            return '#/' + (this.id == 'home' ? '' : this.id);
+            return '#/' + (this.id === 'home' ? '' : this.id);
         };
 
         $scope.tabs = [
