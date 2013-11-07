@@ -18,7 +18,7 @@ html.no-js
     // build:css(.tmp) styles/main.css
     link(rel='stylesheet', href='styles/main.css')
     // endbuild
-    // ensure ng-cloaked elements aren't shown while the app is loading, @see ng-cloak in Angular API
+    //- ensure ng-cloaked elements aren't shown while the app is loading, @see ng-cloak in Angular API
     style.
       [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],     .ng-cloak, .x-ng-cloak {display: none;}
   body(ng-app='ultimate-crossword')
@@ -59,7 +59,7 @@ html.no-js
     script(src='bower_components/bootstrap-sass/js/bootstrap-collapse.js')
     script(src='bower_components/bootstrap-sass/js/bootstrap-tab.js')
     // endbuild
-    // build:js scripts/modules.js
+    // build:js(app) scripts/modules.js
     script(src='bower_components/angular-resource/angular-resource.js')
     script(src='bower_components/angular-cookies/angular-cookies.js')
     script(src='bower_components/angular-sanitize/angular-sanitize.js')
