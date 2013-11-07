@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ultimateCrosswordAppApp', [
+angular.module('ultimate-crossword', [
   'ngCookies',
   'ngResource',
   'ngSanitize'
@@ -9,7 +9,10 @@ angular.module('ultimateCrosswordAppApp', [
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainController'
+      })
+      .when('/about', {
+          templateUrl : 'views/about.html'
       })
       .otherwise({
         redirectTo: '/'

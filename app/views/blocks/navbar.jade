@@ -1,0 +1,21 @@
+.navbar.navbar-inverse.navbar-fixed-top(ng-controller="NavbarController")
+  .navbar-inner
+    .container
+      .btn.btn-navbar(data-toggle='collapse',data-target='.nav-collapse',type='div')
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.brand.main-logo.main-logo-font(href='#/',ng-click='selectedTabId="home"') Ultimate Crossword
+      .ng-cloak.nav-collapse.collapse
+        ul.nav
+          li(ng-click="$parent.selectedTabId = tab.id",ng-repeat="tab in tabs",ng-class="{active: tab.id == $parent.selectedTabId}")
+            a(href='#',ng-href='{{tab.getHref()}}',ng-bind='tab.title')
+//      ul.pull-right.ng-cloak.horizontal-navbar(ng-controller="SignupLoginButtonController")
+//        li: span.nav-username(ng-show="session.loggedIn")
+//          | {{session.username}}
+//        li: button.btn.btn-inverse.pull-right.ng-cloak#login-btn(data-target="#signup-login-modal",
+//        data-toggle="modal",
+//        ng-hide="session.loggedIn")
+//          | Signup / Login
+//        li: button.btn.btn-inverse.pull-right.ng-cloak#logout-btn(ng-show="session.loggedIn",ng-click="logout()")
+//          | Logout

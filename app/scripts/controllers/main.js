@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('ultimateCrosswordAppApp')
-  .controller('MainCtrl', function ($scope) {
+angular.module('ultimate-crossword')
+  .controller('MainController', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
