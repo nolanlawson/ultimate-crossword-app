@@ -27,18 +27,20 @@ function ellipsize(str, toLen) {
     return str;
 }
 
-function transformOtherBlocks(otherBlocks) {
+function transformOtherBlocks(otherBlocks, sourceBlockId, following) {
 
     return _(_.pairs(otherBlocks)).map(function(pair) {
-        var id = pair[0];
+        var otherId = pair[0];
         var hints = pair[1];
         var joinedHints = joinHints(hints);
+        var blockIds = following ? [sourceBlockId, otherId] : [otherId, sourceBlockId];
         return {
-            _id              : id,
+            ids              : blockIds,
             hints            : hints,
             joinedHints      : joinedHints,
             shortJoinedHints : ellipsize(joinedHints, MAX_HINTS_LENGTH),
-            count            : hints.length
+            count            : hints.length,
+            following        : following
 
         };
     });
@@ -51,8 +53,8 @@ BlocksService.prototype.loadPage = function (rows) {
 
         block.joinedHints = joinHints(block.hints);
         block.shortJoinedHints = ellipsize(block.joinedHints, MAX_HINTS_LENGTH);
-        block.precedingBlocks = transformOtherBlocks(row.doc.preceding_blocks);
-        block.followingBlocks = transformOtherBlocks(row.doc.following_blocks);
+        block.otherBlocks = transformOtherBlocks(row.doc.preceding_blocks, block._id, false)
+            .concat(transformOtherBlocks(row.doc.following_blocks, block._id, true));
 
         return block;
     }));
