@@ -13,8 +13,6 @@ var MAX_HINTS_LENGTH = 40;
 function BlocksService() {
 
     this.currentPage = [];
-    this.previousPages = [];
-    this.nextPages = [];
 
 }
 
@@ -24,7 +22,7 @@ function joinHints(hints) {
 
 function ellipsize(str, toLen) {
     if (str.length > toLen) {
-        return str.substring(0, toLen - 1) + "\u2026";
+        return str.substring(0, toLen - 1) + '\u2026';
     }
     return str;
 }
@@ -48,7 +46,7 @@ function transformOtherBlocks(otherBlocks) {
 
 BlocksService.prototype.loadPage = function (rows) {
 
-    this.currentPage = _(rows).map(function(row){
+    this.currentPage = this.currentPage.concat(_(rows).map(function(row){
         var block = _({count : row.key}).extend(_.pick(row.doc, '_id', 'hints'));
 
         block.joinedHints = joinHints(block.hints);
@@ -57,7 +55,7 @@ BlocksService.prototype.loadPage = function (rows) {
         block.followingBlocks = transformOtherBlocks(row.doc.following_blocks);
 
         return block;
-    });
+    }));
 };
 
 angular.module('ultimate-crossword').service('blocks', [ BlocksService]);

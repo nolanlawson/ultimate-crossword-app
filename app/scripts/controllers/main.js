@@ -5,27 +5,51 @@ angular.module('ultimate-crossword')
         function ($scope, $http, constants, blocks) {
 
 
-        $scope.blocks = blocks;
+            $scope.blocks = blocks;
+            $scope.constants = constants;
 
-        $scope.getLabelClass = function(blockId) {
-            return 'label-' + (parseInt(blockId, 10) % constants.numColors);
-        };
+            $scope.loadingPage = false;
+            $scope.lastRow = null;
 
-        function onError() {
-            console.log('got an error');
-        }
+            $scope.getLabelClass = function (blockId) {
+                return 'label-' + (parseInt(blockId, 10) % constants.numColors);
+            };
 
-        $http({method: 'GET',
-            url: constants.couchdb.url + '/_design/counts_to_blocks/_view/counts_to_blocks/',
-            params: {limit: constants.pageSize, descending: true, 'include_docs' : true}})
-            .success(function (data) {
-                if (!data.rows) {
-                    onError();
+            function onError() {
+                $scope.loadingPage = false;
+                console.log('got an error');
+            }
+
+            var url = constants.couchdb.url + '/_design/counts_to_blocks/_view/counts_to_blocks/';
+
+            $scope.loadNextPage = function() {
+                if ($scope.loadingPage) { // loading already in progress
+                    return;
+                }
+                $scope.loadingPage = true;
+
+                var params = {limit: constants.pageSize, descending: true, 'include_docs' : true};
+                if ($scope.lastRow) { // next page
+                    _.extend(params,{skip : 1, startkey : $scope.lastRow.key, startkey_docid : $scope.lastRow.doc._id});
                 }
 
-                blocks.loadPage(data.rows);
+                $http({method: 'GET',
+                    url: url,
+                    params: params})
+                    .success(function (data) {
+                        if (!data.rows) {
+                            onError();
+                        }
+                        $scope.loadingPage = false;
 
-            }).error(onError);
+                        blocks.loadPage(data.rows);
+
+                        $scope.lastRow = _.last(data.rows);
 
 
-    }]);
+                    }).error(onError);
+            };
+
+            $scope.loadNextPage();
+
+        }]);
