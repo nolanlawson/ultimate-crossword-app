@@ -9,25 +9,48 @@ html
     table.table.table-striped.hide-while-loading(ng-show="blocks.currentPage.length")
       thead
         tr
-          th ID
-          th Count
+          th(colspan=2) Sequence
+          th Popularity
           th Hints
-          th My guess
+          th(colspan=2) My guess
       tbody(ng-repeat='block in blocks.currentPage')
         tr
-          td(rowspan="{{block.precedingBlocks.length + block.followingBlocks.length + 1}}") {{block._id}}
+          td
+            span.label(ng-class='getLabelClass(block._id)') {{block._id}}
+          td
           td {{block.count}}
-          td {{block.joinedHints}}
+          td
+            span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
           td
             input(type='text')
-        tr(ng-repeat='otherBlock in block.precedingBlocks')
-          td {{otherBlock._id}}
-          td {{otherBlock.joinedHints}}
+          td
+            button.btn(style="width:100%",ng-show='block.precedingBlocks.length || block.followingBlocks.length',
+                ng-class="{'btn-primary' : !block.expanded}",ng-click="block.expanded = !block.expanded")
+              span.ellipsize {{block.precedingBlocks.length + block.followingBlocks.length}} more&hellip;&nbsp;
+              i(ng-class="{'icon-chevron-down icon-white' : !block.expanded, 'icon-chevron-up' : block.expanded}")
+        tr(ng-show='block.expanded',ng-repeat='otherBlock in block.precedingBlocks')
+          td
+            span.label(ng-class='getLabelClass(otherBlock._id)') {{otherBlock._id}}
+          td
+            span.label(ng-class='getLabelClass(block._id)') {{block._id}}
+          td {{otherBlock.count}}
+          td
+            span(bs-tooltip='otherBlock.joinedHints') {{otherBlock.shortJoinedHints}}
+          td
+            input(type='text')
           td
 
-        tr(ng-repeat='otherBlock in block.followingBlocks')
-          td {{otherBlock._id}}
-          td {{otherBlock.joinedHints}}
+
+        tr(ng-show='block.expanded',ng-repeat='otherBlock in block.followingBlocks')
+          td
+            span.label(ng-class='getLabelClass(block._id)') {{block._id}}
+          td
+            span.label(ng-class='getLabelClass(otherBlock._id)') {{otherBlock._id}}
+          td {{otherBlock.count}}
+          td
+            span(bs-tooltip='otherBlock.joinedHints') {{otherBlock.shortJoinedHints}}
+          td
+            input(type='text')
           td
 
 

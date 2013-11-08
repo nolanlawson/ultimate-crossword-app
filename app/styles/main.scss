@@ -32,10 +32,11 @@ body {
     letter-spacing: -1px;
 }
 
-.ellipsis {
+.ellipsize {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
 }
 
 .ajax-loader {
@@ -44,3 +45,37 @@ body {
   width  : 100px;
   margin : 0 auto;
 }
+
+$label-color-0: rgb(185, 72, 72);
+$label-color-1: rgb(185, 114, 72);
+$label-color-2: rgb(185, 157, 72);
+$label-color-3: rgb(171, 185, 72);
+$label-color-4: rgb(129, 185, 72);
+$label-color-5: rgb(86, 185, 72);
+$label-color-6: rgb(72, 185, 100);
+$label-color-7: rgb(72, 185, 143);
+$label-color-8: rgb(72, 185, 185);
+$label-color-9: rgb(72, 143, 185);
+$label-color-10: rgb(72, 100, 185);
+$label-color-11: rgb(86, 72, 185);
+$label-color-12: rgb(129, 72, 185);
+$label-color-13: rgb(171, 72, 185);
+$label-color-14: rgb(185, 72, 157);
+$label-color-15: rgb(185, 72, 114);
+
+.label-0 { background-color : $label-color-0; }
+.label-1 { background-color : $label-color-1; }
+.label-2 { background-color : $label-color-2; }
+.label-3 { background-color : $label-color-3; }
+.label-4 { background-color : $label-color-4; }
+.label-5 { background-color : $label-color-5; }
+.label-6 { background-color : $label-color-6; }
+.label-7 { background-color : $label-color-7; }
+.label-8 { background-color : $label-color-8; }
+.label-9 { background-color : $label-color-9; }
+.label-10 { background-color : $label-color-10; }
+.label-11 { background-color : $label-color-11; }
+.label-12 { background-color : $label-color-12; }
+.label-13 { background-color : $label-color-13; }
+.label-14 { background-color : $label-color-14; }
+.label-15 { background-color : $label-color-15; }

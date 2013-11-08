@@ -12,6 +12,7 @@ function ConstantsService() {
         url : 'http://localhost:5984/block_stats'
     };
     this.pageSize = 10;
+    this.numColors = 16;
 }
 
 angular.module('ultimate-crossword').service('constants', [ConstantsService]);

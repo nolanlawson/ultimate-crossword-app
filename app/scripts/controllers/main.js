@@ -7,6 +7,10 @@ angular.module('ultimate-crossword')
 
         $scope.blocks = blocks;
 
+        $scope.getLabelClass = function(blockId) {
+            return 'label-' + (parseInt(blockId, 10) % constants.numColors);
+        };
+
         function onError() {
             console.log('got an error');
         }
