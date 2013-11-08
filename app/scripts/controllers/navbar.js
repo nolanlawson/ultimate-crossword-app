@@ -20,9 +20,14 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
 
         $scope.tabs = [
             new Tab('home', 'Home'),
+            new Tab('faq', 'FAQs'),
             new Tab('about', 'About')
         ];
-        $scope.selectedTabId = $location.path() === '/about' ? 'about' : 'home';
+
+        var selectedTab = _.find($scope.tabs, function(tab){
+            return $location.path() === '/' + tab.id;
+        });
+        $scope.selectedTabId = selectedTab ? selectedTab.id : 'home';
 
     }]
 );

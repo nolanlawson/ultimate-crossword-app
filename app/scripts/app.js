@@ -15,6 +15,9 @@ angular.module('ultimate-crossword', [
             .when('/about', {
                 templateUrl: 'views/about.html'
             })
+            .when('/faq', {
+                templateUrl: 'views/faq.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });
