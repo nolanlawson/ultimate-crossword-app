@@ -2,6 +2,7 @@ $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
+@import "fonts";
 
 /* Put your CSS here */
 html, body {
@@ -15,18 +16,31 @@ body {
 }
 
 .hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
+    margin: 20px auto 20px auto;
+    min-width: 300px;
+    font-size: 16px;
     font-weight: 200;
-    line-height: 30px;
+    line-height: 20px;
     background-color: #eee;
     border-radius: 6px;
-    padding: 60px;
+    padding: 30px;
 }
 
 .hero-unit h1 {
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ajax-loader {
+  background: url(images/ajax-loader.gif) center center no-repeat;
+  height : 100px;
+  width  : 100px;
+  margin : 0 auto;
 }

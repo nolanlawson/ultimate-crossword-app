@@ -13,7 +13,7 @@ html.no-js
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title The Ultimate Crossword
     meta(name='description', content='')
-    meta(name='viewport', content='width=device-width')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     // Place favicon.ico and apple-touch-icon.png in the root directory
     // build:css(.tmp) styles/main.css
     link(rel='stylesheet', href='styles/main.css')
@@ -44,6 +44,7 @@ html.no-js
     //-ga('send', 'pageview');
     script(src='bower_components/jquery/jquery.js')
     script(src='bower_components/angular/angular.js')
+    script(src='bower_components/underscore/underscore.js')
     // build:js scripts/plugins.js
     script(src='bower_components/bootstrap-sass/js/bootstrap-affix.js')
     script(src='bower_components/bootstrap-sass/js/bootstrap-alert.js')
@@ -66,6 +67,9 @@ html.no-js
     // endbuild
     // build:js({.tmp,app}) scripts/scripts.js
     script(src='scripts/app.js')
+    script(src='scripts/services/constants.js')
+    script(src='scripts/services/blocks.js')
     script(src='scripts/controllers/main.js')
     script(src='scripts/controllers/navbar.js')
+
     // endbuild

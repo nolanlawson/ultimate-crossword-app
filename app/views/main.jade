@@ -2,9 +2,32 @@ html
   body
     include blocks/navbar
     .hero-unit
-      h1 'Allo, 'Allo!
-      p You now have
-      ul
-        li(ng-repeat='thing in awesomeThings') {{thing}}
-      p installed.
-      h3 Enjoy coding! - Yeoman
+      h1
+        span.scramble-font Ultimate Crossword
+        span.pacifico-font .net
+    .ajax-loader(ng-hide="blocks.currentPage.length")
+    table.table.table-striped.hide-while-loading(ng-show="blocks.currentPage.length")
+      thead
+        tr
+          th ID
+          th Count
+          th Hints
+          th My guess
+      tbody(ng-repeat='block in blocks.currentPage')
+        tr
+          td(rowspan="{{block.precedingBlocks.length + block.followingBlocks.length + 1}}") {{block._id}}
+          td {{block.count}}
+          td {{block.joinedHints}}
+          td
+            input(type='text')
+        tr(ng-repeat='otherBlock in block.precedingBlocks')
+          td {{otherBlock._id}}
+          td {{otherBlock.joinedHints}}
+          td
+
+        tr(ng-repeat='otherBlock in block.followingBlocks')
+          td {{otherBlock._id}}
+          td {{otherBlock.joinedHints}}
+          td
+
+
