@@ -47,6 +47,10 @@ ul > li {
 
 }
 
+.hidden {
+  visibility : hidden;
+}
+
 .ajax-loader {
   background: url(images/ajax-loader.gif) center center no-repeat;
   height : 100px;

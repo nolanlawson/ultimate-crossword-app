@@ -10,16 +10,17 @@ html
     table.table.table-striped.hide-while-loading(ng-show="blocks.currentPage.length")
       thead
         tr
-          th(colspan=3) Sequence
+          th(colspan=2) Sequence
           th Popularity
           th Hints
           th(colspan=2) My guess
       tbody(ng-repeat='block in blocks.currentPage')
         tr
-          td: mixin block-label('block._id', 'visible')
-          //- the following two are just to make the table formatting look right
-          td: mixin block-label('"12345"', 'hidden')
-          td: mixin block-label('"12345"', 'hidden')
+          td
+            div(style="margin-right:18px")
+              mixin block-label('block._id', 'visible', 'block')
+          //- the following is just to make the table formatting look right
+          td: mixin block-label('"12345"', 'hidden', 'block')
           td {{block.count}}
           td
             span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
@@ -32,11 +33,11 @@ html
               i(ng-class="{'icon-chevron-down icon-white' : !block.expanded, 'icon-chevron-up' : block.expanded}")
         tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
           td
-            i.icon-chevron-right(ng-show='$first')
+            div(style="display:inline-block;")
+              i.icon-chevron-right(ng-class="{hidden : !$first}",style='margin-right:4px;')
+              mixin block-label('relatedBlock.ids[0]', 'visible', 'inline-block')
           td
-            mixin block-label('relatedBlock.ids[0]', 'visible')
-          td
-            mixin block-label('relatedBlock.ids[1]', 'visible')
+            mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
           td {{relatedBlock.count}}
           td
             span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
@@ -47,7 +48,7 @@ html
           td
       tfoot
         tr
-          td(colspan=7,style="text-align:left;")
+          td(colspan=6,style="text-align:left;")
             button.btn.btn-primary(ng-class='{disabled : loadingPage}',ng-click="loadNextPage()")
               span &nbsp;Load {{constants.pageSize}} more&hellip;
               i.icon-plus.icon-white
