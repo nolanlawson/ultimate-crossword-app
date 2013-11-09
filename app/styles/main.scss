@@ -90,6 +90,17 @@ ul > li {
   border-radius  : 5px;
 }
 
+.monospace-font {
+  margin: 0 2px;
+  padding: 0px 5px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 12px;
+}
+
 $label-color-0: rgb(185, 72, 72);
 $label-color-1: rgb(185, 114, 72);
 $label-color-2: rgb(185, 157, 72);
