@@ -6,18 +6,18 @@
  * Time: 11:08 PM
  * To change this template use File | Settings | File Templates.
  */
-angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', '$location',
-    function($scope, $location) {
+angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', '$location', 'search',
+    function($scope, $location, searchService) {
 
-        $scope.$parent.q = '';
+        $scope.searchService = searchService;
 
         $scope.performSearch = function() {
 
-            var blockId = parseInt($scope.$parent.q, 10);
+            var blockId = parseInt($scope.searchService.q, 10);
 
             // for now, only accept block ids
             if (!isNaN(blockId)) {
-                window.location = '#/' + blockId;
+                $location.path('/block/' + blockId);
             }
         };
 

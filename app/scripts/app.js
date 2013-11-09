@@ -18,6 +18,10 @@ angular.module('ultimate-crossword', [
             .when('/faq', {
                 templateUrl: 'views/faq.html'
             })
+            .when('/block/:q', {
+                templateUrl : 'views/block-detail.html',
+                controller: 'BlockDetailController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
