@@ -46,6 +46,7 @@ angular.module('ultimate-crossword')
                                 }
                                 blocks.loadRelated(block, data.rows);
                                 block.expanded = true;
+                                block.fetched = true;
                             })
                             .error(function(){
                                 block.loadingRelated = false;
