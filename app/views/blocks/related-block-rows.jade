@@ -1,7 +1,7 @@
 tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
   td
     div(style="display:inline-block;")
-      i.icon-chevron-right(ng-class="{hidden : !$first}")
+      i.icon-chevron-right(style="display:inline-block;",ng-class="{hidden : !$first}")
       mixin block-label('relatedBlock.ids[0]', 'visible', 'inline-block')
   td
     mixin block-label('relatedBlock.ids[1]', 'visible', 'block')

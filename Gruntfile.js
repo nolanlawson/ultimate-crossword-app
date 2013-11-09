@@ -54,7 +54,7 @@ module.exports = function (grunt) {
                 tasks: ['copy:styles', 'autoprefixer']
             },
             jade: {
-                files: ['<%= yeoman.app %>/{,*/}*.jade'],
+                files: ['<%= yeoman.app %>/{,*/}*.jade', '<%= yeoman.app %>/views/{,*/}*.jade'],
                 tasks: ['jade']
             },
             livereload: {
