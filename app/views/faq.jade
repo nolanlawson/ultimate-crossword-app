@@ -5,6 +5,57 @@ html
       span FAQs
     .row
         .span8.offset2.section-content
-            p Blah blah blah, all about this app.
-            p Blah blah blah, more details.
-            p Hello world!
+            h3 Who made this?
+            p
+              | You and I did, with some help from Adobe.
+              a(href='http://arstechnica.com/security/2013/11/how-an-epic-blunder-by-adobe-could-strengthen-hand-of-password-crackers/') They accidentally leaked
+              | 153 million encrypted user passwords and hints, which is where this "crossword puzzle" comes from.
+            h3 How does it work?
+            p
+              | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't
+              em hash 
+              | them (which is bad), and they kept the password hints in clear text.
+            p
+              | Basically, their encryption algorithm splits up passwords into sequences of 8 characters, each of which corresponds to the same block,
+              | repeated across all passwords.  This creates an interesting byproduct.
+            p
+              | Look at the cartoon above.  Considering that "weather vane sword" and "favorite of 12 apostles" are hints for
+              | the same block, the only 8-letter solution is "matthias". (The first hint is a reference to the Redwall books.)
+            p
+              | Now, if we assume "name1" is a hint for
+              | "matthias1", then we've not only solved "matthias", but also "1".  Combine this with "duh", which we'll assume is a hint for "password" (all too common),
+              | and we've successfully cracked the 5th password as "password1", even though there's no hint! 
+              a(href='http://www.explainxkcd.com/wiki/index.php?title=1286') Neat, huh?
+            h3 Aren't you compromising people's personal information?
+            p
+              | Unless someone manages to guess Adobe's cipher key (brute force seems to be the only way), the majority of the passwords are probably safe.
+              | Plus, Adobe already sent out
+              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453) a security advisory
+              | telling their users to change their passwords.
+            p 
+              | Also, anyone who set their password to "adobe123" or "pikachu" couldn't care much about security.  And if they do, I hope they consider
+              | this a wakeup call!
+            h3 Why did you create this site?
+            p
+              | I made it as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does make for an excellent crossword puzzle.
+            p 
+              | Also, I'm making a statement about how important it is to do security correctly.  Passwords like "adobe123", 'pikachu', and even 'flipper'
+              | just aren't very secure, folks.
+            h3 What can end-users do to improve their own password security?
+            p
+              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') I wrote a blog post
+              | about my own personal password system, which costs nothing and requires no special technical knowledge.  (TL;DR:
+              a(href='http://www.joelonsoftware.com/items/2008/09/11b.html') use Dropbox and PasswordGorilla/PasswdSafe/KeePass
+              | .)  Anyone using this system would greatly minimize their exposure to a leak like Adobe's, because their passwords aren't
+              | re-used across multiple sites.
+            h3 What should developers do to improve user security?
+            p
+              | Salt and hash your user passwords.  Make the salt different every time.  Use a cryptographically-strong random number generator.
+              | And most importantly, ignore everything I just wrote, because
+              em you should never try to do security yourself. 
+              | Instead, use a well-established library for your language or framework.  Security is easy to screw up, so leave the hard stuff to the experts.
+              | For instance, this site uses
+              a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature 
+              | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I couldn't possibly understand.
+
+            
