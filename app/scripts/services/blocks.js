@@ -27,34 +27,42 @@ function ellipsize(str, toLen) {
     return str;
 }
 
-function transformOtherBlocks(otherBlocks, sourceBlockId, following) {
+function transformrelatedBlocks(rows, sourceBlockId) {
 
-    return _(_.pairs(otherBlocks)).map(function(pair) {
-        var otherId = pair[0];
-        var hints = pair[1];
+    return _.map(rows, function(row) {
+
+        var otherId = row.doc.block.toString();
+        var hints = row.doc.hints;
         var joinedHints = joinHints(hints);
-        var blockIds = following ? [sourceBlockId, otherId] : [otherId, sourceBlockId];
+        var preceding = row.doc.preceding;
+        var blockIds = preceding ? [otherId, sourceBlockId] : [sourceBlockId, otherId];
+
         return {
             ids              : blockIds,
             hints            : hints,
             joinedHints      : joinedHints,
             shortJoinedHints : ellipsize(joinedHints, MAX_HINTS_LENGTH),
             count            : hints.length,
-            following        : following
-
+            preceding        : preceding
         };
     });
 }
 
+BlocksService.prototype.loadRelated = function(block, rows) {
+
+    var relatedBlocks = transformrelatedBlocks(rows, block._id);
+
+    block.relatedBlocks = relatedBlocks;
+};
+
 BlocksService.prototype.loadPage = function (rows) {
 
     this.currentPage = this.currentPage.concat(_(rows).map(function(row){
-        var block = _({count : row.key}).extend(_.pick(row.doc, '_id', 'hints'));
+        var block = _({count : row.key}).extend(_.pick(row.doc, '_id', 'hints', 'numRelated'));
 
         block.joinedHints = joinHints(block.hints);
         block.shortJoinedHints = ellipsize(block.joinedHints, MAX_HINTS_LENGTH);
-        block.otherBlocks = transformOtherBlocks(row.doc.preceding_blocks, block._id, false)
-            .concat(transformOtherBlocks(row.doc.following_blocks, block._id, true));
+        block.relatedBlocks = [];
 
         return block;
     }));

@@ -25,20 +25,20 @@ html
           td
             input(type='text')
           td
-            button.btn(style="width:100%",ng-show='block.otherBlocks.length',
-                ng-class="{'btn-primary' : !block.expanded}",ng-click="block.expanded = !block.expanded")
-              span.ellipsize {{block.otherBlocks.length}} more&hellip;&nbsp;
+            button.btn(style="width:100%",ng-show='block.numRelated',
+                ng-class="{'btn-primary' : !block.expanded, 'disabled' : block.loadingRelated}",ng-click="expandOrCollapse(block)")
+              span.ellipsize {{block.numRelated}} more&hellip;&nbsp;
               i(ng-class="{'icon-chevron-down icon-white' : !block.expanded, 'icon-chevron-up' : block.expanded}")
-        tr(ng-show='block.expanded',ng-repeat='otherBlock in block.otherBlocks')
+        tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
           td
             i.icon-chevron-right(ng-show='$first')
           td
-            span.label(ng-class='getLabelClass(otherBlock.ids[0])') {{otherBlock.ids[0]}}
+            span.label(ng-class='getLabelClass(relatedBlock.ids[0])') {{relatedBlock.ids[0]}}
           td
-            span.label(ng-class='getLabelClass(otherBlock.ids[1])') {{otherBlock.ids[1]}}
-          td {{otherBlock.count}}
+            span.label(ng-class='getLabelClass(relatedBlock.ids[1])') {{relatedBlock.ids[1]}}
+          td {{relatedBlock.count}}
           td
-            span(bs-tooltip='otherBlock.joinedHints') {{otherBlock.shortJoinedHints}}
+            span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
           td
             input(type='text')
           td

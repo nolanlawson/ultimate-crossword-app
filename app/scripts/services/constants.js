@@ -9,7 +9,8 @@
 function ConstantsService() {
 
     this.couchdb = {
-        url : 'http://localhost:5984/block_stats'
+        blocks_url : 'http://koholint-wired:5985/block_summaries',
+        details_url : 'http://koholint-wired:5985/related_blocks'
     };
     this.pageSize = 10;
     this.numColors = 16;
