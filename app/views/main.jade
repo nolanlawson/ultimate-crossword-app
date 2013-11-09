@@ -1,4 +1,5 @@
 html
+  include mixins/block-label
   body
     include blocks/navbar
     .hero-unit
@@ -15,10 +16,10 @@ html
           th(colspan=2) My guess
       tbody(ng-repeat='block in blocks.currentPage')
         tr
-          td
-            span.label(ng-class='getLabelClass(block._id)') {{block._id}}
-          td
-          td
+          td: mixin block-label('block._id', 'visible')
+          //- the following two are just to make the table formatting look right
+          td: mixin block-label('"12345"', 'hidden')
+          td: mixin block-label('"12345"', 'hidden')
           td {{block.count}}
           td
             span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
@@ -33,14 +34,16 @@ html
           td
             i.icon-chevron-right(ng-show='$first')
           td
-            span.label(ng-class='getLabelClass(relatedBlock.ids[0])') {{relatedBlock.ids[0]}}
+            mixin block-label('relatedBlock.ids[0]', 'visible')
           td
-            span.label(ng-class='getLabelClass(relatedBlock.ids[1])') {{relatedBlock.ids[1]}}
+            mixin block-label('relatedBlock.ids[1]', 'visible')
           td {{relatedBlock.count}}
           td
             span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
           td
-            input(type='text')
+            div
+              input(style='width: calc(50% - 16px);',type='text')
+              input(style='width: calc(50% - 16px);',type='text')
           td
       tfoot
         tr

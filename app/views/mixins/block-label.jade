@@ -1,0 +1,7 @@
+//- a block label with a link
+mixin block-label(idText, visibility)
+  .block-label(style='visibility:#{visibility};')
+    a.label(href='#',ng-class='getLabelClass(#{idText})',
+    ng-href='#/block/{{#{idText}}}')
+      span.block-label {{#{idText}}}&nbsp;
+      i.icon-share.icon-white

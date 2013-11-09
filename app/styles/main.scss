@@ -46,6 +46,16 @@ body {
   margin : 0 auto;
 }
 
+.block-label > a {
+
+  text-decoration : none;
+
+  &:hover {
+    text-decoration : underline;
+  }
+}
+
+
 $label-color-0: rgb(185, 72, 72);
 $label-color-1: rgb(185, 114, 72);
 $label-color-2: rgb(185, 157, 72);

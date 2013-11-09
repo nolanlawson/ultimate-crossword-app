@@ -20,9 +20,9 @@ module.exports = function (grunt) {
         jade: {
             dist: {
                 options: {
-                    pretty: false,
+                    pretty: true,
                     data : {
-                      pkg : require('./package.json')
+                        pkg : require('./package.json')
                     }
                 },
                 files: [
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= yeoman.app %>',
                         dest: '.tmp',
-                        src: '**/*.jade',
+                        src: '{,*/}*.jade',
                         ext: '.html'
                     }
                 ]
