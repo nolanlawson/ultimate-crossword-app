@@ -93,6 +93,8 @@ angular.module('ultimate-crossword')
                     });
             };
 
-            $scope.loadNextPage();
+            if (!$scope.blocksService.currentPage.length) { // no docs loaded yet
+                $scope.loadNextPage();
+            }
 
         }]);

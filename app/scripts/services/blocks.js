@@ -57,15 +57,15 @@ BlocksService.prototype.loadRelated = function(block, rows) {
 
 BlocksService.prototype.transformRowsIntoBlocks = function(rows) {
     return _.map(rows, function(row) {
-        var block = _({count : row.key}).extend(_.pick(row.doc, '_id', 'hints', 'numRelated'));
+        var block = _.pick(row.doc, '_id', 'hints', 'soloCount', 'followingCount', 'precedingCount');
 
         block.joinedHints = joinHints(block.hints);
         block.shortJoinedHints = ellipsize(block.joinedHints, MAX_HINTS_LENGTH);
         block.relatedBlocks = [];
 
         return block;
-    })
-}
+    });
+};
 
 BlocksService.prototype.loadPage = function (rows) {
 

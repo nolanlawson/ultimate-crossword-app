@@ -9,8 +9,8 @@
 function ConstantsService() {
 
     this.couchdb = {
-        blocks_url : 'http://localhost:5984/block_summaries',
-        details_url : 'http://localhost:5984/related_blocks'
+        blocks_url : 'http://localhost:5984/block_summaries2',
+        details_url : 'http://localhost:5984/related_blocks2'
     };
     this.maxNumRelated = 20;
     this.pageSize = 10;
