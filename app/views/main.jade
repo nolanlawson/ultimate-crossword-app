@@ -27,7 +27,7 @@ html
           td
             button.btn(style="width:100%",ng-show='block.numRelated',
                 ng-class="{'btn-primary' : !block.expanded, 'disabled' : block.loadingRelated}",ng-click="expandOrCollapse(block)")
-              span.ellipsize {{block.numRelated}} more&hellip;&nbsp;
+              span.ellipsize {{block.numRelated}} related&hellip;&nbsp;
               i(ng-class="{'icon-chevron-down icon-white' : !block.expanded, 'icon-chevron-up' : block.expanded}")
         tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
           td

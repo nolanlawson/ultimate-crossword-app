@@ -12,6 +12,7 @@ function ConstantsService() {
         blocks_url : 'http://koholint-wired:5985/block_summaries',
         details_url : 'http://koholint-wired:5985/related_blocks'
     };
+    this.maxNumRelated = 20;
     this.pageSize = 10;
     this.numColors = 16;
 }
