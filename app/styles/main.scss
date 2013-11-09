@@ -15,6 +15,14 @@ body {
     color: #333;
 }
 
+p {
+  margin-left : 10px;
+}
+
+ul > li {
+  margin-left : 20px;
+}
+
 .hero-unit {
     margin: 20px auto 20px auto;
     min-width: 300px;
@@ -44,6 +52,21 @@ body {
   height : 100px;
   width  : 100px;
   margin : 0 auto;
+}
+
+.image-box {
+  text-align:center;
+  & > a > img {
+    padding : 15px 25px;
+    background : #ddd;
+    border-radius : 2px;
+
+    border : transparent 2px solid;
+
+    &:hover {
+      border : #0088cc 2px solid;
+    }
+  }
 }
 
 .block-label > a {

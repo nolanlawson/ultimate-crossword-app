@@ -5,55 +5,69 @@ html
       span FAQs
     .row
         .span8.offset2.section-content
-            h3 Who made this?
+            h4 Who made this?
             p
-              | You and I did, with some help from Adobe.
-              a(href='http://arstechnica.com/security/2013/11/how-an-epic-blunder-by-adobe-could-strengthen-hand-of-password-crackers/') They accidentally leaked
+              | You and I did, with some help from Adobe.&nbsp;
+              a(href='http://arstechnica.com/security/2013/11/how-an-epic-blunder-by-adobe-could-strengthen-hand-of-password-crackers/')
+                | They accidentally leaked&nbsp;
               | 153 million encrypted user passwords and hints, which is where this "crossword puzzle" comes from.
-            h3 How does it work?
+            p.image-box
+              a(href='http://xkcd.com/1286/')
+                img(src="http://imgs.xkcd.com/comics/encryptic.png",width=473,height=541)
+            h4 How does it work?
             p
-              | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't
-              em hash 
+              | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't&nbsp;
+              em hash&nbsp;
               | them (which is bad), and they kept the password hints in clear text.
             p
               | Basically, their encryption algorithm splits up passwords into sequences of 8 characters, each of which corresponds to the same block,
               | repeated across all passwords.  This creates an interesting byproduct.
             p
-              | Look at the cartoon above.  Considering that "weather vane sword" and "favorite of 12 apostles" are hints for
-              | the same block, the only 8-letter solution is "matthias". (The first hint is a reference to the Redwall books.)
+              | Look at the cartoon above.  We know that "weather vane sword" and "favorite of 12 apostles" are hints for
+              | the same block, so the only 8-letter solution is "matthias". (The first hint is a reference to the&nbsp;
+              a(href='https://en.wikipedia.org/wiki/Redwall') Redwall&nbsp;
+              | books.)
             p
               | Now, if we assume "name1" is a hint for
-              | "matthias1", then we've not only solved "matthias", but also "1".  Combine this with "duh", which we'll assume is a hint for "password" (all too common),
+              | "matthias1", then we've not only solved "matthias", but also "1".  Combine this with "duh", which is probably
+              | a hint for "password" (all too common),
               | and we've successfully cracked the 5th password as "password1", even though there's no hint! 
-              a(href='http://www.explainxkcd.com/wiki/index.php?title=1286') Neat, huh?
-            h3 Aren't you compromising people's personal information?
+            p
+              | Neat, huh?&nbsp;
+              a(href='http://www.explainxkcd.com/wiki/index.php?title=1286') A lot of XKCD readers think so, too.
+            h4 Aren't you compromising people's personal information?
             p
               | Unless someone manages to guess Adobe's cipher key (brute force seems to be the only way), the majority of the passwords are probably safe.
-              | Plus, Adobe already sent out
-              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') a security advisory
+              | Plus, Adobe already sent out&nbsp;
+              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') a security advisory&nbsp;
               | telling their users to change their passwords.
-            h3 Why did you create this site?
+            p Anyway, the data itself is readily available on the Internet.  Although I did take the precaution of removing the
+              | encrypted blocks from the database exposed via this site, just in case.
+            h4 Why did you create this site?
             p
-              | I made it as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does make for an excellent crossword puzzle.
+              | This site is as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does make for an excellent crossword puzzle.
             p 
-              | Also, I'm making a statement about how important it is to do security correctly.  Passwords like "adobe123", 'pikachu', and even 'flipper'
+              | I also hope to make a statement about how important it is to do security correctly.  Passwords like "adobe123", 'pikachu', and even 'flipper'
               | just aren't cutting it, folks.
-            h3 So what can end-users do to improve their own password security?
+            h4 So what can end-users do to improve their own password security?
             p
-              | I wrote 
-              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') this blog post 
-              | about my own personal password system, which costs nothing and requires no special technical knowledge.  (TL;DR: 
-              a(href='http://www.joelonsoftware.com/items/2008/09/11b.html') use Dropbox and PasswordGorilla/PasswdSafe/KeePass 
+              | I wrote&nbsp;
+              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') this blog post&nbsp;
+              | about my own personal password system, which costs nothing and requires no special technical knowledge.  (TL;DR:&nbsp;
+              a(href='http://www.joelonsoftware.com/items/2008/09/11b.html') use Dropbox and Password Gorilla&nbsp;
               | .)  Anyone using this system would greatly minimize their exposure to a leak like Adobe's, because their passwords aren't 
               | re-used across multiple sites.
-            h3 What should developers do to improve user security?
+            h4 What should developers do to improve user security?
             p
-              | Salt and hash your user passwords.  Make the salt different every time.  Use a cryptographically-strong random number generator.
-              | And most importantly, ignore everything I just wrote, because
-              em you should never try to do security yourself. 
+              | Salt and hash your user passwords.  Make the salt different every time.
+              | Use a cryptographically-strong random number generator.
+            p
+              | And most importantly, ignore everything I just wrote, because&nbsp;
+              em you should never try to do security yourself.&nbsp;
               | Instead, use a well-established library for your language or framework.  Security is easy to screw up, so leave the hard stuff to the experts.
-              | For instance, this site uses
-              a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature 
+            p
+              | For instance, this site uses&nbsp;
+              a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature&nbsp;
               | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I couldn't possibly understand.
 
             
