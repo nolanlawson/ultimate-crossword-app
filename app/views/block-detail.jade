@@ -2,13 +2,9 @@ html
   include mixins/block-label
   body
     include blocks/navbar
-    h1.label.big-label(ng-class='blocksService.getLabelClass(blockId)')
-      | Block \#{{blockId}}
-
-    .label-link(style='display: inline-block;')
-      a.label(href='#',ng-href='/#/block/{{blockId}}')
-        span Share&nbsp;
-        i.icon-share.icon-white
+    .text-center(style="margin: 10px 0 20px;")
+      h1.label.big-label(ng-class='blocksService.getLabelClass(blockId)')
+        | Block \#{{blockId}}
 
     .ajax-loader(ng-hide="doneLoading")
     table.table.table-striped.hide-while-loading(ng-show="doneLoading")
