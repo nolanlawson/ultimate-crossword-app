@@ -20,7 +20,10 @@ module.exports = function (grunt) {
         jade: {
             dist: {
                 options: {
-                    pretty: true
+                    pretty: false,
+                    data : {
+                      pkg : require('./package.json')
+                    }
                 },
                 files: [
                     {
