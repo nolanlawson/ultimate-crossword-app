@@ -9,6 +9,18 @@
 angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', '$location',
     function($scope, $location) {
 
+        $scope.$parent.q = '';
+
+        $scope.performSearch = function() {
+
+            var blockId = parseInt($scope.$parent.q, 10);
+
+            // for now, only accept block ids
+            if (!isNaN(blockId)) {
+                window.location = '#/' + blockId;
+            }
+        };
+
         function Tab(id, title) {
             this.id = id;
             this.title = title;

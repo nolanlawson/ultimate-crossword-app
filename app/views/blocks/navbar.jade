@@ -10,6 +10,8 @@
         ul.nav
           li(ng-click="$parent.selectedTabId = tab.id",ng-repeat="tab in tabs",ng-class="{active: tab.id == $parent.selectedTabId}")
             a(href='#',ng-href='{{tab.getHref()}}',ng-bind='tab.title')
+        form.navbar-search.pull-left
+          input.search-query(type="text",placeholder="Search",ng-model="$parent.q",ng-submit="performSearch()")
 //      ul.pull-right.ng-cloak.horizontal-navbar(ng-controller="SignupLoginButtonController")
 //        li: span.nav-username(ng-show="session.loggedIn")
 //          | {{session.username}}
