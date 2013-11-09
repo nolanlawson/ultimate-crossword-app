@@ -1,0 +1,15 @@
+tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
+  td
+    div(style="display:inline-block;")
+      i.icon-chevron-right(ng-class="{hidden : !$first}")
+      mixin block-label('relatedBlock.ids[0]', 'visible', 'inline-block')
+  td
+    mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
+  td {{relatedBlock.count}}
+  td
+    span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
+  td
+    div
+      input(style='width: calc(50% - 16px);',type='text')
+      input(style='width: calc(50% - 16px);',type='text')
+  td

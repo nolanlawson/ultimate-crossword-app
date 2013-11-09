@@ -1,7 +1,7 @@
 //- a block label with a link
 mixin block-label(idText, visibility, display)
-  .block-label(style='visibility:#{visibility};display:#{display};')
-    a.label(href='#',ng-class='getLabelClass(#{idText})',
+  .label-link(style='visibility:#{visibility};display:#{display};')
+    a.label(href='#',ng-class='blocksService.getLabelClass(#{idText})',
     ng-href='#/block/{{#{idText}}}')
-      span.block-label {{#{idText}}}&nbsp;
+      span {{#{idText}}}&nbsp;
       i.icon-share.icon-white

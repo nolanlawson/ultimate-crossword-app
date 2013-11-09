@@ -1,4 +1,18 @@
 html
+  include mixins/block-label
   body
     include blocks/navbar
-    h2. Block is {{blockId}}
+    h1.label.big-label(ng-class='blocksService.getLabelClass(blockId)')
+      | Block \#{{blockId}}
+
+    .label-link(style='display: inline-block;')
+      a.label(href='#',ng-href='/#/block/{{blockId}}')
+        span Share&nbsp;
+        i.icon-share.icon-white
+
+    .ajax-loader(ng-hide="doneLoading")
+    table.table.table-striped.hide-while-loading(ng-show="doneLoading")
+      include blocks/main-table-header
+      tbody
+        include blocks/main-block-row
+        include blocks/related-block-rows

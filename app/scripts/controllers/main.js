@@ -2,18 +2,14 @@
 
 angular.module('ultimate-crossword')
     .controller('MainController', ['$scope', '$http', 'constants', 'blocks',
-        function ($scope, $http, constants, blocks) {
+        function ($scope, $http, constants, blocksService) {
 
 
-            $scope.blocks = blocks;
+            $scope.blocksService = blocksService;
             $scope.constants = constants;
 
             $scope.loadingPage = false;
             $scope.lastRow = null;
-
-            $scope.getLabelClass = function (blockId) {
-                return 'label-' + (parseInt(blockId, 10) % constants.numColors);
-            };
 
             function onError() {
                 $scope.loadingPage = false;
@@ -43,9 +39,9 @@ angular.module('ultimate-crossword')
                             .success(function(data){
                                 block.loadingRelated = false;
                                 if (!data.rows) {
-                                    onError();
+                                    return onError();
                                 }
-                                blocks.loadRelated(block, data.rows);
+                                blocksService.loadRelated(block, data.rows);
                                 block.expanded = true;
                                 block.fetched = true;
                             })
@@ -82,11 +78,11 @@ angular.module('ultimate-crossword')
                     params: params})
                     .success(function (data) {
                         if (!data.rows) {
-                            onError();
+                            return onError();
                         }
                         $scope.loadingPage = false;
 
-                        blocks.loadPage(data.rows);
+                        blocksService.loadPage(data.rows);
 
                         $scope.lastRow = _.last(data.rows);
 

@@ -10,10 +10,10 @@
 
 var MAX_HINTS_LENGTH = 40;
 
-function BlocksService() {
+function BlocksService(constants) {
 
     this.currentPage = [];
-
+    this.constants = constants;
 }
 
 function joinHints(hints) {
@@ -27,7 +27,7 @@ function ellipsize(str, toLen) {
     return str;
 }
 
-function transformrelatedBlocks(rows, sourceBlockId) {
+BlocksService.prototype.transformRelatedBlocks = function(rows, sourceBlockId) {
 
     return _.map(rows, function(row) {
 
@@ -50,14 +50,13 @@ function transformrelatedBlocks(rows, sourceBlockId) {
 
 BlocksService.prototype.loadRelated = function(block, rows) {
 
-    var relatedBlocks = transformrelatedBlocks(rows, block._id);
+    var relatedBlocks = this.transformRelatedBlocks(rows, block._id);
 
     block.relatedBlocks = relatedBlocks;
 };
 
-BlocksService.prototype.loadPage = function (rows) {
-
-    this.currentPage = this.currentPage.concat(_(rows).map(function(row){
+BlocksService.prototype.transformRowsIntoBlocks = function(rows) {
+    return _.map(rows, function(row) {
         var block = _({count : row.key}).extend(_.pick(row.doc, '_id', 'hints', 'numRelated'));
 
         block.joinedHints = joinHints(block.hints);
@@ -65,7 +64,16 @@ BlocksService.prototype.loadPage = function (rows) {
         block.relatedBlocks = [];
 
         return block;
-    }));
+    })
+}
+
+BlocksService.prototype.loadPage = function (rows) {
+
+    this.currentPage = this.currentPage.concat(this.transformRowsIntoBlocks(rows));
 };
 
-angular.module('ultimate-crossword').service('blocks', [ BlocksService]);
+BlocksService.prototype.getLabelClass = function (blockId) {
+    return 'label-' + (parseInt(blockId, 10) % this.constants.numColors);
+};
+
+angular.module('ultimate-crossword').service('blocks', [ 'constants', BlocksService]);

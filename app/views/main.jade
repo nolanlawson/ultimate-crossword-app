@@ -6,46 +6,12 @@ html
       h1
         span.scramble-font Ultimate Crossword
         span.pacifico-font .net
-    .ajax-loader(ng-hide="blocks.currentPage.length")
-    table.table.table-striped.hide-while-loading(ng-show="blocks.currentPage.length")
-      thead
-        tr
-          th(colspan=2) Sequence
-          th Popularity
-          th Hints
-          th(colspan=2) My guess
-      tbody(ng-repeat='block in blocks.currentPage')
-        tr
-          td
-            div(style="margin-right:18px")
-              mixin block-label('block._id', 'visible', 'block')
-          //- the following is just to make the table formatting look right
-          td: mixin block-label('"12345"', 'hidden', 'block')
-          td {{block.count}}
-          td
-            span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
-          td
-            input(type='text')
-          td
-            button.btn(style="width:100%",ng-show='block.numRelated',
-                ng-class="{'btn-primary' : !block.expanded, 'disabled' : block.loadingRelated}",ng-click="expandOrCollapse(block)")
-              span.ellipsize {{block.numRelated}} related&hellip;&nbsp;
-              i(ng-class="{'icon-chevron-down icon-white' : !block.expanded, 'icon-chevron-up' : block.expanded}")
-        tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
-          td
-            div(style="display:inline-block;")
-              i.icon-chevron-right(ng-class="{hidden : !$first}",style='margin-right:4px;')
-              mixin block-label('relatedBlock.ids[0]', 'visible', 'inline-block')
-          td
-            mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
-          td {{relatedBlock.count}}
-          td
-            span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
-          td
-            div
-              input(style='width: calc(50% - 16px);',type='text')
-              input(style='width: calc(50% - 16px);',type='text')
-          td
+    .ajax-loader(ng-hide="blocksService.currentPage.length")
+    table.table.table-striped.hide-while-loading(ng-show="blocksService.currentPage.length")
+      include blocks/main-table-header
+      tbody(ng-repeat='block in blocksService.currentPage')
+        include blocks/main-block-row
+        include blocks/related-block-rows
       tfoot
         tr
           td(colspan=6,style="text-align:left;")
