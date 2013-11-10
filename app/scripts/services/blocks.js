@@ -27,40 +27,57 @@ function ellipsize(str, toLen) {
     return str;
 }
 
-BlocksService.prototype.transformRelatedBlocks = function(rows, sourceBlockId) {
+function sortByValuesDesc(obj) {
+    return _.chain(_.pairs(obj)).sortBy(
+        function (pair) {
+            return pair[1];
+        }
+    ).reverse().map(
+        function (pair) {
+            return pair[0];
+        }
+    ).value();
+}
 
-    return _.map(rows, function(row) {
+function applyHints(blockOrRelatedBlock, hintMap) {
+
+    blockOrRelatedBlock.hints = sortByValuesDesc(hintMap);
+    blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints);
+    blockOrRelatedBlock.shortJoinedHints = ellipsize(blockOrRelatedBlock.joinedHints, MAX_HINTS_LENGTH);
+}
+
+BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) {
+
+    return _.map(rows, function (row) {
 
         var otherId = row.doc.block.toString();
-        var hints = row.doc.hints;
-        var joinedHints = joinHints(hints);
-        var preceding = row.doc.preceding;
-        var blockIds = preceding ? [otherId, sourceBlockId] : [sourceBlockId, otherId];
+        var blockIds = row.doc.preceding ? [otherId, sourceBlockId] : [sourceBlockId, otherId];
 
-        return {
-            ids              : blockIds,
-            hints            : hints,
-            joinedHints      : joinedHints,
-            shortJoinedHints : ellipsize(joinedHints, MAX_HINTS_LENGTH),
-            count            : hints.length,
-            preceding        : preceding
+        var result = {
+            ids: blockIds,
+            preceding: row.doc.preceding,
+            count : row.doc.count,
+            hintsRedacted: row.doc.hintsRedacted
         };
+
+        applyHints(result, row.doc.hintMap);
+
+        return result;
     });
 };
 
-BlocksService.prototype.loadRelated = function(block, rows) {
+BlocksService.prototype.loadRelated = function (block, rows) {
 
     var relatedBlocks = this.transformRelatedBlocks(rows, block._id);
 
     block.relatedBlocks = relatedBlocks;
 };
 
-BlocksService.prototype.transformRowsIntoBlocks = function(rows) {
-    return _.map(rows, function(row) {
-        var block = _.pick(row.doc, '_id', 'hints', 'soloCount', 'followingCount', 'precedingCount');
+BlocksService.prototype.transformRowsIntoBlocks = function (rows) {
+    return _.map(rows, function (row) {
+        var block = _.pick(row.doc, '_id', 'soloCount', 'followingCount', 'precedingCount', 'hintsRedacted');
 
-        block.joinedHints = joinHints(block.hints);
-        block.shortJoinedHints = ellipsize(block.joinedHints, MAX_HINTS_LENGTH);
+        applyHints(block, row.doc.hintMap);
         block.relatedBlocks = [];
 
         return block;
@@ -74,6 +91,19 @@ BlocksService.prototype.loadPage = function (rows) {
 
 BlocksService.prototype.getLabelClass = function (blockId) {
     return 'label-' + (parseInt(blockId, 10) % this.constants.numColors);
+};
+
+BlocksService.prototype.updateHints = function(blocksOrRelatedBlocks, rows) {
+    // update a list of blocks or related blocks with the full hints fetched from the block_hints database
+
+    var idsToHints = _.object(_.map(rows, function(row){return [row._id, row.doc];}));
+
+    blocksOrRelatedBlocks.forEach(function(blockOrRelatedBlock){
+        if (blockOrRelatedBlock.hintsRedacted && idsToHints[blockOrRelatedBlock._id]) {
+            var fullHints = idsToHints[blockOrRelatedBlock._id].hintMap;
+            applyHints(blockOrRelatedBlock, fullHints);
+        }
+    });
 };
 
 angular.module('ultimate-crossword').service('blocks', [ 'constants', BlocksService]);

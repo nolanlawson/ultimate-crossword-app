@@ -17,7 +17,7 @@ angular.module('ultimate-crossword')
             }
 
             var blocks_url = constants.couchdb.blocks_url + '/_design/counts_to_blocks/_view/counts_to_blocks/';
-            var details_url = constants.couchdb.details_url + '/_all_docs';
+            var details_url = constants.couchdb.related_url + '/_all_docs';
 
             $scope.expandOrCollapse = function(block) {
                 if (!block.expanded) {
