@@ -29,6 +29,8 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
                 reason = 'You are already logged in.';
             }
             $scope.warning = reason;
+            $scope.password = ''; // reset
+            $scope.confirmPassword = ''; // reset
 
         }
 
@@ -43,6 +45,8 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
                     $scope.warning = false;
                     $scope.hide(); // hide the modal
                     session.login(data.name);
+                    $scope.password = ''; // reset
+                    $scope.confirmPassword = ''; // reset
                 }
             } else {
                 onError(data);

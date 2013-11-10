@@ -19,7 +19,6 @@ function ConstantsService() {
     this.maxNumRelated = 20;
     this.pageSize = 10;
     this.numColors = 16;
-    this.sessionCheckInterval = 30000;
 }
 
 angular.module('ultimate-crossword').service('constants', [ConstantsService]);

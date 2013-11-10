@@ -9,10 +9,10 @@ div(ng-controller="SignupLoginController")
       span Welcome back, {{returningUser}}!
     .alert.alert-info(ng-hide='returningUser')
       .icon-for-alert-info
-        i.icon-info-sign.icon-white(style='margin-right:8px;')
+        i.icon-info-sign.icon-white
       span Signing up lets you save your progress and share it with other people.
 
-    form.form-horizontal
+    form#signup-login-form.form-horizontal(ng-submit="submit()")
       .control-group
         label.control-label(for='user') User name
         .controls
@@ -32,6 +32,5 @@ div(ng-controller="SignupLoginController")
             | I already have an account
   .modal-footer
     button.btn(href='#',data-dismiss="modal") Close
-    button.btn.btn-primary(ng-class="{disabled: submitting}",type="submit",form="signup-login-form",
-    ng-click="submit()")
+    button.btn.btn-primary(ng-class="{disabled: submitting}",type="submit",form="signup-login-form")
       | {{alreadyHaveAccount && 'Login' || 'Signup'}}

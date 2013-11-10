@@ -7,7 +7,11 @@ html
         | Block \#{{blockId}}
 
     .ajax-loader(ng-hide="doneLoading")
-    table.table.table-striped.hide-while-loading(ng-show="doneLoading")
+    .alert.alert-info(ng-show='doneLoading && !block')
+      .icon-for-alert-info
+        i.icon-info-sign.icon-white
+      | No block with that ID found.
+    table.table.table-striped.hide-while-loading(ng-show="doneLoading && block")
       include blocks/main-table-header
       tbody
         include blocks/main-block-row

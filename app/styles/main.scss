@@ -112,6 +112,10 @@ ul > li {
   padding: 1px 2px 2px;
   border-radius: 50px;
   margin-right: 8px;
+
+  & > i {
+    margin-right:8px;
+  }
 }
 
 /**

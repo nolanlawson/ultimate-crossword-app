@@ -15,8 +15,9 @@ angular.module('ultimate-crossword')
             var details_url = constants.couchdb.details_url + '/_all_docs';
 
 
-            function onError() {
-                console.log('got an error');
+            function onError(data) {
+                console.log('got an error ' + data);
+                $scope.doneLoading = true;
             }
 
             var params = {descending: true, 'include_docs': true};

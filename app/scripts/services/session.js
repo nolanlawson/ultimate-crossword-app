@@ -30,8 +30,6 @@ function SessionService(constants, $cookieStore, $http) {
     }
 
     checkLoggedIn();
-
-    setInterval(checkLoggedIn, constants.sessionCheckInterval);
 }
 
 SessionService.prototype.login = function (username) {
