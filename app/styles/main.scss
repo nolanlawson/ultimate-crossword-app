@@ -106,6 +106,37 @@ ul > li {
   margin-right:20px;
 }
 
+.icon-for-alert-info {
+  display: inline-block;
+  background-color: #3a87ad;
+  padding: 1px 2px 2px;
+  border-radius: 50px;
+  margin-right: 8px;
+}
+
+/**
+ * Navbar
+ */
+
+ul.horizontal-navbar {
+  list-style-type: none;
+  margin: 0;
+}
+
+ul.horizontal-navbar li {
+  float: left;
+}
+
+.nav-username {
+  padding-right: 10px;
+  line-height:40px;
+  color : #fff;
+}
+
+/**
+ * Label colors
+ */
+
 $label-color-0: rgb(185, 72, 72);
 $label-color-1: rgb(185, 114, 72);
 $label-color-2: rgb(185, 157, 72);

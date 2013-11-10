@@ -1,0 +1,37 @@
+div(ng-controller="SignupLoginController")
+  .modal-header
+    button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+    h3 Signup / Login
+  .modal-body
+    .alert.alert-info(ng-show='returningUser')
+      .icon-for-alert-info
+        i.icon-heart.icon-white
+      span Welcome back, {{returningUser}}!
+    .alert.alert-info(ng-hide='returningUser')
+      .icon-for-alert-info
+        i.icon-info-sign.icon-white(style='margin-right:8px;')
+      span Signing up lets you save your progress and share it with other people.
+
+    form.form-horizontal
+      .control-group
+        label.control-label(for='user') User name
+        .controls
+          input(ng-minlength="4",ng-model="username",type='text',placeholder='User name',required="required")
+        label.control-label(for='inputPassword',required="required") Password
+        .controls
+          input(ng-model="password",type='password', placeholder='Password',required="required")
+        label.control-label(ng-hide="alreadyHaveAccount",for='confirmPassword',required="required") Confirm password
+        .controls(ng-hide="alreadyHaveAccount")
+          input(ng-model="confirmPassword",type='password', placeholder='Confirm password')
+      .alert.alert-warning(ng-show="warning")
+        | {{warning}}
+      .control-group
+        .controls
+          label.checkbox
+            input(type='checkbox',ng-model="alreadyHaveAccount")
+            | I already have an account
+  .modal-footer
+    button.btn(href='#',data-dismiss="modal") Close
+    button.btn.btn-primary(ng-class="{disabled: submitting}",type="submit",form="signup-login-form",
+    ng-click="submit()")
+      | {{alreadyHaveAccount && 'Login' || 'Signup'}}

@@ -12,12 +12,13 @@
             a(href='#',ng-href='{{tab.getHref()}}',ng-bind='tab.title')
         form.navbar-search.pull-left(ng-submit="performSearch()")
           input.search-query(type="text",placeholder="Search",ng-model="searchService.q")
-//      ul.pull-right.ng-cloak.horizontal-navbar(ng-controller="SignupLoginButtonController")
-//        li: span.nav-username(ng-show="session.loggedIn")
-//          | {{session.username}}
-//        li: button.btn.btn-inverse.pull-right.ng-cloak#login-btn(data-target="#signup-login-modal",
-//        data-toggle="modal",
-//        ng-hide="session.loggedIn")
-//          | Signup / Login
-//        li: button.btn.btn-inverse.pull-right.ng-cloak#logout-btn(ng-show="session.loggedIn",ng-click="logout()")
-//          | Logout
+      ul.pull-right.ng-cloak.horizontal-navbar
+        li: span.nav-username(ng-show="session.loggedIn")
+          | {{session.username}}
+        li: button.btn.btn-inverse.pull-right.ng-cloak(data-target="#signup-login-modal",
+        bs-modal="'views/signup-login-modal.html'"
+        data-toggle="modal",
+        ng-hide="session.loggedIn")
+          | Signup / Login
+        li: button.btn.btn-inverse.pull-right.ng-cloak(ng-show="session.loggedIn",ng-click="session.logout()")
+          | Logout

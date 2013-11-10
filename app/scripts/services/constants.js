@@ -9,13 +9,17 @@
 function ConstantsService() {
 
     this.couchdb = {
-        blocks_url : 'http://localhost:5984/block_summaries2',
-        details_url : 'http://localhost:5984/related_blocks2'
+        blocks_url   : 'http://localhost:5984/block_summaries2',
+        details_url  : 'http://localhost:5984/related_blocks2',
+        users_url    : 'http://koholint-wired:5985/_users',
+        userdocs_url : 'http://koholint-wired:5985/user_docs',
+        session_url  : 'http://koholint-wired:5985/_session'
     };
     this.solr_url = 'http://localhost:8983/solr';
     this.maxNumRelated = 20;
     this.pageSize = 10;
     this.numColors = 16;
+    this.sessionCheckInterval = 30000;
 }
 
 angular.module('ultimate-crossword').service('constants', [ConstantsService]);

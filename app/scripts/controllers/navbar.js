@@ -6,10 +6,11 @@
  * Time: 11:08 PM
  * To change this template use File | Settings | File Templates.
  */
-angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', '$location', 'search',
-    function($scope, $location, searchService) {
+angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', '$location', 'search', 'session',
+    function($scope, $location, searchService, session) {
 
         $scope.searchService = searchService;
+        $scope.session = session;
 
         $scope.performSearch = function() {
 
