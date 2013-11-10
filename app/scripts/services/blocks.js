@@ -46,7 +46,7 @@ BlocksService.prototype.transformRelatedBlocks = function(rows, sourceBlockId) {
             preceding        : preceding
         };
     });
-}
+};
 
 BlocksService.prototype.loadRelated = function(block, rows) {
 

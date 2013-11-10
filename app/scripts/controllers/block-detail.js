@@ -48,7 +48,6 @@ angular.module('ultimate-crossword')
                             }
 
                             block.relatedBlocks = blocksService.transformRelatedBlocks(data.rows, block._id);
-                            block.ex
                             // all done loading
                             $scope.block = block;
                             $scope.doneLoading = true;
