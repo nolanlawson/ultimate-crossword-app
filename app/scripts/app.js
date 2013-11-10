@@ -4,6 +4,8 @@ angular.module('ultimate-crossword', [
         'ngCookies',
         'ngResource',
         'ngSanitize',
+        'ngRoute',
+        'ngAnimate',
         '$strap.directives'
     ])
     .config(function ($routeProvider) {

@@ -16,7 +16,8 @@ describe('Controller: MainController', function () {
         });
     }));
 
-    it('should attach a list of awesomeThings to the scope', function () {
-        expect(scope.awesomeThings.length).toBe(3);
+    // TODO: add tests; too lazy right now
+    it('should attach constants to the scope', function () {
+        expect(scope.constants).not.toBeNull();
     });
 });

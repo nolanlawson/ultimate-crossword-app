@@ -17,6 +17,7 @@ html.no-js
     // Place favicon.ico and apple-touch-icon.png in the root directory
     // build:css(.tmp) styles/main.css
     link(rel='stylesheet', href='styles/main.css')
+    link(rel='stylesheet', href='bower_components/animate.css/animate.css')
     // endbuild
     //- ensure ng-cloaked elements aren't shown while the app is loading, @see ng-cloak in Angular API
     style.
@@ -33,7 +34,7 @@ html.no-js
       script(src='bower_components/es5-shim/es5-shim.js')
       script(src='bower_components/json3/lib/json3.min.js')
     // Add your site or application content here
-    .container(ng-view='')
+    .container(ng-view='', ng-class="fader-animation")
     //-Google Analytics: change UA-XXXXX-X to be your site's ID
     //-script.
     //-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -64,6 +65,8 @@ html.no-js
     script(src='bower_components/angular-resource/angular-resource.js')
     script(src='bower_components/angular-cookies/angular-cookies.js')
     script(src='bower_components/angular-sanitize/angular-sanitize.js')
+    script(src='bower_components/angular-route/angular-route.js')
+    script(src='bower_components/angular-animate/angular-animate.js')
     script(src='bower_components/angular-strap/dist/angular-strap.js')
     // endbuild
     // build:js({.tmp,app}) scripts/scripts.js

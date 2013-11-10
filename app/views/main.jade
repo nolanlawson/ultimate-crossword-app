@@ -9,7 +9,7 @@ html
     .ajax-loader(ng-hide="blocksService.currentPage.length")
     table.table.table-striped.hide-while-loading(ng-show="blocksService.currentPage.length")
       include blocks/main-table-header
-      tbody(ng-repeat='block in blocksService.currentPage')
+      tbody(ng-repeat='block in blocksService.currentPage',ng-animate="'animate-enter'")
         include blocks/main-block-row
         include blocks/related-block-rows
       tfoot

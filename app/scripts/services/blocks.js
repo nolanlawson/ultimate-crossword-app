@@ -46,7 +46,7 @@ BlocksService.prototype.transformRelatedBlocks = function(rows, sourceBlockId) {
             preceding        : preceding
         };
     });
-}
+};
 
 BlocksService.prototype.loadRelated = function(block, rows) {
 
@@ -59,6 +59,7 @@ BlocksService.prototype.transformRowsIntoBlocks = function(rows) {
     return _.map(rows, function(row) {
         var block = _.pick(row.doc, '_id', 'hints', 'soloCount', 'followingCount', 'precedingCount');
 
+        block.id = block._id; // angular considers _ to be a private field
         block.joinedHints = joinHints(block.hints);
         block.shortJoinedHints = ellipsize(block.joinedHints, MAX_HINTS_LENGTH);
         block.relatedBlocks = [];

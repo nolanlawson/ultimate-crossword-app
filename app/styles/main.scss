@@ -134,6 +134,75 @@ ul.horizontal-navbar li {
 }
 
 /**
+ * Animations
+ */
+
+/*
+The animate-enter CSS class is the event name that you
+have provided within the ngAnimate attribute.
+*/
+.animate-enter {
+  -webkit-transition: 1s linear all; /* Safari/Chrome */
+  -moz-transition: 1s linear all; /* Firefox */
+  -o-transition: 1s linear all; /* Opera */
+  transition: 1s linear all; /* IE10+ and Future Browsers */
+
+  /* The animation preparation code */
+  opacity: 0;
+}
+
+/*
+Keep in mind that you want to combine both CSS
+classes together to avoid any CSS-specificity
+conflicts
+*/
+.animate-enter.animate-enter-active {
+  /* The animation code itself */
+  opacity: 1;
+}
+
+.slide-reveal {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:0.5;
+
+  position:relative;
+  opacity:0;
+  top:10px;
+}
+.slide-reveal.slide-reveal-active {
+  top:0;
+  opacity:1;
+}
+
+.fader-animation.ng-enter,
+.fader-animation.ng-leave {
+  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+.fader-animation.ng-enter {
+  -ms-opacity: 0;
+  opacity: 0;
+}
+.fader-animation.ng-enter.ng-enter-active {
+  -ms-opacity: 1;
+  opacity: 1;
+}
+
+.fader-animation.ng-leave {
+  -ms-opacity: 1;
+  opacity: 1;
+}
+.fader-animation.ng-leave.ng-leave-active {
+  -ms-opacity: 0;
+  opacity: 0;
+}
+
+/**
  * Label colors
  */
 
