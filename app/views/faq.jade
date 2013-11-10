@@ -22,10 +22,10 @@ html
             p
               | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't&nbsp;
               em hash&nbsp;
-              | them (which is bad), and they kept the password hints in clear text.
+              | them, and they kept the password hints in clear text.
             p
-              | Basically, their encryption method split up passwords into sequences of 8 characters, each of which
-              | corresponded to the same block,
+              | Basically, their encryption method split passwords into sequences of 8 characters, each of which
+              | corresponds to the same block,
               | repeated across all passwords.  This creates an interesting byproduct.
             p
               | Look at the cartoon above.  We know that "weather vane sword" and "favorite of 12 apostles" are hints for
@@ -58,23 +58,29 @@ html
               a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') a security advisory&nbsp;
               | telling their users to change their passwords.
             p And even though the leaked file is readily available on the Internet, I took the precuation of only exposing what's
-              | necessary for the crossword puzzle, just in case.
+              | necessary for the crossword puzzle.
             h4 Why did you create this site?
             p
-              | I made it as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does make for an excellent crossword puzzle.
+              | I made it as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does
+              | make for an excellent crossword puzzle.  I think it's fun!
             p 
-              | Also, I'm hoping that this site makes a statement about the importance of good security.  Protip: if
+              | Hopefully, I'm also managing to make a statement about the importance of good security.  Protip: if
               | I can make a crossword puzzle out of your database, then your security sucks.
             h4 So what can users do to improve their password security?
             p
-              | First off, passwords like "adobe123", 'pikachu', and even 'keroppi'
-              | just aren't cutting it, folks.  Human memory has its limits, though, which is why we need a stronger system.
+              | First off, passwords like&nbsp;
+              a(href='http://localhost:9000/#/block/23463') matthew
+              | ,&nbsp;
+              a(href='http://localhost:9000/#/block/131435') adobe69
+              | , and even&nbsp;
+              a(href='http://localhost:9000/#/block/100313') keroppi&nbsp;
+              | just aren't cutting it, folks.  Our fragile human memory is limited, though, so we need a better system.
             p
               | I wrote&nbsp;
               a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') this blog post&nbsp;
               | about the system I use for my own passwords, which costs nothing and requires no special technical knowledge.  (TL;DR:&nbsp;
               a(href='http://www.joelonsoftware.com/items/2008/09/11b.html') use Dropbox and Password Gorilla&nbsp;
-              | .)  Your passwords look like&nbsp;
+              | .)  Your passwords end up looking like&nbsp;
               span.monospace-font Mt^cdxE973N$C\@=
               | , they're always different, and you don't have to memorize them.
             p
@@ -91,6 +97,7 @@ html
             p
               | For instance, this site uses&nbsp;
               a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature&nbsp;
-              | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I couldn't possibly understand.
+              | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I don't even
+              | need to understand.
 
             
