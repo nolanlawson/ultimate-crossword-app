@@ -21,7 +21,7 @@ function SessionService(constants, $cookieStore, $http) {
                     self.login(data.userCtx.name);
                 } else {
                     // server sez we got logged out!
-                    self.logout();
+                    self.loggedIn = false;
                 }
             })
             .error(function (err) {
