@@ -17,6 +17,45 @@ angular.module('ultimate-crossword')
                 console.log('got an error: ' + data);
             }
 
+            function addCheapHighlighting(rows) {
+                // Do cheap, regex-based highlighting because Solr's highlighting feature would be overkill
+                // (too much bandwidth used, have to store hints, have to merge them, etc.)
+
+                // thanks mozilla:
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions?
+                // redirectlocale=en-US&redirectslug=JavaScript%2FGuide%2FRegular_Expressions
+                function escapeRegExp(string){
+                    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
+                }
+
+                var regex = new RegExp('\\b(' + escapeRegExp($scope.q) + ')\\b');
+
+                _.forEach(rows, function(row){
+                    var counter = 0;
+
+                    var highlightedHintMap = _.object(_.chain(_.pairs(row.doc.hintMap)
+                    ).map(function(pair){
+                            var hint = pair[0];
+                            var count = pair[1];
+
+                            var highlightedHint = hint.replace(regex, '<strong>$1</strong>');
+                            console.log(highlightedHint);
+
+                            if (highlightedHint !== hint) { // highlighted
+                                return [true, count, highlightedHint]; // sort highlighted ones first
+                            }
+
+                            return [false, count, hint];
+                        }
+                    ).sort().map(function(arr){
+                        // fudge the count so that they're sorted correctly
+                        return [arr[2], counter++];
+                    }).value());
+
+                    row.doc.hintMap = highlightedHintMap;
+                });
+            }
+
             function onSearchCompleted() {
 
                 var blockLookup = {};
@@ -70,6 +109,9 @@ angular.module('ultimate-crossword')
                         if (!data.rows) {
                             return onError(data);
                         }
+
+                        addCheapHighlighting(data.rows);
+
                         intermediateResults[(resultName)] = data.rows;
 
                         callback();
@@ -92,6 +134,9 @@ angular.module('ultimate-crossword')
                         var blocksAndRelatedBlocks = _.flatten(
                             intermediateResults.couchRelatedBlocks,
                             intermediateResults.couchSummaries);
+
+                        addCheapHighlighting(data.rows);
+
                         blocksService.updateHints(blocksAndRelatedBlocks, data.rows);
 
                         onSearchCompleted();

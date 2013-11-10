@@ -39,14 +39,15 @@ function sortByValuesDesc(obj) {
     ).value();
 }
 
-function applyHints(blockOrRelatedBlock, hintMap) {
+BlocksService.prototype.applyHints = function(blockOrRelatedBlock, hintMap) {
 
     blockOrRelatedBlock.hints = sortByValuesDesc(hintMap);
     blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints);
     blockOrRelatedBlock.shortJoinedHints = ellipsize(blockOrRelatedBlock.joinedHints, MAX_HINTS_LENGTH);
-}
+};
 
 BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) {
+    var self = this;
 
     return _.map(rows, function (row) {
 
@@ -60,7 +61,7 @@ BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) 
             hintsRedacted: row.doc.hintsRedacted
         };
 
-        applyHints(result, row.doc.hintMap);
+        self.applyHints(result, row.doc.hintMap);
 
         return result;
     });
@@ -74,10 +75,11 @@ BlocksService.prototype.loadRelated = function (block, rows) {
 };
 
 BlocksService.prototype.transformRowsIntoBlocks = function (rows) {
+    var self = this;
     return _.map(rows, function (row) {
         var block = _.pick(row.doc, '_id', 'soloCount', 'followingCount', 'precedingCount', 'hintsRedacted');
 
-        applyHints(block, row.doc.hintMap);
+        self.applyHints(block, row.doc.hintMap);
         block.relatedBlocks = [];
 
         return block;
@@ -94,6 +96,7 @@ BlocksService.prototype.getLabelClass = function (blockId) {
 };
 
 BlocksService.prototype.updateHints = function(blocksOrRelatedBlocks, rows) {
+    var self = this;
     // update a list of blocks or related blocks with the full hints fetched from the block_hints database
 
     var idsToHints = _.object(_.map(rows, function(row){return [row._id, row.doc];}));
@@ -101,7 +104,7 @@ BlocksService.prototype.updateHints = function(blocksOrRelatedBlocks, rows) {
     blocksOrRelatedBlocks.forEach(function(blockOrRelatedBlock){
         if (blockOrRelatedBlock.hintsRedacted && idsToHints[blockOrRelatedBlock._id]) {
             var fullHints = idsToHints[blockOrRelatedBlock._id].hintMap;
-            applyHints(blockOrRelatedBlock, fullHints);
+            self.applyHints(blockOrRelatedBlock, fullHints);
         }
     });
 };

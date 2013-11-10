@@ -21,7 +21,7 @@ html
         td: mixin block-label('"12345"', 'hidden', 'block')
         td {{result.count}}
         td
-          span(bs-tooltip='result.joinedHints') {{result.shortJoinedHints}}
+          span(bs-tooltip='result.joinedHints',ng-bind-html='result.shortJoinedHints')
         td
           input(style='width : calc(100% - 16px);',type='text')
         td
