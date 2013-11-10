@@ -1,0 +1,35 @@
+html
+  include mixins/block-label
+  body
+    include blocks/navbar
+  h2.section-title
+    span Search for {{q}}
+
+  .ajax-loader(ng-hide="doneLoading")
+  table.table.table-striped.hide-while-loading(ng-show="doneLoading")
+    include blocks/main-table-header
+    tbody(ng-repeat="result in results",ng-switch on="result.docType")
+      tr(ng-switch-when="summary")
+        td
+          .single-block
+            mixin block-label('result.blockIds[0]', 'visible', 'block')
+        //- the following is just to make the table formatting look right
+        td: mixin block-label('"12345"', 'hidden', 'block')
+        td {{result.count}}
+        td
+          span(bs-tooltip='result.joinedHints') {{result.shortJoinedHints}}
+        td
+          input(style='width : calc(100% - 16px);',type='text')
+        td
+      tr(ng-switch-when="related")
+        td
+          div(style="display:inline-block;")
+            mixin block-label('result.blockIds[0]', 'visible', 'block')
+        td: mixin block-label('result.blockIds[1]', 'visible', 'block')
+        td {{result.count}}
+        td
+          span(bs-tooltip='result.joinedHints') {{result.shortJoinedHints}}
+        td
+          input(style='width: calc(50% - 16px);',type='text')
+          input(style='width: calc(50% - 16px);',type='text')
+        td

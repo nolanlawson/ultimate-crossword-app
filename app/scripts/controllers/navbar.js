@@ -13,11 +13,15 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
 
         $scope.performSearch = function() {
 
-            var blockId = parseInt($scope.searchService.q, 10);
+            var q = $scope.searchService.q;
+            var qAsInt = parseInt(q, 10);
 
             // for now, only accept block ids
-            if (!isNaN(blockId)) {
-                $location.path('/block/' + blockId);
+            if (!isNaN(q)) {
+                $location.path('/block/' + qAsInt);
+            } else {
+                // perform search
+                $location.path('/search/' + encodeURIComponent(q));
             }
         };
 
@@ -36,10 +40,14 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
             new Tab('about', 'About')
         ];
 
-        var selectedTab = _.find($scope.tabs, function(tab){
-            return $location.path() === '/' + tab.id;
-        });
-        $scope.selectedTabId = selectedTab ? selectedTab.id : 'home';
+        if (new RegExp('^/(?:search|block)/').exec($location.path())) { // tabless page, no need to highlight
+            $scope.selectedTabId = null;
+        } else { // figure out which one to highlight
+            var selectedTab = _.find($scope.tabs, function(tab){
+                return $location.path() === '/' + tab.id;
+            });
+            $scope.selectedTabId = selectedTab ? selectedTab.id : 'home';
+        }
 
     }]
 );

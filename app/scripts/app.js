@@ -22,6 +22,10 @@ angular.module('ultimate-crossword', [
                 templateUrl : 'views/block-detail.html',
                 controller: 'BlockDetailController'
             })
+            .when('/search/:q', {
+                templateUrl : 'views/search.html',
+                controller: 'SearchController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

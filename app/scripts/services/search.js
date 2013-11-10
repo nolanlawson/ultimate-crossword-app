@@ -8,6 +8,7 @@
  */
 function SearchService() {
 
+    // ensure that the q is shared across the whole app
     this.q = '';
 }
 
