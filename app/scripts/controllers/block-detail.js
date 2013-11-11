@@ -102,6 +102,38 @@ angular.module('ultimate-crossword')
                 // all done loading
                 $scope.block = block;
                 $scope.doneLoading = true;
+
+                // optionally, fetch guesses from other users
+                fetchGuessesFromOtherUsers();
+            }
+
+            function fetchGuessesFromOtherUsers() {
+
+                var url = constants.couchdb.userdocs_url + '/_design/popular_guesses/_view/popular_guesses';
+                var params = {
+                    reduce   : true,
+                    group    : true,
+                    startkey : JSON.stringify([$scope.blockId]),
+                    endkey   : JSON.stringify([$scope.blockId, {}])
+                };
+                $http({method : 'GET', url : url, params : params})
+                    .success(function(data){
+                        if (!data.rows) {
+                            onError(data);
+                        }
+                        $scope.guessesFromOtherUsers = _.chain(data.rows).sortBy(function(row){
+                            return -row.value;
+                        }).map(function(row){
+                            return { guess : row.key[1], popularity : row.value };
+                        }).value();
+
+                        $scope.numGuessesFromOtherUsers = _.reduce($scope.guessesFromOtherUsers, function(count, guess){
+                            return count + guess.popularity;
+                        }, 0);
+                    })
+                    .error(onError);
+
+
             }
 
             fetchSummary();

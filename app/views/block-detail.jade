@@ -1,12 +1,24 @@
 html
   include mixins/block-label
   include mixins/hints-with-counts
+  include mixins/guesses-with-counts
   body
     include blocks/navbar
     .text-center(style="margin: 10px 0 20px;")
       h1.label.big-label(ng-class='blocksService.getLabelClass(blockId)')
         | Block \#{{blockId}}
-
+    .alert.alert-info(ng-show='doneLoading && numGuessesFromOtherUsers')
+      .icon-for-alert-info
+        i.icon-thumbs-up.icon-white
+      span(ng-pluralize count='numGuessesFromOtherUsers',
+          when="{'one' : '1 user has submitted a guess for this block.', 'other' : '{{numGuessesFromOtherUsers}} users have submitted guesses for this block.'}",
+          style="margin-right:10px;")
+      button.btn(href='#',ng-show='!showGuessesFromOtherUsers',ng-click='showGuessesFromOtherUsers = true')
+        | Show guesses
+      button.btn(href='#',ng-show='showGuessesFromOtherUsers',ng-click='showGuessesFromOtherUsers = false')
+        | Hide guesses
+      div(ng-show='showGuessesFromOtherUsers')
+        mixin guesses-with-counts('guessesFromOtherUsers')
     .ajax-loader(ng-hide="doneLoading")
     .alert.alert-info(ng-show='doneLoading && !block')
       .icon-for-alert-info

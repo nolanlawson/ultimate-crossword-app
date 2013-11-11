@@ -1,0 +1,8 @@
+mixin guesses-with-counts(propString)
+  //- using this css for the styling only
+  .hints-with-counts(style='max-width:250px')
+    ul
+      li(ng-repeat='guessWithCount in #{propString}')
+        span {{guessWithCount.guess}}
+        span.label.pull-right(ng-show='guessWithCount.popularity > 1')
+          | &times;{{guessWithCount.popularity}}
