@@ -6,13 +6,28 @@
  * Time: 11:08 PM
  * To change this template use File | Settings | File Templates.
  */
-function PouchService(constants, $rootScope) {
+function PouchService(constants, $rootScope, $window) {
     var self = this;
 
     self.constants = constants;
     self.doc = {guesses : {}};
     self.$rootScope = $rootScope;
+
+    console.log($window);
+
+    $window.onbeforeunload = function() {
+        if (self.isDirty()) {
+            self.updateGuesses();
+            return 'You have unsaved changes.';
+        }
+    };
 }
+
+PouchService.prototype.isDirty = function() {
+    var self = this;
+
+    return !_.isEqual(self.lastDocFromDb, self.doc);
+};
 
 PouchService.prototype.updateGuesses = function() {
     var self = this;
@@ -21,6 +36,9 @@ PouchService.prototype.updateGuesses = function() {
         return;
     } else if (self.syncWithPouchInProgress) {
         console.log('sync with pouch already in progress');
+        return;
+    } else if (!self.isDirty()) {
+        console.log('I am not dirty, no reason to update');
         return;
     }
     self.syncWithPouchInProgress = true;
@@ -42,15 +60,24 @@ PouchService.prototype.updateGuesses = function() {
                     newDoc._rev = response.rev;
 
                     _.extend(self.doc, newDoc);
-                } else {
-                    self.syncWithPouchInProgress = false;
+                    self.updateLastDocFromDb();
                 }
+
+                self.syncWithPouchInProgress = false;
+
             });
         } else {
             self.syncWithPouchInProgress = false;
         }
     });
 
+};
+
+PouchService.prototype.updateLastDocFromDb = function() {
+    var self = this;
+
+    // underscore does only a shallow copy; not good enough
+    self.lastDocFromDb = _.extend(_.clone(self.doc), {guesses : _.clone(self.doc.guesses)});
 };
 
 PouchService.prototype.createOrLoadDb = function(username) {
@@ -68,11 +95,8 @@ PouchService.prototype.createOrLoadDb = function(username) {
         self.db.replicate.to(self.constants.couchdb.userdocs_url, {continuous : true});
         self.db.replicate.from(self.constants.couchdb.userdocs_url, {
             continuous : true,
-            filter : function(doc) {
-                return doc._id === username; // don't sync everybody and their grandma's databases
-            }
+            filter : 'app/by_user'
         });
-
     }
 
     // single database, single document
@@ -85,6 +109,7 @@ PouchService.prototype.createOrLoadDb = function(username) {
             self.db.put(self.doc, function(err, response){
                 if (response && response.ok) {
                     self.doc._rev = response.rev;
+                    self.updateLastDocFromDb();
                     console.log('new doc: ' + JSON.stringify(self.doc));
                     onDbReady();
                 }
@@ -93,6 +118,7 @@ PouchService.prototype.createOrLoadDb = function(username) {
         } else { // existing document
             console.log('doc exists: ' + JSON.stringify(doc));
             _.extend(self.doc, doc);
+            self.updateLastDocFromDb();
 
             onDbReady();
         }
@@ -108,4 +134,4 @@ PouchService.prototype.onLogOut = function() {
     self.dbReady = false;
 };
 
-angular.module('ultimate-crossword').service('pouch', ['constants', '$rootScope', PouchService]);
+angular.module('ultimate-crossword').service('pouch', ['constants', '$rootScope', '$window', PouchService]);

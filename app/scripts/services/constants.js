@@ -20,7 +20,7 @@ function ConstantsService() {
     this.maxNumRelated = 20;
     this.pageSize = 10;
     this.numColors = 16;
-    this.pouchRefreshInterval = 60000;
+    this.pouchRefreshInterval = 20000;
     this.searchPageSize = 5;
 }
 
