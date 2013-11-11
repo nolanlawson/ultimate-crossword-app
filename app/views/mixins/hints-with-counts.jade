@@ -1,0 +1,8 @@
+mixin hints-with-counts(propString)
+  td.hints-with-counts
+    ul
+      li(ng-repeat='hintWithCount in #{propString}')
+        span
+          | {{hintWithCount[0]}}&nbsp;
+        span.label.pull-right(ng-show='hintWithCount[1] > 1')
+          | x{{hintWithCount[1]}}

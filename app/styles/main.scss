@@ -58,6 +58,21 @@ ul > li {
   margin : 0 auto;
 }
 
+/**
+ * Block table styling
+ */
+.hints-with-counts {
+  & > ul {
+    & > li {
+      list-style: none;
+    }
+  }
+}
+
+/**
+ * For the FAQs section
+ */
+
 .image-box {
   text-align:center;
   & > a > img {
@@ -71,6 +86,26 @@ ul > li {
       border : #0088cc 2px solid;
     }
   }
+}
+
+// copied from GitHub; I love their monospace <code> look
+.monospace-font {
+  margin: 0 2px;
+  padding: 0px 5px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 12px;
+}
+
+/**
+ * Labels
+ */
+.single-block {
+  display:inline-block;
+  margin-right:20px;
 }
 
 .label-link > a {
@@ -90,21 +125,9 @@ ul > li {
   border-radius  : 5px;
 }
 
-.monospace-font {
-  margin: 0 2px;
-  padding: 0px 5px;
-  border: 1px solid #ddd;
-  background-color: #f8f8f8;
-  border-radius: 3px;
-  white-space: nowrap;
-  font-family: Consolas, "Liberation Mono", Courier, monospace;
-  font-size: 12px;
-}
-
-.single-block {
-  display:inline-block;
-  margin-right:20px;
-}
+/**
+ * Alerts
+ */
 
 .icon-for-alert-info {
   display: inline-block;

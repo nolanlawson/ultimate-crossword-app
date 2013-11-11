@@ -27,21 +27,34 @@ function ellipsize(str, toLen) {
     return str;
 }
 
-function sortByValuesDesc(obj) {
-    return _.chain(_.pairs(obj)).sortBy(
-        function (pair) {
-            return pair[1];
+function sortByValuesDescKeysAsc(obj) {
+    var result = _.pairs(obj);
+    result.sort(function (pair1, pair2) {
+
+        var key1 = pair1[0];
+        var value1 = pair1[1];
+        var key2 = pair2[0];
+        var value2 = pair2[1];
+
+        if (value1 === value2) {
+            if (key1 === key2) {
+                return 0;
+            } else {
+                return key1 < key2 ? -1 : 1;
+            }
+        } else {
+            return value2 < value1 ? -1 : 1;
         }
-    ).reverse().map(
-        function (pair) {
-            return pair[0];
-        }
-    ).value();
+    });
+    return result;
+
 }
 
 BlocksService.prototype.applyHints = function(blockOrRelatedBlock, hintMap) {
 
-    blockOrRelatedBlock.hints = sortByValuesDesc(hintMap);
+    blockOrRelatedBlock.hintsWithCounts = sortByValuesDescKeysAsc(hintMap);
+    blockOrRelatedBlock.hints = _.map(blockOrRelatedBlock.hintsWithCounts, function(pair){return pair[0];});
+
     blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints);
     blockOrRelatedBlock.shortJoinedHints = ellipsize(blockOrRelatedBlock.joinedHints, MAX_HINTS_LENGTH);
 };

@@ -1,5 +1,6 @@
 html
   include mixins/block-label
+  include mixins/hints-with-counts
   body
     include blocks/navbar
     .text-center(style="margin: 10px 0 20px;")
@@ -27,8 +28,7 @@ html
           //- the following is just to make the table formatting look right
           td: mixin block-label('"12345"', 'hidden', 'block')
           td {{block.soloCount}}
-          td
-            span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
+          mixin hints-with-counts('block.hintsWithCounts')
           td
             input(style='width : calc(100% - 16px);',type='text')
         tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
@@ -39,8 +39,7 @@ html
           td
             mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
           td {{relatedBlock.count}}
-          td
-            span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
+          mixin hints-with-counts('relatedBlock.hintsWithCounts')
           td
             div
               input(style='width: calc(50% - 16px);',type='text')
