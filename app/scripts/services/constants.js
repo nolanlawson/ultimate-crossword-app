@@ -17,7 +17,7 @@ function ConstantsService() {
         session_url  : 'http://koholint-wired:5985/_session'
     };
     this.solr_url = 'http://localhost:8983/solr';
-    this.maxNumRelated = 20;
+    this.maxNumRelated = 5;
     this.pageSize = 10;
     this.numColors = 16;
     this.pouchRefreshInterval = 20000;

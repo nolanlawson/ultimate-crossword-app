@@ -66,7 +66,7 @@ angular.module('ultimate-crossword')
 
                     result = _.extend(result, {
                         blockIds : (solrDoc.docType === 'related' ? block.ids : [solrDoc.id, '12345']),
-                        count    : (solrDoc.docType === 'related' ? block.count : block.soloCount)
+                        count    : (solrDoc.docType === 'related' ? block.count : block.soloHintCount)
                     });
 
                     return _.extend(result, solrDoc);

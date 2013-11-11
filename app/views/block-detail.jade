@@ -39,7 +39,7 @@ html
               i.icon-chevron-right.hidden(style="display:inline-block;")
           //- the following is just to make the table formatting look right
           td: mixin block-label('"12345"', 'hidden', 'block')
-          td {{block.soloCount}}
+          td {{block.soloHintCount}}
           mixin hints-with-counts('block.hintsWithCounts', false)
           td
             input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[block._id]')
@@ -55,4 +55,4 @@ html
           td
             div
               input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
-              input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
+              input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')

@@ -13,3 +13,15 @@ tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
       input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
       input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')
   td
+tr(ng-show='block.moreRelatedBlocks > 0')
+  td
+  td
+  td
+  td
+  td
+  td
+    button.btn(style='width: 100%;',href='#',ng-click="loadMoreRelated(block)",
+        ng-class="{'disabled' : block.loadingRelated}")
+      span.ellipsize {{block.moreRelatedBlocks}} more...
+      i.icon-chevron-down
+

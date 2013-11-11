@@ -5,13 +5,13 @@ tr
       i.icon-chevron-right.hidden(style="display:inline-block;")
   //- the following is just to make the table formatting look right
   td: mixin block-label('"12345"', 'hidden', 'block')
-  td {{block.soloCount}}
+  td {{block.soloHintCount}}
   td
     span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
   td
     input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[block._id]')
   td
-    button.btn(style="width:100%",ng-show='block.followingCount || block.precedingCount',
-    ng-class="{'btn-primary' : !block.expanded, 'disabled' : block.loadingRelated}",ng-click="expandOrCollapse(block)")
-      span.ellipsize {{block.followingCount + block.precedingCount}} related&hellip;&nbsp;
-      i(ng-class="{'icon-chevron-down icon-white' : !block.expanded, 'icon-chevron-up' : block.expanded}")
+    button.btn(style="width:100%",ng-show='block.followingBlockCount || block.precedingBlockCount',
+    ng-class="{'disabled' : block.loadingRelated}",ng-click="expandOrCollapse(block)")
+      span.ellipsize {{block.followingBlockCount + block.precedingBlockCount}} related&hellip;&nbsp;
+      i(ng-class="{'icon-chevron-down' : !block.expanded, 'icon-chevron-up' : block.expanded}")
