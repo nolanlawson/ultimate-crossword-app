@@ -29,7 +29,8 @@ angular.module('ultimate-crossword')
             function addCheapHighlighting(str) {
                 // Do cheap, regex-based highlighting because Solr's highlighting feature would be overkill
                 // (too much bandwidth used, have to store hints, have to merge them, etc.)
-                return str.replace(cheapHighlighter, '<strong>$1</strong>');
+                var htmlEscaped = str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                return (htmlEscaped).replace(cheapHighlighter, '<strong>$1</strong>');
             }
 
             function onSearchCompleted() {
@@ -53,9 +54,13 @@ angular.module('ultimate-crossword')
                     var block = blockLookup[solrDoc.id];
 
                     // create a neat search result object
-                    var result = _.pick(block, 'joinedHints', 'shortJoinedHints');
+                    var result = _.pick(block, 'hintsWithCounts');
+
+                    result.hintsWithCounts.forEach(function(hintWithCount){
+                        hintWithCount[0] = addCheapHighlighting(hintWithCount[0]);
+                    });
+
                     result = _.extend(result, {
-                        shortJoinedHints : addCheapHighlighting(result.shortJoinedHints),
                         blockIds : (solrDoc.docType === 'related' ? block.ids : [solrDoc.id, '12345']),
                         count    : (solrDoc.docType === 'related' ? block.count : block.soloCount)
                     });
