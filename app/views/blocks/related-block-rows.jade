@@ -13,7 +13,7 @@ tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
       input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
       input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')
   td
-tr(ng-show='block.moreRelatedBlocks > 0')
+tr(ng-show='block.expanded && block.moreRelatedBlocks > 0')
   td
   td
   td
