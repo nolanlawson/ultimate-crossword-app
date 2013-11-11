@@ -46,8 +46,7 @@ angular.module('ultimate-crossword')
                     // to have a separate views.  Saves space and time.  Whoosh.
                     startkey: JSON.stringify(block._id + '~'),
                     endkey: JSON.stringify(block._id + '~Z'),
-                    include_docs: true,
-                    limit: constants.maxNumRelated
+                    include_docs: true
                 };
 
                 $http({method: 'GET', url: related_url, params: params})

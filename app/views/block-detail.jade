@@ -12,7 +12,36 @@ html
         i.icon-info-sign.icon-white
       | No block with that ID found.
     table.table.table-striped.hide-while-loading(ng-show="doneLoading && block")
-      include blocks/main-table-header
+      thead
+        tr
+          th(colspan=2) Sequence
+          th Popularity
+          th Hints
+          th My guess
       tbody
-        include blocks/main-block-row
-        include blocks/related-block-rows
+        tr
+          td
+            .single-block
+              mixin block-label('block._id', 'visible', 'inline-block')
+              i.icon-chevron-right.hidden(style="display:inline-block;")
+          //- the following is just to make the table formatting look right
+          td: mixin block-label('"12345"', 'hidden', 'block')
+          td {{block.soloCount}}
+          td
+            span(bs-tooltip='block.joinedHints') {{block.shortJoinedHints}}
+          td
+            input(style='width : calc(100% - 16px);',type='text')
+        tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
+          td
+            div(style="display:inline-block;")
+              i.icon-chevron-right(style="display:inline-block;",ng-class="{hidden : !$first}")
+              mixin block-label('relatedBlock.ids[0]', 'visible', 'inline-block')
+          td
+            mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
+          td {{relatedBlock.count}}
+          td
+            span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
+          td
+            div
+              input(style='width: calc(50% - 16px);',type='text')
+              input(style='width: calc(50% - 16px);',type='text')
