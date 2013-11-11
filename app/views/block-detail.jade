@@ -2,6 +2,7 @@ html
   include mixins/block-label
   include mixins/hints-with-counts
   include mixins/guesses-with-counts
+  include mixins/main-table-header
   body
     include blocks/navbar
     .text-center(style="margin: 10px 0 20px;")
@@ -25,12 +26,7 @@ html
         i.icon-info-sign.icon-white
       | No block with that ID found.
     table.table.table-striped.hide-while-loading(ng-show="doneLoading && block")
-      thead
-        tr
-          th(colspan=2) Sequence
-          th Popularity
-          th Hints
-          th My guess
+      mixin main-table-header(5)
       tbody
         tr
           td

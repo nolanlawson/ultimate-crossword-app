@@ -1,0 +1,10 @@
+mixin main-table-header(columns)
+  thead
+    tr
+      th(colspan=2) Blocks
+      th Popularity
+      th Hints
+    if columns == 6:
+      th(colspan=2) My guess
+    else :
+      th My guess

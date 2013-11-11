@@ -1,5 +1,6 @@
 html
   include mixins/block-label
+  include mixins/main-table-header
   body
     include blocks/navbar
     .hero-unit
@@ -8,7 +9,7 @@ html
         span.pacifico-font .net
     .ajax-loader(ng-hide="blocksService.currentPage.length")
     table.table.table-striped.hide-while-loading(ng-show="blocksService.currentPage.length")
-      include blocks/main-table-header
+      mixin main-table-header(6)
       tbody(ng-repeat='block in blocksService.currentPage')
         include blocks/main-block-row
         include blocks/related-block-rows

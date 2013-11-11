@@ -71,7 +71,9 @@ tr.darker-gray {
  */
 .hints-with-counts {
   & > ul {
+    margin-left : 0;
     & > li {
+      margin-left : 0;
       list-style: none;
     }
   }

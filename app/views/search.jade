@@ -1,6 +1,7 @@
 html
   include mixins/block-label
   include mixins/hints-with-counts
+  include mixins/main-table-header
   body
     include blocks/navbar
   h2.section-title
@@ -12,7 +13,7 @@ html
       i.icon-info-sign.icon-white
     | No results found.
   table.table.table-striped.hide-while-loading(ng-show="initialLoadComplete && results.length")
-    include blocks/main-table-header
+    mixin main-table-header(5)
     tbody(ng-repeat="result in results",ng-switch on="result.docType")
       tr(ng-switch-when="summary")
         td
