@@ -8,7 +8,7 @@
  *
  */
 
-var MAX_HINTS_LENGTH = 40;
+var MAX_HINTS_LENGTH = 45;
 
 function BlocksService(constants) {
 
@@ -16,15 +16,26 @@ function BlocksService(constants) {
     this.constants = constants;
 }
 
-function joinHints(hints) {
-    return (hints.length) ? _(hints).join(',') : '(No hints)';
+function joinHints(hints, hasMore) {
+    var result = (hints.length) ? _(hints).join(', ') : '(No hints)';
+    return result + (hasMore ? '<br/>(Click the block for more hints)' : '');
 }
 
-function ellipsize(str, toLen) {
-    if (str.length > toLen) {
-        return str.substring(0, toLen - 1) + '\u2026';
+function joinHintsEllipsized(hints) {
+    var result = '';
+    for (var i = 0, len = hints.length; i < len; i++) {
+
+        var hint = hints[i];
+        if (hint.length + result.length > MAX_HINTS_LENGTH) { // too long
+            return result + '\u2026';
+        } else { // still short enough
+            if (i > 0) {
+                result += ', ';
+            }
+            result +=  hint;
+        }
     }
-    return str;
+    return result;
 }
 
 function sortByValuesDescKeysAsc(obj) {
@@ -55,8 +66,8 @@ BlocksService.prototype.applyHints = function(blockOrRelatedBlock, hintMap) {
     blockOrRelatedBlock.hintsWithCounts = sortByValuesDescKeysAsc(hintMap);
     blockOrRelatedBlock.hints = _.map(blockOrRelatedBlock.hintsWithCounts, function(pair){return pair[0];});
 
-    blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints);
-    blockOrRelatedBlock.shortJoinedHints = ellipsize(blockOrRelatedBlock.joinedHints, MAX_HINTS_LENGTH);
+    blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints, blockOrRelatedBlock.hintsRedacted);
+    blockOrRelatedBlock.shortJoinedHints = joinHintsEllipsized(blockOrRelatedBlock.hints);
 };
 
 BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) {
@@ -72,7 +83,7 @@ BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) 
             ids: blockIds,
             preceding: row.doc.preceding,
             count : row.doc.count,
-            hintsRedacted: row.doc.hintsRedacted,
+            hintsRedacted: row.doc.hintsRedacted
         };
 
         self.applyHints(result, row.doc.hintMap);

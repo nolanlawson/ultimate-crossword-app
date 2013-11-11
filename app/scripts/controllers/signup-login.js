@@ -18,7 +18,7 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
         var MAX_PASSWORD = 32;
         var MAX_USERNAME = 32;
         var MIN_PASSWORD = 8;
-        var MIN_USERNAME = 5;
+        var MIN_USERNAME = 3;
 
         function onError(data) {
             var reason = data.reason || 'Unknown error';
