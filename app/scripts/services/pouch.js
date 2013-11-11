@@ -63,9 +63,16 @@ PouchService.prototype.createOrLoadDb = function(username) {
             self.updateGuesses();
         }, self.constants.pouchRefreshInterval);
         self.$rootScope.$apply(); // update angular display
-        PouchDB.replicate(self.doc._id, self.constants.couchdb.userdocs_url, {
-            continuous : true
+
+        // replication to remote CouchDB
+        self.db.replicate.to(self.constants.couchdb.userdocs_url, {continuous : true});
+        self.db.replicate.from(self.constants.couchdb.userdocs_url, {
+            continuous : true,
+            filter : function(doc) {
+                return doc._id === username; // don't sync everybody and their grandma's databases
+            }
         });
+
     }
 
     // single database, single document
