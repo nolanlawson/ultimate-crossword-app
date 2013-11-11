@@ -23,6 +23,14 @@ ul > li {
   margin-left : 20px;
 }
 
+tr.darker-gray {
+
+  &  > td {
+    background: #f0f0f0;
+  }
+}
+
+
 .hero-unit {
     margin: 20px auto 20px auto;
     min-width: 300px;
