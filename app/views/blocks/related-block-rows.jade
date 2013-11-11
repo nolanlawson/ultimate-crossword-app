@@ -10,6 +10,6 @@ tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
     span(bs-tooltip='relatedBlock.joinedHints') {{relatedBlock.shortJoinedHints}}
   td
     div
-      input(style='width: calc(50% - 16px);',type='text')
-      input(style='width: calc(50% - 16px);',type='text')
+      input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
+      input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')
   td

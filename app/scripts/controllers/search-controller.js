@@ -1,13 +1,17 @@
 'use strict';
 
 angular.module('ultimate-crossword')
-    .controller('SearchController', ['$scope', '$route', 'blocks', '$http', 'constants', 'search',
-        function ($scope, $route, blocksService, $http, constants, searchService) {
+    .controller('SearchController', ['$scope', '$route', 'blocks', '$http', 'constants', 'search', 'pouch',
+        function ($scope, $route, blocksService, $http, constants, searchService, pouch) {
 
-            $scope.q = decodeURIComponent($route.current.params.q);
+            $scope.pouch = pouch;
             $scope.blocksService = blocksService;
+            $scope.constants = constants;
+            $scope.results = [];
+            $scope.initialLoadComplete = false;
 
             // ensure that the search text appears in the search box
+            $scope.q = decodeURIComponent($route.current.params.q);
             searchService.q = $scope.q;
 
 
@@ -69,8 +73,11 @@ angular.module('ultimate-crossword')
 
                 });
 
-                $scope.results = results;
-                $scope.doneLoading = true;
+                $scope.results = $scope.results.concat(results);
+                $scope.initialLoadComplete = true;
+                $scope.searchInProgress = false;
+                $scope.numFound = intermediateResults.numFound;
+                intermediateResults = {};
 
             }
 
@@ -147,6 +154,8 @@ angular.module('ultimate-crossword')
 
             function performSolrSearch() {
 
+                $scope.searchInProgress = true;
+
                 var params = {
                     q          : $scope.q,
                     defType    : 'edismax',
@@ -159,14 +168,19 @@ angular.module('ultimate-crossword')
                     indent     : 'off',
                     omitHeader : true,
                     mm         : '100%',
-                    rows       : 999999
+                    offset     : ($scope.results && $scope.results.length) || 0,
+                    rows       : constants.searchPageSize
                 };
                 $http({method: 'GET', url: constants.solr_url + '/select/', params: params})
                     .success(function (data) {
                         if (!(data.response && data.response.docs)) {
                             return onError(data);
                         }
-                        intermediateResults.solrDocs = data.response.docs;
+
+                        var solrDocs = data.response.docs;
+                        intermediateResults.numFound = data.response.numFound;
+
+                        intermediateResults.solrDocs = solrDocs;
 
                         performCouchSummariesSearch();
 
@@ -174,10 +188,13 @@ angular.module('ultimate-crossword')
                     .error(onError);
             }
 
-            if (!$scope.results) {
+            $scope.loadNextPage = function() {
+                if (!$scope.searchInProgress) {
+                    performSolrSearch();
+                }
+            };
+
+            if (!$scope.initialLoadComplete) {
                 performSolrSearch();
             }
-
-
-
         }]);

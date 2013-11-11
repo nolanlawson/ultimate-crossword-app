@@ -28,9 +28,9 @@ html
           //- the following is just to make the table formatting look right
           td: mixin block-label('"12345"', 'hidden', 'block')
           td {{block.soloCount}}
-          mixin hints-with-counts('block.hintsWithCounts', 'ng-bind')
+          mixin hints-with-counts('block.hintsWithCounts', false)
           td
-            input(style='width : calc(100% - 16px);',type='text')
+            input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[block._id]')
         tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
           td
             div(style="display:inline-block;")
@@ -39,8 +39,8 @@ html
           td
             mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
           td {{relatedBlock.count}}
-          mixin hints-with-counts('relatedBlock.hintsWithCounts', 'ng-bind')
+          mixin hints-with-counts('relatedBlock.hintsWithCounts', false)
           td
             div
-              input(style='width: calc(50% - 16px);',type='text')
-              input(style='width: calc(50% - 16px);',type='text')
+              input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
+              input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')

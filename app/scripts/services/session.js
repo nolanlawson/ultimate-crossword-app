@@ -3,7 +3,7 @@
  */
 'use strict';
 
-function SessionService(constants, $cookieStore, $http) {
+function SessionService(constants, $cookieStore, $http, pouch) {
 
     var self = this;
 
@@ -11,6 +11,7 @@ function SessionService(constants, $cookieStore, $http) {
     self.lastUsername = $cookieStore.get('username');
     self.$http = $http;
     self.constants = constants;
+    self.pouch = pouch;
 
     function checkLoggedIn() {
 
@@ -37,6 +38,8 @@ SessionService.prototype.login = function (username) {
     this.username = username;
     this.$cookieStore.put('username', username); // save the last username for quicker sign-in later
     this.lastUsername = username;
+    // init pouchdb
+    this.pouch.createOrLoadDb(username);
 };
 
 SessionService.prototype.logout = function () {
@@ -51,6 +54,7 @@ SessionService.prototype.logout = function () {
         .success(function (data) {
             if (data.ok) {
                 self.loggedIn = false;
+                self.pouch.onLogOut();
             } else {
                 logoutError(data);
             }
@@ -58,5 +62,5 @@ SessionService.prototype.logout = function () {
 };
 
 
-angular.module('ultimate-crossword').service('session', ['constants', '$cookieStore', '$http',
+angular.module('ultimate-crossword').service('session', ['constants', '$cookieStore', '$http', 'pouch',
     SessionService]);

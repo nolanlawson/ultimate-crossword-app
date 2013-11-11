@@ -17,6 +17,6 @@ html
           td(colspan=6,style="text-align:left;")
             button.btn.btn-primary(ng-class='{disabled : loadingPage}',ng-click="loadNextPage()")
               span &nbsp;Load {{constants.pageSize}} more&hellip;
-              i.icon-plus.icon-white
+              i.icon-refresh.icon-white(ng-show='loadingPage')
 
 

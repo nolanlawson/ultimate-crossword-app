@@ -1,7 +1,10 @@
-mixin hints-with-counts(propString, bindString)
+mixin hints-with-counts(propString, asHtml)
   td.hints-with-counts
     ul
       li(ng-repeat='hintWithCount in #{propString}')
-        span(#{bindString}="hintWithCount[0]")
+        if asHtml
+          span(ng-bind-html="hintWithCount[0]")
+        else
+          span {{hintWithCount[0]}}
         span.label.pull-right(ng-show='hintWithCount[1] > 1')
           | &times;{{hintWithCount[1]}}

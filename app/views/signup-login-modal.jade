@@ -3,7 +3,7 @@ div(ng-controller="SignupLoginController")
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
     h3 Signup / Login
   .modal-body
-    .alert.alert-info(ng-show='returningUser')
+    .alert.alert-info(ng-show='returningUser && returningUser == username')
       .icon-for-alert-info
         i.icon-heart.icon-white
       span Welcome back, {{returningUser}}!

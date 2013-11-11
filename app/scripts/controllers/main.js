@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('ultimate-crossword')
-    .controller('MainController', ['$scope', '$http', 'constants', 'blocks',
-        function ($scope, $http, constants, blocksService) {
+    .controller('MainController', ['$scope', '$http', 'constants', 'blocks', 'pouch',
+        function ($scope, $http, constants, blocksService, pouch) {
 
 
             $scope.blocksService = blocksService;
@@ -10,6 +10,7 @@ angular.module('ultimate-crossword')
 
             $scope.loadingPage = false;
             $scope.lastRow = null;
+            $scope.pouch = pouch;
 
             function onError() {
                 $scope.loadingPage = false;

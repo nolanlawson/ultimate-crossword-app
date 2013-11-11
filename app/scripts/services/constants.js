@@ -20,6 +20,8 @@ function ConstantsService() {
     this.maxNumRelated = 20;
     this.pageSize = 10;
     this.numColors = 16;
+    this.pouchRefreshInterval = 60000;
+    this.searchPageSize = 5;
 }
 
 angular.module('ultimate-crossword').service('constants', [ConstantsService]);

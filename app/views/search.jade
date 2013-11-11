@@ -6,12 +6,12 @@ html
   h2.section-title
     span Search for {{q}}
 
-  .ajax-loader(ng-hide="doneLoading")
-  .alert.alert-info(ng-show="doneLoading && !results.length")
+  .ajax-loader(ng-hide="initialLoadComplete")
+  .alert.alert-info(ng-show="initialLoadComplete && !results.length")
     .icon-for-alert-info
       i.icon-info-sign.icon-white
     | No results found.
-  table.table.table-striped.hide-while-loading(ng-show="doneLoading && results.length")
+  table.table.table-striped.hide-while-loading(ng-show="initialLoadComplete && results.length")
     include blocks/main-table-header
     tbody(ng-repeat="result in results",ng-switch on="result.docType")
       tr(ng-switch-when="summary")
@@ -21,9 +21,9 @@ html
         //- the following is just to make the table formatting look right
         td: mixin block-label('"12345"', 'hidden', 'block')
         td {{result.count}}
-        mixin hints-with-counts('result.hintsWithCounts', 'ng-bind-html')
+        mixin hints-with-counts('result.hintsWithCounts', true)
         td
-          input(style='width : calc(100% - 16px);',type='text')
+          input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[0]]')
         td
       tr(ng-switch-when="related")
         td
@@ -31,8 +31,13 @@ html
             mixin block-label('result.blockIds[0]', 'visible', 'block')
         td: mixin block-label('result.blockIds[1]', 'visible', 'block')
         td {{result.count}}
-        mixin hints-with-counts('result.hintsWithCounts', 'ng-bind-html')
+        mixin hints-with-counts('result.hintsWithCounts', true)
         td
-          input(style='width: calc(50% - 16px);',type='text')
-          input(style='width: calc(50% - 16px);',type='text')
+          input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[0]]')
+          input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[1]]')
         td
+    tfoot(ng-show='!searchInProgress && numFound > results.length')
+      td(colspan=2)
+        button.btn.btn-primary(href='#',ng-click='loadNextPage()',ng-class="{'disabled': searchInProgress}")
+          | Load {{constants.searchPageSize}} more...
+          i.icon-refresh.icon-white(ng-show='searchInProgress')

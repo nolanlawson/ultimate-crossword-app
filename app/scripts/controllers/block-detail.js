@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('ultimate-crossword')
-    .controller('BlockDetailController', ['$scope', '$route', 'blocks', '$http', 'constants',
-        function ($scope, $route, blocksService, $http, constants) {
+    .controller('BlockDetailController', ['$scope', '$route', 'blocks', '$http', 'constants', 'pouch',
+        function ($scope, $route, blocksService, $http, constants, pouch) {
 
             $scope.blocksService = blocksService;
+            $scope.pouch = pouch;
 
             $scope.blockId = $route.current.params.q;
 
