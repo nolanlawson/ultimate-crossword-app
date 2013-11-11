@@ -11,6 +11,7 @@ function PouchService(constants, $rootScope, $window) {
 
     self.constants = constants;
     self.doc = {guesses : {}};
+    self.lastDocFromDb = {guesses : {}};
     self.$rootScope = $rootScope;
 
     console.log($window);
@@ -18,7 +19,7 @@ function PouchService(constants, $rootScope, $window) {
     $window.onbeforeunload = function() {
         if (self.isDirty()) {
             self.updateGuesses();
-            return 'You have unsaved changes.';
+            return self.dbReady ? 'You have unsaved changes.' : 'You have unsaved changes.  You need to sign in to save them!';
         }
     };
 }
