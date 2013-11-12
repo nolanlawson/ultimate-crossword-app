@@ -3,33 +3,36 @@ div(ng-controller="SignupLoginController")
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
     h3 Signup / Login
   .modal-body
-    .alert.alert-info(ng-show='returningUser && returningUser == username')
+    .alert.alert-info(ng-show='!warning && returningUser && returningUser == username')
       .icon-for-alert-info
         i.icon-heart.icon-white
       span Welcome back, {{returningUser}}!
-    .alert.alert-info(ng-hide='returningUser')
+    .alert.alert-info(ng-show='!warning && !(returningUser && returningUser == username)')
       .icon-for-alert-info
         i.icon-info-sign.icon-white
-      span Signing up lets you save your progress and share it with other people.
-
+      span Signing up lets you save your progress and share it with others.
+    .alert.alert-warning(ng-show="warning")
+      .icon-for-alert-warning
+        i.icon-exclamation-sign.icon-white
+      | {{warning.text}}
     form#signup-login-form.form-horizontal(ng-submit="submit()")
-      .control-group
+      .control-group(ng-class='{warning : warning.username}')
         label.control-label(for='user') User name
         .controls
-          input(ng-minlength="4",ng-model="username",type='text',placeholder='User name',required="required")
+          input(ng-model="username",type='text',placeholder='User name',required="required")
+      .control-group(ng-class='{warning : warning.password}')
         label.control-label(for='inputPassword',required="required") Password
         .controls
           input(ng-model="password",type='password', placeholder='Password',required="required")
         label.control-label(ng-hide="alreadyHaveAccount",for='confirmPassword',required="required") Confirm password
         .controls(ng-hide="alreadyHaveAccount")
           input(ng-model="confirmPassword",type='password', placeholder='Confirm password')
-      .alert.alert-warning(ng-show="warning")
-        | {{warning}}
       .control-group
         .controls
           label.checkbox
             input(type='checkbox',ng-model="alreadyHaveAccount")
             | I already have an account
+
   .modal-footer
     button.btn(href='#',data-dismiss="modal") Close
     button.btn.btn-primary(ng-class="{disabled: submitting}",type="submit",form="signup-login-form")

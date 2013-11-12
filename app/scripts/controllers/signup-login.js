@@ -20,18 +20,58 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
         var MIN_PASSWORD = 8;
         var MIN_USERNAME = 3;
 
-        function onError(data) {
-            var reason = data.reason || 'Unknown error';
-            if (reason === 'Document update conflict.') { // unhelpful error message from CouchDB
-                reason = 'That user name is already taken.';
-            }
-            if (data.error === 'not_found' && data.reason === 'missing') {
-                reason = 'You are already logged in.';
-            }
-            $scope.warning = reason;
-            $scope.password = ''; // reset
-            $scope.confirmPassword = ''; // reset
+        function validateFormAndReturnWarning() {
+            // verify length and shit.  We don't have to do an excellent job, because
+            // CouchDB will reject users for way more spurious reasons.
+            if (!$scope.alreadyHaveAccount) {
+                // signing up
 
+                if ($scope.password) {
+                    if ($scope.password.length < MIN_PASSWORD || $scope.password.length > MAX_PASSWORD) {
+                        return {
+                            password : true,
+                            text : 'Password must be between ' + MIN_PASSWORD + ' and ' + MAX_PASSWORD + ' characters.'
+                        };
+                    }
+                    if ($scope.confirmPassword && $scope.password !== $scope.confirmPassword) {
+                        return {
+                            password : true,
+                            text : 'Passwords must match.'
+                        };
+                    }
+                }
+                if ($scope.username) {
+                    if ($scope.username.length < MIN_USERNAME || $scope.username.length > MAX_USERNAME) {
+                        return {
+                            username : true,
+                            text : 'Username must be between ' + MIN_USERNAME + ' and ' + MAX_USERNAME + '  characters.'
+                        };
+                    }
+                }
+            } // else logging in; show no errors until the users have pressed the submit button
+            return null;
+        }
+
+
+        function validateForm() {
+            $scope.warning = validateFormAndReturnWarning();
+        }
+
+        $scope.$watch('username + password + confirmPassword + alreadyHaveAccount', validateForm);
+
+        function onError(data) {
+            var warning = { text : (data.reason || 'Unknown error')};
+
+            if (warning.text === 'Document update conflict.') { // unhelpful error message from CouchDB
+                warning.text = 'Bummer, someone already took that user name! Please try another.';
+                warning.username = true;
+            }
+
+            if (data.error === 'not_found' && data.reason === 'missing') {
+                warning.text = 'You are already logged in.';
+            }
+
+            $scope.warning = warning;
         }
 
         function onSuccess(data) {
@@ -63,11 +103,6 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
 
         function signup() {
 
-            if ($scope.password !== $scope.confirmPassword) {
-                $scope.warning = 'Passwords must match.';
-                return;
-            }
-
             var data = {
                 name: $scope.username,
                 password: $scope.password,
@@ -83,19 +118,7 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
 
         $scope.submit = function () {
 
-            // verify length and shit.  We don't have to do an excellent job, because
-            // CouchDB will reject users for way more spurious reasons.
-            if (!$scope.password || $scope.password.length < MIN_PASSWORD) {
-                $scope.warning = 'Your password must be at least ' + MIN_PASSWORD + ' characters.';
-                return;
-            } else if ($scope.password.length > MAX_PASSWORD) {
-                $scope.warning = 'Your password must be at most ' + MAX_PASSWORD + ' characters.';
-                return;
-            } else if (!$scope.username || $scope.username.length < MIN_USERNAME) {
-                $scope.warning = 'Your username must be at least ' + MIN_USERNAME + '  characters';
-                return;
-            } else if ($scope.username.length > MAX_USERNAME) {
-                $scope.warning = 'Your username must be at most ' + MAX_USERNAME + ' characters.';
+            if (!$scope.password || !$scope.username || $scope.warning) {
                 return;
             }
 

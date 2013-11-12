@@ -9,7 +9,7 @@ html
         span.pacifico-font .net
     .ajax-loader(ng-hide="blocksService.currentPage.length")
     table.table.table-striped.hide-while-loading(ng-show="blocksService.currentPage.length")
-      mixin main-table-header(6)
+      mixin main-table-header(2)
       tbody(ng-repeat='block in blocksService.currentPage')
         include blocks/main-block-row
         include blocks/related-block-rows

@@ -139,9 +139,9 @@ tr.darker-gray {
  * Alerts
  */
 
-.icon-for-alert-info {
+@mixin icon-for-alert($color) {
   display: inline-block;
-  background-color: #3a87ad;
+  background-color: $color;
   padding: 1px 2px 2px;
   border-radius: 50px;
   margin-right: 8px;
@@ -149,6 +149,13 @@ tr.darker-gray {
   & > i {
     margin-right:8px;
   }
+}
+
+.icon-for-alert-warning {
+  @include icon-for-alert(#c09853);
+}
+.icon-for-alert-info {
+  @include icon-for-alert(#3a87ad);
 }
 
 /**

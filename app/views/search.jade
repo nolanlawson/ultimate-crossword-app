@@ -13,7 +13,7 @@ html
       i.icon-info-sign.icon-white
     | No results found.
   table.table.table-striped.hide-while-loading(ng-show="initialLoadComplete && results.length")
-    mixin main-table-header(5)
+    mixin main-table-header(1)
     tbody(ng-repeat="result in results",ng-switch on="result.docType")
       tr(ng-switch-when="summary")
         td
