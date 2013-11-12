@@ -7,13 +7,12 @@ html
         .span8.offset2.section-content
             h4 Who made this?
             p
-              | You and I did, with some help from Adobe.&nbsp;
+              | You and I did, with some help from Adobe. &nbsp;
               a(href='http://arstechnica.com/security/2013/11/how-an-epic-blunder-by-adobe-could-strengthen-hand-of-password-crackers/')
-                | They accidentally leaked&nbsp;
+                | They accidentally leaked &nbsp;
               | 153 million encrypted user passwords and hints, which is where the "crossword puzzle" comes from.
             p
-              | I got the idea from this&nbsp;
-              a(href='http://xkcd.com') XKCD&nbsp;
+              | I got the idea from this XKCD 
               | comic:
             p.image-box
               a(href='http://xkcd.com/1286/')
@@ -21,7 +20,7 @@ html
             h4 How does it work?
             p
               | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't&nbsp;
-              em hash&nbsp;
+              em hash &nbsp;
               | them, and they kept the password hints in clear text.
             p
               | Basically, their encryption algorithm split passwords into sequences of 8 characters, each of which
@@ -54,8 +53,8 @@ html
             h4 Aren't you compromising people's personal information?
             p
               | Unless someone manages to guess Adobe's cipher key (brute force seems to be the only way), the majority of the passwords are probably safe.
-              | Plus, Adobe already sent out&nbsp;
-              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') a security advisory&nbsp;
+              | Plus, Adobe already sent out &nbsp;
+              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') a security advisory &nbsp;
               | telling their users to change their passwords.
             p And even though the leaked file is readily available on the Internet, I took the precuation of only exposing what's
               | necessary for the crossword puzzle.
@@ -68,11 +67,11 @@ html
               | I can make a crossword puzzle out of your database, then your security sucks.
             h4 So what can users do to improve their password security?
             p
-              | First off, passwords like&nbsp;
+              | First off, passwords like &nbsp;
               a(href='#/block/23463') matthew
-              | ,&nbsp;
+              | , &nbsp;
               a(href='#/block/131435') adobe69
-              | , and even&nbsp;
+              | , and even &nbsp;
               a(href='#/block/100313') keroppi&nbsp;
               | just aren't cutting it, folks.  Human memory has its limits, though, so
               | we need a good compromise between &nbsp;
@@ -85,7 +84,7 @@ html
               a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') this blog post&nbsp;
               | about the system I use for my own passwords, which costs nothing and requires no special technical knowledge.  (TL;DR:&nbsp;
               a(href='http://www.joelonsoftware.com/items/2008/09/11b.html') use Dropbox and Password Gorilla&nbsp;
-              | .)  Your passwords end up looking like&nbsp;
+              | .)  Your passwords end up looking like &nbsp;
               span.monospace-font Mt^cdxE973N$C\@=
               | , they're always different, and you don't have to memorize them.
             p
@@ -104,6 +103,6 @@ html
               | For instance, this site uses&nbsp;
               a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature&nbsp;
               | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I don't even
-              | need to understand.
+              | need to understand, so I can't possibly screw it up.
 
             
