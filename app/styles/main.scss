@@ -1,8 +1,8 @@
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
+@import "bootstrap-overrides";
 @import "bootstrap-sass/lib/bootstrap";
-@import "fonts";
 
 /* Put your CSS here */
 html, body {
@@ -21,6 +21,19 @@ p {
 
 ul > li {
   margin-left : 20px;
+}
+
+.big-logo {
+  margin : 10px 20px 40px 20px;
+
+  & > .big-logo-inner {
+    text-align : center;
+    padding : 10px 20px 10px 20px;
+    background-color : #f9f9f9;
+    border-radius:6px;
+    max-width : 700px;
+    margin : 0 auto;
+  }
 }
 
 .bold-text {

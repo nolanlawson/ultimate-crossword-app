@@ -3,10 +3,13 @@ html
   include mixins/main-table-header
   body
     include blocks/navbar
-    .hero-unit
-      h1
-        span.scramble-font Ultimate Crossword
-        span.pacifico-font .net
+    .big-logo
+      .big-logo-inner
+        img(src='images/logo-big.png')
+        h4.tagline
+          | The world's largest crossword puzzle, brought to you by&nbsp;
+          a(href='#/faq') bad security
+          |.
     .ajax-loader(ng-hide="blocksService.currentPage.length")
     table.table.table-striped.hide-while-loading(ng-show="blocksService.currentPage.length")
       mixin main-table-header(2)
