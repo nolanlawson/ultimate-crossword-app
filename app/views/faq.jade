@@ -24,12 +24,12 @@ html
               em hash&nbsp;
               | them, and they kept the password hints in clear text.
             p
-              | Basically, their encryption method split passwords into sequences of 8 characters, each of which
+              | Basically, their encryption algorithm split passwords into sequences of 8 characters, each of which
               | corresponds to the same block,
               | repeated across all passwords.  This creates an interesting byproduct.
             p
-              | Look at the cartoon above.  We know that "weather vane sword" and "favorite of 12 apostles" are hints for
-              | the same block, and the only 8-letter solution that fits both is&nbsp;
+              | Look at the cartoon above.  If we know that "weather vane sword" and "favorite of 12 apostles" are hints for
+              | the same block, then the only 8-letter solution that fits both is&nbsp;
               span.monospace-font matthias
               | . (The first hint is a reference to the&nbsp;
               a(href='https://en.wikipedia.org/wiki/Redwall') Redwall&nbsp;
@@ -64,7 +64,7 @@ html
               | I made it as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does
               | make for an excellent crossword puzzle.  I think it's fun!
             p 
-              | Hopefully, I'm also managing to make a statement about the importance of good security.  Protip: if
+              | And hopefully, my little experiment will also manage to make a statement about the importance of good security.  Protip: if
               | I can make a crossword puzzle out of your database, then your security sucks.
             h4 So what can users do to improve their password security?
             p
@@ -74,7 +74,12 @@ html
               a(href='#/block/131435') adobe69
               | , and even&nbsp;
               a(href='#/block/100313') keroppi&nbsp;
-              | just aren't cutting it, folks.  Our fragile human memory is limited, though, so we need a better system.
+              | just aren't cutting it, folks.  Human memory has its limits, though, so
+              | we need a good compromise between &nbsp;
+              span.monospace-font pikachu
+              | &nbsp; and 
+              span.monospace-font P1k4chuu~2012!
+              | .
             p
               | I wrote&nbsp;
               a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') this blog post&nbsp;
@@ -84,9 +89,10 @@ html
               span.monospace-font Mt^cdxE973N$C\@=
               | , they're always different, and you don't have to memorize them.
             p
-              | Anyone using this system would greatly minimize their exposure to a leak like Adobe's, because their passwords aren't
-              | re-used across multiple sites.
-            h4 What should developers do to improve user security?
+              | Anyone using this system would greatly minimize their 
+              | exposure to a leak like Adobe's, because their passwords wouldn't 
+              | be re-used across multiple sites.
+            h4 What can developers do to improve security?
             p
               | Salt and hash your user passwords.  Make the salt different every time.
               | Use a cryptographically-strong random number generator.
