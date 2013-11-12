@@ -93,8 +93,8 @@ PouchService.prototype.createOrLoadDb = function(username) {
         self.$rootScope.$apply(); // update angular display
 
         // replication to remote CouchDB
-        self.db.replicate.to(self.constants.couchdb.userdocs_url, {continuous : true});
-        self.db.replicate.from(self.constants.couchdb.userdocs_url, {
+        self.db.replicate.to(self.constants.couchdb.users_db_url + '/user_docs', {continuous : true});
+        self.db.replicate.from(self.constants.couchdb.users_db_url + '/user_docs', {
             continuous : true,
             filter : 'app/by_user'
         });

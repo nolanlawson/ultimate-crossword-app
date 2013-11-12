@@ -9,12 +9,10 @@
 function ConstantsService() {
 
     this.couchdb = {
-        blocks_url   : 'http://localhost:5984/block_summaries',
-        related_url  : 'http://localhost:5984/related_blocks',
-        hints_url    : 'http://localhost:5984/block_hints',
-        users_url    : 'http://koholint-wired:5985/_users',
-        userdocs_url : 'http://koholint-wired:5985/user_docs',
-        session_url  : 'http://koholint-wired:5985/_session'
+        blocks_url   : 'http://localhost:5984/block_summaries2',
+        related_url  : 'http://localhost:5984/related_blocks2',
+        hints_url    : 'http://localhost:5984/block_hints2',
+        users_db_url : 'http://koholint-wired:5985'
     };
     this.solr_url = 'http://localhost:8983/solr';
     this.maxNumRelated = 5;

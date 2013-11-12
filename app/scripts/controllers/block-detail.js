@@ -83,7 +83,7 @@ angular.module('ultimate-crossword')
 
             function fetchGuessesFromOtherUsers() {
 
-                var url = constants.couchdb.userdocs_url + '/_design/popular_guesses/_view/popular_guesses';
+                var url = constants.couchdb.users_db_url + '/user_docs/_design/popular_guesses/_view/popular_guesses';
                 var params = {
                     stale    : 'update_after',
                     reduce   : true,

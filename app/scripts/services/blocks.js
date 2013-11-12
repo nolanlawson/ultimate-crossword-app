@@ -83,7 +83,8 @@ BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) 
             ids: blockIds,
             preceding: row.doc.preceding,
             count : row.doc.count,
-            hintsRedacted: row.doc.hintsRedacted
+            hintsRedacted: row.doc.hintsRedacted,
+            hintsRedactedUnique : row.doc.hintsRedactedUnique
         };
 
         self.applyHints(result, row.doc.hintMap);
@@ -104,7 +105,7 @@ BlocksService.prototype.transformRowsIntoBlocks = function (rows) {
     return _.map(rows, function (row) {
         var block = _.pick(row.doc, '_id', 'soloHintCount',
             'followingHintCount', 'precedingHintCount', 'followingBlockCount',
-            'precedingBlockCount', 'hintsRedacted');
+            'precedingBlockCount', 'hintsRedacted','hintsRedactedUnique');
 
         self.applyHints(block, row.doc.hintMap);
         block.relatedBlocks = [];

@@ -15,7 +15,7 @@ function SessionService(constants, $cookieStore, $http, pouch) {
 
     function checkLoggedIn() {
 
-        $http({method: 'GET', url: constants.couchdb.session_url})
+        $http({method: 'GET', url: constants.couchdb.users_db_url + '/_session'})
             .success(function (data) {
                 if (data.ok && data.userCtx && data.userCtx.name) {
                     // server sez we're logged in
@@ -50,7 +50,7 @@ SessionService.prototype.logout = function () {
         console.log(JSON.stringify(data));
     }
 
-    self.$http({method: 'DELETE', url: self.constants.couchdb.session_url})
+    self.$http({method: 'DELETE', url: self.constants.couchdb.users_db_url + '/_session'})
         .success(function (data) {
             if (data.ok) {
                 self.loggedIn = false;

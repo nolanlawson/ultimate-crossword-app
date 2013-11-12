@@ -96,7 +96,7 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
         function login() {
 
             var data = {name: $scope.username, password: $scope.password};
-            $http({method: 'POST', url: constants.couchdb.session_url, data: data})
+            $http({method: 'POST', url: constants.couchdb.users_db_url + '/_session', data: data})
                 .success(onSuccess)
                 .error(onError);
         }
@@ -110,7 +110,7 @@ angular.module('ultimate-crossword').controller('SignupLoginController', [ '$sco
                 type: 'user',
                 _id: ('org.couchdb.user:' + $scope.username)
             };
-            var userUrl = constants.couchdb.users_url + '/org.couchdb.user%3A' + $scope.username;
+            var userUrl = constants.couchdb.users_db_url + '/_users/org.couchdb.user%3A' + $scope.username;
             $http({method: 'PUT', url: userUrl, data: data})
                 .success(onSuccess)
                 .error(onError);
