@@ -22,7 +22,7 @@ html
         //- the following is just to make the table formatting look right
         td: mixin block-label('"12345"', 'hidden', 'block')
         td {{result.count}}
-        mixin hints-with-counts('result.hintsWithCounts', true)
+        mixin hints-with-counts('result')
         td
           input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[0]]')
         td
@@ -32,7 +32,7 @@ html
             mixin block-label('result.blockIds[0]', 'visible', 'block')
         td: mixin block-label('result.blockIds[1]', 'visible', 'block')
         td {{result.count}}
-        mixin hints-with-counts('result.hintsWithCounts', true)
+        mixin hints-with-counts('result')
         td
           input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[0]]')
           input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[1]]')

@@ -2,13 +2,15 @@
 
 angular.module('ultimate-crossword')
     .controller('SearchController', ['$scope', '$route', 'blocks', '$http', 'constants', 'search', 'pouch',
-        function ($scope, $route, blocksService, $http, constants, searchService, pouch) {
+        'blockFetcher',
+        function ($scope, $route, blocksService, $http, constants, searchService, pouch, blockFetcherService) {
 
             $scope.pouch = pouch;
             $scope.blocksService = blocksService;
             $scope.constants = constants;
             $scope.results = [];
             $scope.initialLoadComplete = false;
+            $scope.hintsToHighlight = {};
 
             // ensure that the search text appears in the search box
             $scope.q = decodeURIComponent($route.current.params.q);
@@ -21,7 +23,7 @@ angular.module('ultimate-crossword')
             function escapeRegExp(str){
                 return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
             }
-            var cheapHighlighter = new RegExp('\\b(' + escapeRegExp($scope.q) + ')\\b', 'gi');
+            var cheapHighlighter = new RegExp('\\b' + escapeRegExp($scope.q) + '\\b', 'gi');
 
             var intermediateResults = {};
 
@@ -30,11 +32,20 @@ angular.module('ultimate-crossword')
                 console.log('got an error: ' + data);
             }
 
-            function addCheapHighlighting(str) {
+            function addCheapHighlighting(block) {
                 // Do cheap, regex-based highlighting because Solr's highlighting feature would be overkill
                 // (too much bandwidth used, have to store hints, have to merge them, etc.)
-                var htmlEscaped = str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-                return (htmlEscaped).replace(cheapHighlighter, '<strong>$1</strong>');
+
+                block.hintsWithCounts.forEach(function(hintWithCount){
+                    var hint = hintWithCount[0];
+                    if (hint.match(cheapHighlighter)) {
+                        $scope.hintsToHighlight[(hint)] = true;
+                    }
+                });
+
+                // TODO: bold the keywords or something
+                //var htmlEscaped = str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                //return (htmlEscaped).replace(cheapHighlighter, '<strong>$1</strong>');
             }
 
             function onSearchCompleted() {
@@ -57,19 +68,14 @@ angular.module('ultimate-crossword')
                 var results = _.map(intermediateResults.solrDocs, function(solrDoc){
                     var block = blockLookup[solrDoc.id];
 
-                    // create a neat search result object
-                    var result = _.pick(block, 'hintsWithCounts');
+                    block.docType = solrDoc.docType;
 
-                    result.hintsWithCounts.forEach(function(hintWithCount){
-                        hintWithCount[0] = addCheapHighlighting(hintWithCount[0]);
-                    });
+                    addCheapHighlighting(block);
 
-                    result = _.extend(result, {
-                        blockIds : (solrDoc.docType === 'related' ? block.ids : [solrDoc.id, '12345']),
-                        count    : (solrDoc.docType === 'related' ? block.count : block.soloHintCount)
-                    });
+                    block.blockIds = (block.docType === 'related' ? block.ids : [solrDoc.id, '12345']);
+                    block.count    = (block.docType === 'related' ? block.count : block.soloHintCount);
 
-                    return _.extend(result, solrDoc);
+                    return block;
 
                 });
 
@@ -107,45 +113,8 @@ angular.module('ultimate-crossword')
                 ;
             }
 
-            function performCouchHintsSearch(keys) {
-                var params = {
-                    keys : JSON.stringify(keys),
-                    include_docs : true
-                };
-
-                $http({method : 'GET', url : constants.couchdb.hints_url +'/_all_docs', params : params})
-                    .success(function(data){
-                        if (!data.rows) {
-                            return onError(data);
-                        }
-                        var blocksAndRelatedBlocks = _.flatten(
-                            intermediateResults.couchRelatedBlocks,
-                            intermediateResults.couchSummaries);
-
-                        blocksService.updateHints(blocksAndRelatedBlocks, data.rows);
-
-                        onSearchCompleted();
-                    })
-                    .error(onError);
-            }
-
-            function performCouchHintsSearchIfNecessary() {
-
-                var keys = _.chain(_.flatten(intermediateResults.couchRelatedBlocks, intermediateResults.couchSummaries)).filter(function(blockOrRelatedBlock){
-                    return blockOrRelatedBlock.hintsRedacted;
-                }).pluck('_id').value();
-
-                if (keys.length) {
-                    performCouchHintsSearch(keys);
-                } else {
-                    // no hints were redacted; nothing to do
-                    onSearchCompleted();
-                }
-
-
-            }
             function performCouchRelatedBlocksSearch() {
-                performGenericCouchSearch('related', constants.couchdb.related_url, 'couchRelatedBlocks', performCouchHintsSearchIfNecessary);
+                performGenericCouchSearch('related', constants.couchdb.related_url, 'couchRelatedBlocks', onSearchCompleted);
             }
 
             function performCouchSummariesSearch() {
@@ -192,6 +161,13 @@ angular.module('ultimate-crossword')
                 if (!$scope.searchInProgress) {
                     performSolrSearch();
                 }
+            };
+
+            $scope.fetchBlockHints = function (blockOrRelatedBlock) {
+                blockFetcherService.fetchBlockHints(blockOrRelatedBlock, onError, function onSuccess(){
+                    addCheapHighlighting(blockOrRelatedBlock);
+                });
+
             };
 
             if (!$scope.initialLoadComplete) {

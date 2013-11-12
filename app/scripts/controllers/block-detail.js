@@ -2,7 +2,8 @@
 
 angular.module('ultimate-crossword')
     .controller('BlockDetailController', ['$scope', '$route', 'blocks', '$http', 'constants', 'pouch',
-        function ($scope, $route, blocksService, $http, constants, pouch) {
+        'blockFetcher',
+        function ($scope, $route, blocksService, $http, constants, pouch, blockFetcherService) {
 
             $scope.blocksService = blocksService;
             $scope.pouch = pouch;
@@ -58,42 +59,15 @@ angular.module('ultimate-crossword')
                         }
                         var relatedBlocks = blocksService.transformRelatedBlocks(data.rows, block._id);
 
-                        fetchBlockHintsIfNecessary(block, relatedBlocks);
-
-                    })
-                    .error(onError);
-            }
-
-            function fetchBlockHintsIfNecessary(block, relatedBlocks) {
-
-                var keys = _.chain(_.flatten([block], relatedBlocks)).filter(function(blockOrRelatedBlock){
-                    return blockOrRelatedBlock.hintsRedacted;
-                }).pluck('_id').value();
-
-                if (keys.length) {
-                    fetchBlockHints(block, relatedBlocks, keys);
-                } else { // no hints were redacted, nothing to do
-                    onLoadComplete(block, relatedBlocks);
-                }
-            }
-
-            function fetchBlockHints(block, relatedBlocks, keys) {
-                var params = {
-                    keys : JSON.stringify(keys),
-                    include_docs : true
-                };
-
-                $http({method : 'GET', url : constants.couchdb.hints_url +'/_all_docs', params : params})
-                    .success(function(data){
-                        if (!data.rows) {
-                            return onError(data);
-                        }
-                        blocksService.updateHints(_.flatten([block], relatedBlocks), data.rows);
-
                         onLoadComplete(block, relatedBlocks);
+
                     })
                     .error(onError);
             }
+
+            $scope.fetchBlockHints = function (blockOrRelatedBlock) {
+                blockFetcherService.fetchBlockHints(blockOrRelatedBlock, onError);
+            };
 
             function onLoadComplete(block, relatedBlocks) {
                 block.relatedBlocks = relatedBlocks;

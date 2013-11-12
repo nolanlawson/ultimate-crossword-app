@@ -126,7 +126,7 @@ BlocksService.prototype.updateHints = function(blocksOrRelatedBlocks, rows) {
     var self = this;
     // update a list of blocks or related blocks with the full hints fetched from the block_hints database
 
-    var idsToHints = _.object(_.map(rows, function(row){return [row._id, row.doc];}));
+    var idsToHints = _.object(_.map(rows, function(row){return [row.key, row.doc];}));
 
     blocksOrRelatedBlocks.forEach(function(blockOrRelatedBlock){
         if (blockOrRelatedBlock.hintsRedacted && idsToHints[blockOrRelatedBlock._id]) {
