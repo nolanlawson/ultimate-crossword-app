@@ -1,4 +1,4 @@
-tr.darker-gray(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
+tr.related-block-row(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
   td
     div(style="display:inline-block;")
       i.icon-chevron-right(style="display:inline-block;",ng-class="{hidden : !$first}")
@@ -13,7 +13,7 @@ tr.darker-gray(ng-show='block.expanded',ng-repeat='relatedBlock in block.related
       input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
       input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')
   td
-tr.darker-gray(ng-show='block.expanded && block.moreRelatedBlocks > 0')
+tr.related-block-row(ng-show='block.expanded && block.moreRelatedBlocks > 0')
   td
   td
   td

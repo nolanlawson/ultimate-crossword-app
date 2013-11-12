@@ -23,10 +23,19 @@ ul > li {
   margin-left : 20px;
 }
 
-tr.darker-gray {
+tr.related-block-row {
 
-  &  > td {
-    background: #f0f0f0;
+  border-left: 2px solid #999;
+  border-right: 2px solid #999;
+
+  &:nth-child(odd) > td {
+    background: #d9d9d9 !important;
+  }
+  &:nth-child(even) > td {
+    background: #f0f0f0 !important;
+  }
+  &:last-child {
+    border-bottom: 2px solid #999;
   }
 }
 
