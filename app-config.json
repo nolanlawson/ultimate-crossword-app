@@ -15,6 +15,7 @@
             "hints_url"    : "couchdb/block_hints",
             "users_db_url" : "couchdb"
         },
-        "solr_url"         : "solr"
+        "solr_url"         : "solr",
+        "google_analytics" : "UA-45701231-1"
     }
 }
