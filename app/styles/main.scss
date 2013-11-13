@@ -247,6 +247,10 @@ ul.horizontal-navbar li {
   background-repeat: no-repeat;
 }
 
+.navbar-inverse  .navbar-search .search-query {
+  color : $navbarInverseSearchPlaceholderColor; // fixes a bug in Firefox where this doesn't render the right color
+}
+
 /**
  * Label colors
  */
