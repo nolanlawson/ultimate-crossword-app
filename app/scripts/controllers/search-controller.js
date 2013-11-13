@@ -131,8 +131,7 @@ angular.module('ultimate-crossword')
                     qf         : 'hints',
                     fl         : 'id,docType',
                     // boost with a multiplicative boost so more popular blocks tend to appear first
-                    // roughly, docs with count >10 start to "look" more important
-                    boost      : 'exp(div(popularity,10))',
+                    boost      : 'log(popularity)',
                     wt         : 'json',
                     indent     : 'off',
                     omitHeader : true,
