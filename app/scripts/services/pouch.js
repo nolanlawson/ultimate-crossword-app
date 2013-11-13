@@ -14,8 +14,6 @@ function PouchService(constants, $rootScope, $window) {
     self.lastDocFromDb = {guesses : {}};
     self.$rootScope = $rootScope;
 
-    console.log($window);
-
     $window.onbeforeunload = function() {
         if (self.isDirty()) {
             self.updateGuesses();

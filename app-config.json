@@ -1,0 +1,20 @@
+{
+    "development": {
+        "couchdb": {
+            "blocks_url"   : "http://localhost:5984/block_summaries2",
+            "related_url"  : "http://localhost:5984/related_blocks2",
+            "hints_url"    : "http://localhost:5984/block_hints2",
+            "users_db_url" : "http://koholint-wired:5985"
+        },
+        "solr_url"         : "http://localhost:8983/solr"
+    },
+    "production": {
+        "couchdb": {
+            "blocks_url"   : "couchdb/block_summaries",
+            "related_url"  : "couchdb/related_blocks",
+            "hints_url"    : "couchdb/block_hints",
+            "users_db_url" : "couchdb"
+        },
+        "solr_url"         : "solr"
+    }
+}

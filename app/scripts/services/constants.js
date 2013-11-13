@@ -8,18 +8,13 @@
  */
 function ConstantsService() {
 
-    this.couchdb = {
-        blocks_url   : 'http://localhost:5984/block_summaries2',
-        related_url  : 'http://localhost:5984/related_blocks2',
-        hints_url    : 'http://localhost:5984/block_hints2',
-        users_db_url : 'http://koholint-wired:5985'
-    };
-    this.solr_url = 'http://localhost:8983/solr';
     this.maxNumRelated = 5;
     this.pageSize = 10;
     this.numColors = 16;
     this.pouchRefreshInterval = 20000;
     this.searchPageSize = 5;
+
+    _.extend(this, AppConfig);
 }
 
 angular.module('ultimate-crossword').service('constants', [ConstantsService]);

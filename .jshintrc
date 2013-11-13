@@ -21,6 +21,7 @@
   "globals": {
     "angular" : false,
     "_"       : true,
-    "PouchDB" : true
+    "PouchDB" : true,
+    "AppConfig" : true
   }
 }

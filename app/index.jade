@@ -68,7 +68,10 @@ html.no-js
     script(src='bower_components/angular-sanitize/angular-sanitize.js')
     script(src='bower_components/angular-strap/dist/angular-strap.js')
     // endbuild
+    script.
+      var AppConfig = !{JSON.stringify(config)};
     // build:js({.tmp,app}) scripts/scripts.js
+
     script(src='scripts/app.js')
     script(src='scripts/services/constants.js')
     script(src='scripts/services/blocks.js')

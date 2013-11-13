@@ -22,7 +22,26 @@ module.exports = function (grunt) {
                 options: {
                     pretty: true,
                     data : {
-                        pkg : require('./package.json')
+                        pkg : require('./package.json'),
+                        config : require('./app-config.json').production
+                    }
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '.tmp',
+                        src: '{,*/}*.jade',
+                        ext: '.html'
+                    }
+                ]
+            },
+            server: {
+                options: {
+                    pretty: true,
+                    data : {
+                        pkg : require('./package.json'),
+                        config : require('./app-config.json').development
                     }
                 },
                 files: [
@@ -55,7 +74,7 @@ module.exports = function (grunt) {
             },
             jade: {
                 files: ['<%= yeoman.app %>/{,*/}*.jade', '<%= yeoman.app %>/views/{,*/}*.jade'],
-                tasks: ['jade']
+                tasks: ['jade:server']
             },
             livereload: {
                 options: {
@@ -314,7 +333,7 @@ module.exports = function (grunt) {
         },
         concurrent: {
             server: [
-                'jade',
+                'jade:server',
                 'coffee:dist',
                 'compass:server',
                 'copy:styles'
@@ -391,7 +410,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'jade',
+        'jade:dist',
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
