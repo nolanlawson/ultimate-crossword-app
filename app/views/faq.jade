@@ -52,17 +52,26 @@ html
               a(href='http://www.explainxkcd.com/wiki/index.php?title=1286') A lot of XKCD readers think so, too.
             h4 Aren't you compromising people's personal information?
             p
-              | Unless someone manages to guess Adobe's cipher key (brute force seems to be the only way), the majority of the passwords are probably safe.
-              | Plus, Adobe already sent out &nbsp;
-              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') a security advisory &nbsp;
-              | telling their users to change their passwords.
-            p And even though the leaked file is readily available on the Internet, I took the precuation of only exposing what's
-              | necessary for the crossword puzzle.
+              | Unless someone manages to guess Adobe's cipher key with brute force,
+              | the hintless passwords are all safe.  (Adobe wisely seems to have stopped using hints shortly before
+              | the file was leaked.)
+              | Regardless, though, &nbsp;
+              a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') change your password
+              | &nbsp; if you haven't already.
+            p
+              | As for the passwords with hints, many of them are ridiculously easy to guess (that's the
+              | problem with hints), so we'd be kidding
+              | ourselves if we think the spammers and hackers haven't already gorged themselves on this bounty.
+              | The file is easily available on the Internet.
+            p
+              | Just to be safe, though, I took the precaution of anonymizing the blocks displayed
+              | on this site. Also, I only
+              | expose the information that's necessary for the crossword puzzle (e.g. no email addresses).
             h4 Why did you create this site?
             p
               | I made it as a proof-of-concept for Randall's cartoon, to show that the Adobe leak really does
               | make for an excellent crossword puzzle.  I think it's fun!
-            p 
+            p
               | And hopefully, this little demonstration also makes a good statement about the importance of proper security.  Protip: if
               | I can make a crossword puzzle out of your database, then your security sucks.
             h4 So what can users do to improve their password security?
@@ -81,9 +90,12 @@ html
               | .
             p
               | I wrote&nbsp;
-              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') this blog post&nbsp;
-              | about the system I use for my own passwords, which costs nothing and requires no special technical knowledge.  (TL;DR:&nbsp;
-              a(href='http://www.joelonsoftware.com/items/2008/09/11b.html') use Dropbox and Password Gorilla&nbsp;
+              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') a blog post &nbsp;
+              | about the system I use for my own passwords, which costs nothing and requires no special technical knowledge.
+              | (TL;DR: use &nbsp;
+              a(href='https://www.dropbox.com/') Dropbox
+              | &nbsp; and &nbsp;
+              a(href='https://github.com/zdia/gorilla/wiki') Password Gorilla
               | .)  Your passwords end up looking like &nbsp;
               span.monospace-font Mt^cdxE973N$C\@=
               | , they're always different, and you don't have to memorize them.
