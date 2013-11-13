@@ -14,7 +14,7 @@ html.no-js
     title Ultimate Crossword
     meta(name="description", content="The world's largest crossword puzzle, brought to you by bad security.")
     meta(name="author", content="Nolan Lawson")
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0',maximum-scale="1.0", user-scalable="no")
     // Place favicon.ico and apple-touch-icon.png in the root directory
     // build:css(.tmp) styles/main.css
     link(rel='stylesheet', href='styles/main.css')
@@ -52,7 +52,7 @@ html.no-js
     // build:js(app) scripts/plugins.js
     //-script(src='bower_components/bootstrap-sass/js/bootstrap-affix.js')
     //-script(src='bower_components/bootstrap-sass/js/bootstrap-alert.js')
-    //-script(src='bower_components/bootstrap-sass/js/bootstrap-dropdown.js')
+    script(src='bower_components/bootstrap-sass/js/bootstrap-dropdown.js')
     script(src='bower_components/bootstrap-sass/js/bootstrap-tooltip.js')
     script(src='bower_components/bootstrap-sass/js/bootstrap-modal.js')
     script(src='bower_components/bootstrap-sass/js/bootstrap-transition.js')
@@ -61,7 +61,7 @@ html.no-js
     //-script(src='bower_components/bootstrap-sass/js/bootstrap-typeahead.js')
     //-script(src='bower_components/bootstrap-sass/js/bootstrap-carousel.js')
     //-script(src='bower_components/bootstrap-sass/js/bootstrap-scrollspy.js')
-    //-script(src='bower_components/bootstrap-sass/js/bootstrap-collapse.js')
+    script(src='bower_components/bootstrap-sass/js/bootstrap-collapse.js')
     script(src='bower_components/bootstrap-sass/js/bootstrap-tab.js')
     script(src='bower_components/pouchdb-nightly.min.js/index.js')
     script(src='bower_components/angular-resource/angular-resource.js')

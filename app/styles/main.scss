@@ -3,10 +3,59 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-overrides";
 @import "bootstrap-sass/lib/bootstrap";
+@import "bootstrap-sass/lib/responsive";
 
 /* Put your CSS here */
-html, body {
-  margin: 20px;
+
+
+@mixin big-logo-inner {
+  text-align : center;
+  padding : 10px 20px 10px 20px;
+  background-color : #f9f9f9;
+  border-radius:6px;
+  max-width : 700px;
+  margin : 0 auto;
+}
+/* Portrait tablet to landscape and desktop and large desktop*/
+@media (min-width : 980px) {
+  html, body {
+    margin : 20px auto;
+  }
+  .big-logo {
+    margin : 10px 20px 40px 20px;
+
+    & > .big-logo-inner {
+      @include big-logo-inner;
+    }
+  }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  html, body {
+    margin: 0px;
+  }
+  .big-logo {
+    margin : 10px 10px 10px 10px;
+
+    & > .big-logo-inner {
+      @include big-logo-inner;
+    }
+  }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  html, body {
+    margin: 0px;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  html, body {
+    margin: 0px;
+  }
 }
 
 body {
@@ -21,19 +70,6 @@ p {
 
 ul > li {
   margin-left : 20px;
-}
-
-.big-logo {
-  margin : 10px 20px 40px 20px;
-
-  & > .big-logo-inner {
-    text-align : center;
-    padding : 10px 20px 10px 20px;
-    background-color : #f9f9f9;
-    border-radius:6px;
-    max-width : 700px;
-    margin : 0 auto;
-  }
 }
 
 .bold-text {
