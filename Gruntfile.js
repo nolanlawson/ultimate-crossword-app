@@ -229,6 +229,16 @@ module.exports = function (grunt) {
                 dest: '<%= yeoman.dist %>'
             }
         },
+        dataUri : {
+            dist : {
+                src  : ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+                dest : '<%= yeoman.dist %>/styles',
+                options : {
+                    target : ['<%= yeoman.dist %>/styles/images/*.*'],
+                    fixDirLevel: true
+                }
+            }
+        },
         usemin: {
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
@@ -421,7 +431,8 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'rev',
-        'usemin'
+        'usemin',
+        'dataUri'
     ]);
 
     grunt.registerTask('default', [
