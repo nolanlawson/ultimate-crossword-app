@@ -40,5 +40,5 @@ html
     tfoot(ng-show='!searchInProgress && numFound > results.length')
       td(colspan=2)
         button.btn.btn-primary(href='#',ng-click='loadNextPage()',ng-class="{'disabled': searchInProgress}")
-          | Load {{constants.searchPageSize}} more...
+          | Load {{nextPageSize}} more...
           i.icon-refresh.icon-white(ng-show='searchInProgress')

@@ -83,6 +83,7 @@ angular.module('ultimate-crossword')
                 $scope.initialLoadComplete = true;
                 $scope.searchInProgress = false;
                 $scope.numFound = intermediateResults.numFound;
+                $scope.nextPageSize = Math.min(constants.searchPageSize, $scope.numFound - $scope.results.length);
                 intermediateResults = {};
 
             }

@@ -53,3 +53,8 @@ html
             div
               input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
               input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')
+      tfoot(ng-show='!loadingMoreRelated && numRelatedLeftToShow > 0')
+        td(colspan=2)
+          button.btn.btn-primary(href='#',ng-click='loadMoreRelated()',ng-class="{'disabled': loadingMoreRelated}")
+            | Load {{nextPageSize}} more...
+            i.icon-refresh.icon-white(ng-show='loadingMoreRelated')

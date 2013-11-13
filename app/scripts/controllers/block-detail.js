@@ -48,8 +48,12 @@ angular.module('ultimate-crossword')
                     // to have a separate views.  Saves space and time.  Whoosh.
                     startkey: JSON.stringify(block._id + '~'),
                     endkey: JSON.stringify(block._id + '~Z'),
-                    include_docs: true
+                    include_docs: true,
+                    limit : constants.maxNumRelated
                 };
+                if (block.relatedBlocks && block.relatedBlocks.length) { // we're paging
+                    _.extend(params, {skip : 1, startkey : JSON.stringify(_.last(block.relatedBlocks)._id)});
+                }
 
                 $http({method: 'GET', url: related_url, params: params})
                     .success(function (data) {
@@ -69,16 +73,30 @@ angular.module('ultimate-crossword')
                 blockFetcherService.fetchBlockHints(blockOrRelatedBlock, onError);
             };
 
+            $scope.loadMoreRelated = function() {
+                if (!$scope.loadingMoreRelated) {
+                    $scope.loadingMoreRelated = true;
+                    fetchRelatedBlocks($scope.block);
+                }
+            };
+
             function onLoadComplete(block, relatedBlocks) {
-                block.relatedBlocks = relatedBlocks;
+
+                if (!block.expanded) { // fetched first 5 rows
+                    // optionally, fetch guesses from other users
+                    fetchGuessesFromOtherUsers();
+                }
+
+                block.relatedBlocks = (block.relatedBlocks || []).concat(relatedBlocks);
                 block.expanded = true;
 
                 // all done loading
                 $scope.block = block;
                 $scope.doneLoading = true;
+                $scope.loadingMoreRelated = false;
+                $scope.numRelatedLeftToShow = (block.followingBlockCount + block.precedingBlockCount) - block.relatedBlocks.length;
+                $scope.nextPageSize = Math.min($scope.numRelatedLeftToShow, constants.maxNumRelated);
 
-                // optionally, fetch guesses from other users
-                fetchGuessesFromOtherUsers();
             }
 
             function fetchGuessesFromOtherUsers() {
