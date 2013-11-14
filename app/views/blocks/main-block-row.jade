@@ -8,7 +8,7 @@ tr
   td {{block.soloHintCount | number}}
   td(ng-switch on="block.soloHintCount")
     span.muted(ng-switch-when="0")
-      | {{(block.followingHintCount + block.precedingHintCount) | number}} hints in related blocks)
+      | ({{(block.followingHintCount + block.precedingHintCount) | number}} hints in related blocks)
     span(ng-switch-default bs-tooltip='block.joinedHints')
       | {{block.shortJoinedHints}}
   td
