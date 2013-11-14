@@ -12,7 +12,7 @@ License
 Summary
 --------
 
-The Ultimate Crossword is a webapp based on an XKCD comic.  Details can be found on [the about page][2]
+The Ultimate Crossword is a webapp based on an XKCD comic.  Details can be found on [the "about" page][2].
 
 Building
 ---------
