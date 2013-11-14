@@ -1,8 +1,11 @@
-mixin hints-with-counts(blockOrRelatedBlock)
+mixin hints-with-counts(blockOrRelatedBlock, highlight)
   td.hints-with-counts
     ul
       li(ng-repeat='hintWithCount in #{blockOrRelatedBlock}.hintsWithCounts')
-        span(ng-class="{'bold-text' : hintsToHighlight && hintsToHighlight[hintWithCount[0]]}") {{hintWithCount[0]}}
+        if highlight
+          span(ng-class="{'bold-text' : hintsToHighlight && hintsToHighlight[hintWithCount[0]]}") {{hintWithCount[0]}}
+        else
+          span {{hintWithCount[0]}}
         span.label.pull-right(ng-show='hintWithCount[1] > 1')
           | &times;{{hintWithCount[1]}}
     button.btn(href='#',
