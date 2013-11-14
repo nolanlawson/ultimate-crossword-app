@@ -24,6 +24,22 @@ function PouchService(constants, $rootScope, $window) {
     };
 }
 
+PouchService.prototype.notifyShouldUpdate = function(){
+    var self = this;
+
+    if (!self.dbReady) {
+        return;
+    }
+
+    if (self.lastTimeout) {
+        clearTimeout(self.lastTimeout);
+    }
+
+    self.lastTimeout = setTimeout(function() {
+        self.updateGuesses();
+    }, self.constants.pouchRefreshTimeout);
+};
+
 PouchService.prototype.debug = function(str){
     var self = this;
 
@@ -115,9 +131,6 @@ PouchService.prototype.createOrLoadDb = function(username) {
     function onDbReady() {
         self.dbReady = true;
 
-        self.lastInterval = setInterval(function(){
-            self.updateGuesses();
-        }, self.constants.pouchRefreshInterval);
         self.$rootScope.$apply(); // update angular display
 
         // replication to remote CouchDB
@@ -158,8 +171,8 @@ PouchService.prototype.onLogOut = function() {
     var self = this;
     self.doc = {guesses : {}};
     self.lastDocFromDb = {guesses : {}};
-    if (self.lastInterval) {
-        clearInterval(self.lastInterval);
+    if (self.lastTimeout) {
+        clearTimeout(self.lastTimeout);
     }
     self.dbReady = false;
 };

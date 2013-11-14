@@ -11,9 +11,9 @@ function ConstantsService() {
     this.maxNumRelated = 5;
     this.pageSize = 10;
     this.numColors = 16;
-    this.pouchRefreshInterval = 20000;
+    this.pouchRefreshTimeout = 3000;
     this.searchPageSize = 5;
-    this.saveDelay = 3000;
+    this.saveDelay = 1500;
 
     _.extend(this, AppConfig);
 }

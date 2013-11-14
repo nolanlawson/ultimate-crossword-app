@@ -3,6 +3,7 @@ html
   include mixins/hints-with-counts
   include mixins/guesses-with-counts
   include mixins/main-table-header
+  include mixins/block-input
   body
     include blocks/navbar
     .text-center(style="margin: 10px 0 20px;")
@@ -38,7 +39,7 @@ html
           td {{block.soloHintCount | number}}
           mixin hints-with-counts('block')
           td
-            input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[block._id]')
+            mixin block-input('block._id', false)
       tobody
         tr(ng-show='block.expanded',ng-repeat='relatedBlock in block.relatedBlocks')
           td
@@ -51,8 +52,8 @@ html
           mixin hints-with-counts('relatedBlock')
           td
             div
-              input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[0]]')
-              input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[relatedBlock.ids[1]]')
+              mixin block-input('relatedBlock.ids[0]', true)
+              mixin block-input('relatedBlock.ids[1]', true)
       tfoot(ng-show='!loadingMoreRelated && numRelatedLeftToShow > 0')
         td(colspan=2)
           button.btn.btn-primary(href='#',ng-click='loadMoreRelated()',ng-class="{'disabled': loadingMoreRelated}")

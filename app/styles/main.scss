@@ -141,6 +141,13 @@ tr.related-block-row {
   }
 }
 
+input.half-size {
+  width: calc(50% - 16px);
+}
+input.full-size {
+  width: calc(100% - 16px);
+}
+
 /**
  * For the FAQs section
  */

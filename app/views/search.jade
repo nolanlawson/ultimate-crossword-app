@@ -2,6 +2,7 @@ html
   include mixins/block-label
   include mixins/hints-with-counts
   include mixins/main-table-header
+  include mixins/block-input
   body
     include blocks/navbar
   h2.section-title
@@ -24,7 +25,7 @@ html
         td {{result.count | number}}
         mixin hints-with-counts('result', true)
         td
-          input(style='width : calc(100% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[0]]')
+          mixin block-input('result.blockIds[0]', false)
         td
       tr(ng-switch-when="related")
         td
@@ -34,8 +35,8 @@ html
         td {{result.count | number}}
         mixin hints-with-counts('result', true)
         td
-          input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[0]]')
-          input(style='width: calc(50% - 16px);',type='text',ng-model='pouch.doc.guesses[result.blockIds[1]]')
+          mixin block-input('result.blockIds[0]', true)
+          mixin block-input('result.blockIds[1]', true)
         td
     tfoot(ng-show='!searchInProgress && numFound > results.length')
       td(colspan=2)
