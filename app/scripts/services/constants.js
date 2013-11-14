@@ -13,6 +13,7 @@ function ConstantsService() {
     this.numColors = 16;
     this.pouchRefreshInterval = 20000;
     this.searchPageSize = 5;
+    this.saveDelay = 3000;
 
     _.extend(this, AppConfig);
 }

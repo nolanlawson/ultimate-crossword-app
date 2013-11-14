@@ -13,15 +13,24 @@ function PouchService(constants, $rootScope, $window) {
     self.doc = {guesses : {}};
     self.lastDocFromDb = {guesses : {}};
     self.$rootScope = $rootScope;
+    self.syncWithPouchInProgress = false;
+
 
     $window.onbeforeunload = function() {
         if (self.isDirty()) {
-            console.log('self.lastDocFromDb is ' + JSON.stringify(self.lastDocFromDb) +', self.doc is ' + JSON.stringify(self.doc) + '; I\'m dirty!');
             self.updateGuesses();
             return self.dbReady ? 'You have unsaved changes.' : 'You have unsaved changes.  You need to sign in to save them!';
         }
     };
 }
+
+PouchService.prototype.debug = function(str){
+    var self = this;
+
+    if (self.constants.debug_mode) {
+        console.log(str);
+    }
+};
 
 PouchService.prototype.isDirty = function() {
     var self = this;
@@ -29,33 +38,53 @@ PouchService.prototype.isDirty = function() {
     return !_.isEqual(self.lastDocFromDb, self.doc);
 };
 
+PouchService.prototype.onBeginSync = function() {
+    var self = this;
+    self.$rootScope.$apply(function(){
+        self.syncWithPouchInProgress = true;
+    });
+    self.debug('begin sync');
+};
+
+PouchService.prototype.onEndSync = function() {
+    var self = this;
+    self.debug('end sync without updating UI');
+    // set this with a delay; otherwise it happens so fast that the user doesn't see any text
+    setTimeout(function() {
+        self.$rootScope.$apply(function(){
+            self.syncWithPouchInProgress = false;
+            self.debug('end sync, updated UI');
+        });
+    }, self.constants.saveDelay);
+};
+
 PouchService.prototype.updateGuesses = function() {
     var self = this;
     if (!self.dbReady) {
-        console.log('db is not ready');
+        self.debug('db is not ready');
         return;
     } else if (self.syncWithPouchInProgress) {
-        console.log('sync with pouch already in progress');
+        self.debug('sync with pouch already in progress');
         return;
     } else if (!self.isDirty()) {
-        console.log('I am not dirty, no reason to update');
+        self.debug('I am not dirty, no reason to update');
         return;
     }
-    self.syncWithPouchInProgress = true;
 
-    console.log('my doc is ' + JSON.stringify(self.doc));
+    self.debug('my doc is ' + JSON.stringify(self.doc));
     var newDoc = _.clone(self.doc);
+    self.onBeginSync();
 
     self.db.get(self.doc._id, function(err, doc){
         if (err || !doc) {
-            console.log('error: ' + JSON.stringify(err));
-            self.syncWithPouchInProgress = false;
+            self.debug('error: ' + JSON.stringify(err));
+            self.onEndSync();
             return;
         }
         if (!_.isEqual(newDoc.guesses, doc.guesses)) {
             self.db.put(newDoc, function(err, response){
-                console.log('got err: ' + err);
-                console.log('got response: ' + JSON.stringify(response));
+                self.debug('got err: ' + err);
+                self.debug('got response: ' + JSON.stringify(response));
                 if (response && response.ok) {
                     newDoc._rev = response.rev;
 
@@ -63,11 +92,11 @@ PouchService.prototype.updateGuesses = function() {
                     self.updateLastDocFromDb();
                 }
 
-                self.syncWithPouchInProgress = false;
+                self.onEndSync();
 
             });
         } else {
-            self.syncWithPouchInProgress = false;
+            self.onEndSync();
         }
     });
 
@@ -110,13 +139,13 @@ PouchService.prototype.createOrLoadDb = function(username) {
                 if (response && response.ok) {
                     self.doc._rev = response.rev;
                     self.updateLastDocFromDb();
-                    console.log('new doc: ' + JSON.stringify(self.doc));
+                    self.debug('new doc: ' + JSON.stringify(self.doc));
                     onDbReady();
                 }
             });
 
         } else { // existing document
-            console.log('doc exists: ' + JSON.stringify(doc));
+            self.debug('doc exists: ' + JSON.stringify(doc));
             _.extend(self.doc, doc);
             self.updateLastDocFromDb();
 

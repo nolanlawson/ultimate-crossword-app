@@ -6,7 +6,8 @@
             "hints_url"    : "http://localhost:5984/block_hints2",
             "users_db_url" : "https://ultimatecrossword.net/couchdb"
         },
-        "solr_url"         : "http://localhost:8983/solr"
+        "solr_url"         : "http://localhost:8983/solr",
+        "debug_mode"            : true
     },
     "production": {
         "couchdb": {
