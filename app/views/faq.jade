@@ -82,11 +82,9 @@ html
               | , and even &nbsp;
               a(href='#/block/3700') keroppi&nbsp;
               | just aren't cutting it, folks.  Human memory has its limits, though, so
-              | we need a good compromise between &nbsp;
-              span.monospace-font pikachu
-              | &nbsp; and 
-              span.monospace-font P1k4chuu~2012!
-              | .
+              | we can't expect everyone to remember passwords like
+              span.monospace-font MySup3rS3cUreP4sSw0rd~2012!
+              | &nbsp; (which can still be cracked, anyway). We need a better system.
             p
               | I wrote&nbsp;
               a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') a blog post &nbsp;
@@ -102,7 +100,7 @@ html
               | Anyone using this system would greatly minimize their 
               | exposure to a leak like Adobe's, because their passwords wouldn't 
               | be re-used across multiple sites.
-            h4 What can developers do to improve security?
+            h4 What can web developers do to improve security?
             p
               | Salt and hash your user passwords.  Make the salt different every time.
               | Use a cryptographically-strong random number generator.
