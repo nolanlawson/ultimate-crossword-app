@@ -16,6 +16,7 @@ function PouchService(constants, $rootScope, $window) {
 
     $window.onbeforeunload = function() {
         if (self.isDirty()) {
+            console.log('self.lastDocFromDb is ' + JSON.stringify(self.lastDocFromDb) +', self.doc is ' + JSON.stringify(self.doc) + '; I\'m dirty!');
             self.updateGuesses();
             return self.dbReady ? 'You have unsaved changes.' : 'You have unsaved changes.  You need to sign in to save them!';
         }
@@ -126,7 +127,8 @@ PouchService.prototype.createOrLoadDb = function(username) {
 
 PouchService.prototype.onLogOut = function() {
     var self = this;
-    _.extend(self.doc, {_id : null, guesses : {}, _rev : null});
+    self.doc = {guesses : {}};
+    self.lastDocFromDb = {guesses : {}};
     if (self.lastInterval) {
         clearInterval(self.lastInterval);
     }

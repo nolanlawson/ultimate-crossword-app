@@ -4,7 +4,7 @@
             "blocks_url"   : "http://localhost:5984/block_summaries2",
             "related_url"  : "http://localhost:5984/related_blocks2",
             "hints_url"    : "http://localhost:5984/block_hints2",
-            "users_db_url" : "http://koholint:5985"
+            "users_db_url" : "https://ultimatecrossword.net/couchdb"
         },
         "solr_url"         : "http://localhost:8983/solr"
     },
@@ -13,7 +13,7 @@
             "blocks_url"   : "couchdb/block_summaries",
             "related_url"  : "couchdb/related_blocks",
             "hints_url"    : "couchdb/block_hints",
-            "users_db_url" : "couchdb"
+            "users_db_url" : "https://ultimatecrossword.net/couchdb"
         },
         "solr_url"         : "solr",
         "google_analytics" : "UA-45701231-1"
