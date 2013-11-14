@@ -17,11 +17,13 @@ function BlocksService(constants) {
 }
 
 function joinHints(hints, hasMore) {
+    // used for the visibile text in the Hints column
     var result = (hints.length) ? _(hints).join(', ') : '(No hints)';
     return result + (hasMore ? '<br/>(Click the block for more hints)' : '');
 }
 
 function joinHintsEllipsized(hints) {
+    // used for the tooltip text
     var result = '';
     for (var i = 0, len = hints.length; i < len; i++) {
 
@@ -39,32 +41,51 @@ function joinHintsEllipsized(hints) {
 }
 
 function sortByValuesDescKeysAsc(obj) {
-    var result = _.pairs(obj);
-    result.sort(function (pair1, pair2) {
+    var result = [];
+    var countsToHints = {};
+    // eschew underscore because this function is expensive!
+    for (var hint in obj) {
+        if (obj.hasOwnProperty(hint)) {
+            var count1 = obj[hint];
 
-        var key1 = pair1[0];
-        var value1 = pair1[1];
-        var key2 = pair2[0];
-        var value2 = pair2[1];
-
-        if (value1 === value2) {
-            if (key1 === key2) {
-                return 0;
-            } else {
-                return key1 < key2 ? -1 : 1;
+            var existingList = countsToHints[count1];
+            if (existingList) {
+                existingList.push(hint);
+            } else { // new list
+                countsToHints[count1] = [hint];
             }
-        } else {
-            return value2 < value1 ? -1 : 1;
         }
-    });
+    }
+    var sortedCounts = _.keys(countsToHints);
+    sortedCounts.sort(function compareNumbers(a, b){return a - b;});
+    sortedCounts.reverse();
+    for (var i = 0, len1 = sortedCounts.length; i < len1; i++) {
+        var count2 = sortedCounts[i];
+        var hints = countsToHints[count2];
+        hints.sort();
+
+        for (var j = 0, len2 = hints.length; j < len2; j++) {
+            result.push([hints[j], count2]);
+        }
+
+        // XXX: hack to save the browser if the user picks a block with thousands of hints
+        // TODO: page through hints if there are too many
+        if (result.length > 5000) {
+            result.push(['(List truncated due to enormity)', 0]);
+            break;
+        }
+
+    }
     return result;
 
 }
 
 BlocksService.prototype.applyHints = function(blockOrRelatedBlock, hintMap) {
 
-    blockOrRelatedBlock.hintsWithCounts = sortByValuesDescKeysAsc(hintMap);
-    blockOrRelatedBlock.hints = _.map(blockOrRelatedBlock.hintsWithCounts, function(pair){return pair[0];});
+    var hintsWithCounts = sortByValuesDescKeysAsc(hintMap);
+
+    blockOrRelatedBlock.hintsWithCounts = hintsWithCounts;
+    blockOrRelatedBlock.hints = _.map(hintsWithCounts, function(pair){return pair[0];});
 
     blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints, blockOrRelatedBlock.hintsRedacted);
     blockOrRelatedBlock.shortJoinedHints = joinHintsEllipsized(blockOrRelatedBlock.hints);

@@ -16,6 +16,7 @@ BlockFetcherService.prototype.fetchBlockHints = function (blockOrRelatedBlock, o
     var self = this;
 
     blockOrRelatedBlock.fetchingBlockHints = true;
+
     var params = {
         keys : JSON.stringify([blockOrRelatedBlock._id]),
         include_docs : true
@@ -28,6 +29,7 @@ BlockFetcherService.prototype.fetchBlockHints = function (blockOrRelatedBlock, o
             if (!data.rows) {
                 return onError(data);
             }
+
             self.blocksService.updateHints([blockOrRelatedBlock], data.rows);
             blockOrRelatedBlock.fetchedBlockHints = true;
             if (onSuccess) {

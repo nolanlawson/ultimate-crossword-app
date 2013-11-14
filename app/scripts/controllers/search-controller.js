@@ -137,7 +137,7 @@ angular.module('ultimate-crossword')
                     indent     : 'off',
                     omitHeader : true,
                     mm         : '100%',
-                    offset     : ($scope.results && $scope.results.length) || 0,
+                    start      : ($scope.results && $scope.results.length) || 0,
                     rows       : constants.searchPageSize
                 };
                 $http({method: 'GET', url: constants.solr_url + '/select/', params: params})

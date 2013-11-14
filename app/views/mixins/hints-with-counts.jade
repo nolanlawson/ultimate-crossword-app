@@ -9,5 +9,5 @@ mixin hints-with-counts(blockOrRelatedBlock)
         ng-class='{disabled : fetchingBlockHints}',
         ng-show='#{blockOrRelatedBlock}.hintsRedacted && !#{blockOrRelatedBlock}.fetchedBlockHints',
         ng-click='fetchBlockHints(#{blockOrRelatedBlock})')
-      | Show {{#{blockOrRelatedBlock}.hintsRedactedUnique}} more hints&nbsp;
+      | Show {{#{blockOrRelatedBlock}.hintsRedactedUnique | number}} more hints&nbsp;
       i.icon-refresh(ng-show='#{blockOrRelatedBlock}.fetchingBlockHints')

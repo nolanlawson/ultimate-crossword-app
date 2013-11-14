@@ -83,7 +83,7 @@ angular.module('ultimate-crossword')
                 }
                 $scope.loadingPage = true;
 
-                var params = {limit: constants.pageSize, descending: true, 'include_docs' : true};
+                var params = {limit: constants.pageSize, descending: true, 'include_docs' : true, stale : 'update_after'};
                 if ($scope.lastRow) { // next page
                     _.extend(params,{skip : 1, startkey : $scope.lastRow.key, startkey_docid : $scope.lastRow.doc._id});
                 }
