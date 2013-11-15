@@ -14,6 +14,8 @@ function ConstantsService() {
     this.pouchRefreshTimeout = 3000;
     this.searchPageSize = 5;
     this.saveDelay = 1500;
+    this.hintsPageSize = 500;
+    this.hintThreshold = 30; // defined in python when we compiled the db
 
     _.extend(this, AppConfig);
 }

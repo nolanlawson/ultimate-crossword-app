@@ -3,8 +3,8 @@
         "couchdb": {
             "blocks_url"   : "http://localhost:5984/block_summaries",
             "related_url"  : "http://localhost:5984/related_blocks",
-            "hints_url"    : "http://localhost:5984/block_hints",
-            "users_db_url" : "http://koholint.local:5985/couchdb"
+            "hints_url"    : "http://localhost:5984/mini_block_hints",
+            "users_db_url" : "http://koholint.local:5985"
         },
         "solr_url"         : "http://localhost:8983/solr",
         "debug_mode"       : true

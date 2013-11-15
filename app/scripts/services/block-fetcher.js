@@ -18,11 +18,29 @@ BlockFetcherService.prototype.fetchBlockHints = function (blockOrRelatedBlock, o
     blockOrRelatedBlock.fetchingBlockHints = true;
 
     var params = {
-        keys : JSON.stringify([blockOrRelatedBlock._id]),
-        include_docs : true
+        // convention here is to separate with hyphens e.g. <id>-01, <id>-02, <id>-03, etc.
+        endkey : JSON.stringify(blockOrRelatedBlock._id + '-Z'),
+        include_docs : 'true'
     };
 
-    self.$http({method : 'GET', url : self.constants.couchdb.hints_url +'/_all_docs', params : params})
+    if (blockOrRelatedBlock.fetchedBlockHints) {
+        // not our first time fetching
+        _.extend(params,{
+            startkey : JSON.stringify(blockOrRelatedBlock.lastFetchedHintId),
+            skip : 1,
+            limit : self.constants.hintsPageSize
+        });
+    } else {
+        // this is our first time fetching.  Since I didn't originally sort the hints in the block_summary the
+        // same way that I'm sorting now, it's safer to just fetch the first 30 again
+        _.extend(params, {
+            startkey : JSON.stringify(blockOrRelatedBlock._id + '-'),
+            limit : self.constants.hintsPageSize + blockOrRelatedBlock.hintsWithCounts.length
+        });
+    }
+
+    var url = self.constants.couchdb.hints_url +'/_all_docs';
+    self.$http({method : 'GET', url : url, params : params})
         .success(function(data){
             blockOrRelatedBlock.fetchingBlockHints = false;
 
@@ -30,7 +48,7 @@ BlockFetcherService.prototype.fetchBlockHints = function (blockOrRelatedBlock, o
                 return onError(data);
             }
 
-            self.blocksService.updateHints([blockOrRelatedBlock], data.rows);
+            self.blocksService.updateHints(blockOrRelatedBlock, data.rows);
             blockOrRelatedBlock.fetchedBlockHints = true;
             if (onSuccess) {
                 onSuccess();

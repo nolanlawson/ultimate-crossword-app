@@ -67,20 +67,13 @@ function sortByValuesDescKeysAsc(obj) {
         for (var j = 0, len2 = hints.length; j < len2; j++) {
             result.push([hints[j], count2]);
         }
-
-        // XXX: hack to save the browser if the user picks a block with thousands of hints
-        // TODO: page through hints if there are too many
-        if (result.length > 2000) {
-            result.push(['(List truncated due to enormity)', 0]);
-            break;
-        }
-
     }
     return result;
 
 }
 
 BlocksService.prototype.applyHints = function(blockOrRelatedBlock, hintMap) {
+    var self = this;
 
     var hintsWithCounts = sortByValuesDescKeysAsc(hintMap);
 
@@ -89,6 +82,9 @@ BlocksService.prototype.applyHints = function(blockOrRelatedBlock, hintMap) {
 
     blockOrRelatedBlock.joinedHints = joinHints(blockOrRelatedBlock.hints, blockOrRelatedBlock.hintsRedacted);
     blockOrRelatedBlock.shortJoinedHints = joinHintsEllipsized(blockOrRelatedBlock.hints);
+    blockOrRelatedBlock.totalHints = (blockOrRelatedBlock.hintsRedactedUnique + Math.min(self.constants.hintThreshold, blockOrRelatedBlock.hintsWithCounts.length));
+    blockOrRelatedBlock.hintsLeftToShow = blockOrRelatedBlock.totalHints - hintsWithCounts.length;
+    blockOrRelatedBlock.hintsInNextPage = Math.min(blockOrRelatedBlock.hintsLeftToShow, self.constants.hintsPageSize);
 };
 
 BlocksService.prototype.transformRelatedBlocks = function (rows, sourceBlockId) {
@@ -144,18 +140,26 @@ BlocksService.prototype.getLabelClass = function (blockId) {
     return 'label-' + (parseInt(blockId, 10) % this.constants.numColors);
 };
 
-BlocksService.prototype.updateHints = function(blocksOrRelatedBlocks, rows) {
+BlocksService.prototype.updateHints = function(blockOrRelatedBlock, rows) {
     var self = this;
     // update a list of blocks or related blocks with the full hints fetched from the block_hints database
 
-    var idsToHints = _.object(_.map(rows, function(row){return [row.key, row.doc];}));
+    if (!rows.length) {
+        return; // nothing to do
+    }
 
-    blocksOrRelatedBlocks.forEach(function(blockOrRelatedBlock){
-        if (blockOrRelatedBlock.hintsRedacted && idsToHints[blockOrRelatedBlock._id]) {
-            var fullHints = idsToHints[blockOrRelatedBlock._id].hintMap;
-            self.applyHints(blockOrRelatedBlock, fullHints);
-        }
+    if (!blockOrRelatedBlock.fetchedBlockHints) {
+        // it's our first time fetching, so overwrite the first 30 due to the python string sorting inconsistency
+        blockOrRelatedBlock.hintMap = {};
+    }
+    blockOrRelatedBlock.lastFetchedHintId = _.last(rows).key;
+
+    _.forEach(rows, function(row){
+        blockOrRelatedBlock.hintMap[row.doc.hint] = row.doc.count;
     });
+
+    self.applyHints(blockOrRelatedBlock, blockOrRelatedBlock.hintMap);
+
 };
 
 angular.module('ultimate-crossword').service('blocks', [ 'constants', BlocksService]);

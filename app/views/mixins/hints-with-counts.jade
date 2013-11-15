@@ -10,7 +10,7 @@ mixin hints-with-counts(blockOrRelatedBlock, highlight)
           | &times;{{hintWithCount[1]}}
     button.btn(href='#',
         ng-class='{disabled : fetchingBlockHints}',
-        ng-show='#{blockOrRelatedBlock}.hintsRedacted && !#{blockOrRelatedBlock}.fetchedBlockHints',
+        ng-show='#{blockOrRelatedBlock}.hintsInNextPage > 0',
         ng-click='fetchBlockHints(#{blockOrRelatedBlock})')
-      | Show {{#{blockOrRelatedBlock}.hintsRedactedUnique | number}} more hints&nbsp;
+      | Show {{#{blockOrRelatedBlock}.hintsInNextPage | number}} more&nbsp;
       i.icon-refresh(ng-show='#{blockOrRelatedBlock}.fetchingBlockHints')
