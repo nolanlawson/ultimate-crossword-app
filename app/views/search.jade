@@ -22,7 +22,7 @@ html
             mixin block-label('result.blockIds[0]', 'visible', 'block')
         //- the following is just to make the table formatting look right
         td: mixin block-label('"12345"', 'hidden', 'block')
-        td {{result.count | number}}
+        td.hidden-phone {{result.count | number}}
         mixin hints-with-counts('result', true)
         td
           mixin block-input('result.blockIds[0]', false)
@@ -32,14 +32,15 @@ html
           div(style="display:inline-block;")
             mixin block-label('result.blockIds[0]', 'visible', 'block')
         td: mixin block-label('result.blockIds[1]', 'visible', 'block')
-        td {{result.count | number}}
+        td.hidden-phone {{result.count | number}}
         mixin hints-with-counts('result', true)
         td
           mixin block-input('result.blockIds[0]', true)
           mixin block-input('result.blockIds[1]', true)
         td
     tfoot(ng-show='!searchInProgress && numFound > results.length')
-      td(colspan=2)
+      td(colspan="5",style="text-align:left;")
         button.btn.btn-primary(href='#',ng-click='loadNextPage()',ng-class="{'disabled': searchInProgress}")
           | Load {{nextPageSize}} more...
           i.icon-refresh.icon-white(ng-show='searchInProgress')
+      td.hidden-phone

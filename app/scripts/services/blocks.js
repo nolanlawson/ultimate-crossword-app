@@ -70,7 +70,7 @@ function sortByValuesDescKeysAsc(obj) {
 
         // XXX: hack to save the browser if the user picks a block with thousands of hints
         // TODO: page through hints if there are too many
-        if (result.length > 5000) {
+        if (result.length > 2000) {
             result.push(['(List truncated due to enormity)', 0]);
             break;
         }

@@ -19,9 +19,10 @@ html
         include blocks/related-block-rows
       tfoot
         tr
-          td(colspan=6,style="text-align:left;")
+          td(colspan=5,style="text-align:left;")
             button.btn.btn-primary(ng-class='{disabled : loadingPage}',ng-click="loadNextPage()")
               span &nbsp;Load {{constants.pageSize}} more&hellip;
               i.icon-refresh.icon-white(ng-show='loadingPage')
+          td.hidden-phone
 
 

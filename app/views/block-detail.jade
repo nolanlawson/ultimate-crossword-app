@@ -36,7 +36,7 @@ html
               i.icon-chevron-right.hidden(style="display:inline-block;")
           //- the following is just to make the table formatting look right
           td: mixin block-label('"12345"', 'hidden', 'block')
-          td {{block.soloHintCount | number}}
+          td.hidden-phone {{block.soloHintCount | number}}
           mixin hints-with-counts('block')
           td
             mixin block-input('block._id', false)
@@ -48,14 +48,15 @@ html
               mixin block-label('relatedBlock.ids[0]', 'visible', 'inline-block')
           td
             mixin block-label('relatedBlock.ids[1]', 'visible', 'block')
-          td {{relatedBlock.count | number}}
+          td.hidden-phone {{relatedBlock.count | number}}
           mixin hints-with-counts('relatedBlock')
           td
             div
               mixin block-input('relatedBlock.ids[0]', true)
               mixin block-input('relatedBlock.ids[1]', true)
       tfoot(ng-show='!loadingMoreRelated && numRelatedLeftToShow > 0')
-        td(colspan=2)
+        td(colspan=5,style="text-align:left;")
           button.btn.btn-primary(href='#',ng-click='loadMoreRelated()',ng-class="{'disabled': loadingMoreRelated}")
             | Load {{nextPageSize}} more...
             i.icon-refresh.icon-white(ng-show='loadingMoreRelated')
+        td.hidden-phone

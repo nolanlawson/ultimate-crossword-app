@@ -28,6 +28,10 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
       @include big-logo-inner;
     }
   }
+
+  input.half-size {
+    width: calc(50% - 16px);
+  }
 }
 
 /* Portrait tablet to landscape and desktop */
@@ -42,6 +46,10 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
       @include big-logo-inner;
     }
   }
+
+  input.half-size {
+    width: calc(50% - 16px);
+  }
 }
 
 /* Landscape phone to portrait tablet */
@@ -49,12 +57,28 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
   html, body {
     margin: 0px;
   }
+
+  input.half-size {
+    width: calc(50% - 16px);
+  }
 }
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
   html, body {
     margin: 0px;
+  }
+
+  .label-link .label, .badge {
+    font-size : 8px;
+  }
+
+  .table th, .table td {
+    padding: 7px 2px 10px 2px;
+  }
+
+  input.half-size {
+    width: calc(100% - 16px);
   }
 }
 
@@ -141,9 +165,6 @@ tr.related-block-row {
   }
 }
 
-input.half-size {
-  width: calc(50% - 16px);
-}
 input.full-size {
   width: calc(100% - 16px);
 }

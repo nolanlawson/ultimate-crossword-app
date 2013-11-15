@@ -5,7 +5,7 @@ tr
       i.icon-chevron-right.hidden(style="display:inline-block;")
   //- the following is just to make the table formatting look right
   td: mixin block-label('"12345"', 'hidden', 'block')
-  td {{block.soloHintCount | number}}
+  td.hidden-phone {{block.soloHintCount | number}}
   td(ng-switch on="block.soloHintCount")
     span.muted(ng-switch-when="0")
       | ({{(block.followingHintCount + block.precedingHintCount) | number}} hints in related blocks)
@@ -16,5 +16,5 @@ tr
   td
     button.btn(style="width:100%",ng-show='block.followingBlockCount || block.precedingBlockCount',
     ng-class="{'disabled' : block.loadingRelated}",ng-click="expandOrCollapse(block)")
-      span.ellipsize {{block.followingBlockCount + block.precedingBlockCount}} related&hellip;&nbsp;
+      span {{block.followingBlockCount + block.precedingBlockCount}} related&hellip;&nbsp;
       i(ng-class="{'icon-chevron-down' : !block.expanded, 'icon-chevron-up' : block.expanded}")
