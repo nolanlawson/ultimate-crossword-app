@@ -10,7 +10,7 @@ html
               | You and I did, with some help from Adobe. &nbsp;
               a(href='http://arstechnica.com/security/2013/11/how-an-epic-blunder-by-adobe-could-strengthen-hand-of-password-crackers/')
                 | They accidentally leaked &nbsp;
-              | 153 million encrypted user passwords and hints, which is where the "crossword puzzle" comes from.
+              | 153 million encrypted user passwords and hints, which is where the data for this "crossword puzzle" comes from.
             p
               | I got the idea from this XKCD 
               | comic:
@@ -84,7 +84,7 @@ html
               | just aren't cutting it, folks.  Human memory has its limits, though, so
               | we can't expect everyone to remember passwords like
               span.monospace-font MySup3rS3cUreP4sSw0rd~2012!
-              | &nbsp; (which can still be cracked, anyway). We need a better system.
+              | . We need a better system.
             p
               | I wrote&nbsp;
               a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') a blog post &nbsp;
@@ -93,14 +93,14 @@ html
               a(href='https://www.dropbox.com/') Dropbox
               | &nbsp; and &nbsp;
               a(href='https://github.com/zdia/gorilla/wiki') Password Gorilla
-              | .)  Your passwords end up looking like &nbsp;
+              | .)  Your passwords end up as a random string of characters (e.g. &nbsp;
               span.monospace-font Mt^cdxE973N$C\@=
-              | , they're always different, and you don't have to memorize them.
+              | ), they're always different, and you don't have to memorize them.
             p
               | Anyone using this system would greatly minimize their 
               | exposure to a leak like Adobe's, because their passwords wouldn't 
               | be re-used across multiple sites.
-            h4 What can web developers do to improve security?
+            h4 What can developers do to improve security?
             p
               | Salt and hash your user passwords.  Make the salt different every time.
               | Use a cryptographically-strong random number generator.
@@ -112,6 +112,6 @@ html
               | For instance, this site uses&nbsp;
               a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature&nbsp;
               | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I don't even
-              | need to understand, so I can't possibly screw it up.
+              | need to understand, so I can't screw it up.
 
             

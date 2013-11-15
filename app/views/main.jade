@@ -9,7 +9,7 @@ html
         img(src='../../images/logo-big.png')
         h4.tagline
           | The world's largest crossword puzzle, brought to you by&nbsp;
-          a(href='#/faq') bad security
+          a(href='#/faq') lousy security
           |.
     .ajax-loader(ng-hide="blocksService.currentPage.length")
     table.table.table-striped.hide-while-loading(ng-show="blocksService.currentPage.length")
@@ -21,7 +21,7 @@ html
         tr
           td(colspan=5,style="text-align:left;")
             button.btn.btn-primary(ng-class='{disabled : loadingPage}',ng-click="loadNextPage()")
-              span &nbsp;Load {{constants.pageSize}} more&hellip;
+              span Show {{constants.pageSize}} more&hellip;&nbsp;
               i.icon-refresh.icon-white(ng-show='loadingPage')
           td.hidden-phone
 

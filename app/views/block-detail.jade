@@ -57,6 +57,6 @@ html
       tfoot(ng-show='!loadingMoreRelated && numRelatedLeftToShow > 0')
         td(colspan=5,style="text-align:left;")
           button.btn.btn-primary(href='#',ng-click='loadMoreRelated()',ng-class="{'disabled': loadingMoreRelated}")
-            | Load {{nextPageSize}} more...
+            | Show {{nextPageSize}} more...
             i.icon-refresh.icon-white(ng-show='loadingMoreRelated')
         td.hidden-phone

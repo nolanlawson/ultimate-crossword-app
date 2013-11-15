@@ -41,6 +41,6 @@ html
     tfoot(ng-show='!searchInProgress && numFound > results.length')
       td(colspan="5",style="text-align:left;")
         button.btn.btn-primary(href='#',ng-click='loadNextPage()',ng-class="{'disabled': searchInProgress}")
-          | Load {{nextPageSize}} more...
+          | Show {{nextPageSize}} more...
           i.icon-refresh.icon-white(ng-show='searchInProgress')
       td.hidden-phone
