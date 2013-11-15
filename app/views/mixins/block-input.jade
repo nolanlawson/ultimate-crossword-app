@@ -1,9 +1,9 @@
 mixin block-input(idText, halfSize)
   if halfSize
-    input.half-size(type='text',
+    input.half-size(maxlength="8",type='text',
         ng-model='pouch.doc.guesses[#{idText}]',
         ng-change='pouch.notifyShouldUpdate()')
   else
-    input.full-size(type='text',
+    input.full-size(maxlength="8",type='text',
         ng-model='pouch.doc.guesses[#{idText}]',
         ng-change='pouch.notifyShouldUpdate()')

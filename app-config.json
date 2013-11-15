@@ -13,7 +13,7 @@
         "couchdb": {
             "blocks_url"   : "couchdb/block_summaries",
             "related_url"  : "couchdb/related_blocks",
-            "hints_url"    : "couchdb/block_hints",
+            "hints_url"    : "couchdb/mini_block_hints",
             "users_db_url" : "https://ultimatecrossword.net/couchdb"
         },
         "solr_url"         : "solr",

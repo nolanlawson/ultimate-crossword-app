@@ -1,6 +1,6 @@
 {
   "name": "ultimate-crossword-app",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
