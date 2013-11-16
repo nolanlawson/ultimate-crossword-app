@@ -6,7 +6,7 @@
  * Time: 11:08 PM
  * To change this template use File | Settings | File Templates.
  */
-function PouchService(constants, $rootScope, $window) {
+function PouchService(constants, $rootScope, $window, $cookieStore) {
     var self = this;
 
     self.constants = constants;
@@ -19,9 +19,12 @@ function PouchService(constants, $rootScope, $window) {
     $window.onbeforeunload = function() {
         if (self.isDirty()) {
             self.updateGuesses();
-            return self.dbReady ? 'You have unsaved changes.' : 'You have unsaved changes.  You need to sign in to save them!';
+            return 'You have unsaved changes! Just stay on this page for 3 more seconds and we\'ll save \'em. :)';
         }
     };
+
+    // supports existing users, back before we disabled syncing user data with the remote CouchDB
+    self.createOrLoadDb($cookieStore.get('username') || 'user');
 }
 
 PouchService.prototype.notifyShouldUpdate = function(){
@@ -133,12 +136,6 @@ PouchService.prototype.createOrLoadDb = function(username) {
 
         self.$rootScope.$apply(); // update angular display
 
-        // replication to remote CouchDB
-        self.db.replicate.to(self.constants.couchdb.users_db_url + '/user_docs', {continuous : true});
-        self.db.replicate.from(self.constants.couchdb.users_db_url + '/user_docs', {
-            continuous : true,
-            filter : 'app/by_user'
-        });
     }
 
     // single database, single document
@@ -167,14 +164,4 @@ PouchService.prototype.createOrLoadDb = function(username) {
     });
 };
 
-PouchService.prototype.onLogOut = function() {
-    var self = this;
-    self.doc = {guesses : {}};
-    self.lastDocFromDb = {guesses : {}};
-    if (self.lastTimeout) {
-        clearTimeout(self.lastTimeout);
-    }
-    self.dbReady = false;
-};
-
-angular.module('ultimate-crossword').service('pouch', ['constants', '$rootScope', '$window', PouchService]);
+angular.module('ultimate-crossword').service('pouch', ['constants', '$rootScope', '$window', '$cookieStore', PouchService]);

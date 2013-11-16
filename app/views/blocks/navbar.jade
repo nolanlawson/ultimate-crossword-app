@@ -13,15 +13,7 @@
         form.navbar-search.pull-left(ng-submit="performSearch()")
           input.search-query(type="text",placeholder="Search",ng-model="searchService.q")
         ul.pull-right.ng-cloak.horizontal-navbar
-          li(ng-show="session.loggedIn",ng-switch on="session.pouch.syncWithPouchInProgress")
-            span.nav-username(ng-switch-when="true")
+          li(ng-show="pouch.syncWithPouchInProgress")
+            span.nav-username
               | Saving&hellip;&nbsp;
               i.icon-white.icon-refresh
-            span.nav-username(ng-switch-default){{session.username}}
-          li: button.btn.btn-primary.pull-right.ng-cloak(data-target="#signup-login-modal",
-          bs-modal="'views/signup-login-modal.html'"
-          data-toggle="modal",
-          ng-hide="session.loggedIn")
-            | Signup / Login
-          li: button.btn.btn-primary.pull-right.ng-cloak(ng-show="session.loggedIn",ng-click="session.logout()")
-            | Logout

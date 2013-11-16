@@ -3,8 +3,7 @@
         "couchdb": {
             "blocks_url"   : "http://localhost:5984/block_summaries",
             "related_url"  : "http://localhost:5984/related_blocks",
-            "hints_url"    : "http://localhost:5984/mini_block_hints",
-            "users_db_url" : "http://koholint.local:5985"
+            "hints_url"    : "http://localhost:5984/mini_block_hints"
         },
         "solr_url"         : "http://localhost:8983/solr",
         "debug_mode"       : true
@@ -13,8 +12,7 @@
         "couchdb": {
             "blocks_url"   : "couchdb/block_summaries",
             "related_url"  : "couchdb/related_blocks",
-            "hints_url"    : "couchdb/mini_block_hints",
-            "users_db_url" : "https://ultimatecrossword.net/couchdb"
+            "hints_url"    : "couchdb/mini_block_hints"
         },
         "solr_url"         : "solr",
         "google_analytics" : "UA-45701231-1"
