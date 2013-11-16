@@ -35,8 +35,11 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
             return '#/' + (this.id === 'home' ? '' : this.id);
         };
 
+
+
         $scope.tabs = [
-            new Tab('home', 'Home'),
+            new Tab('home', 'Top'),
+            new Tab('random', 'Random!'),
             new Tab('faq', 'FAQs'),
             new Tab('about', 'About')
         ];

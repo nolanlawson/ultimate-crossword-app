@@ -16,6 +16,7 @@ function ConstantsService() {
     this.saveDelay = 1500;
     this.hintsPageSize = 500;
     this.hintThreshold = 30; // defined in python when we compiled the db
+    this.blockIdRange = [1, 700502]; // inclusive,exclusive
 
     _.extend(this, AppConfig);
 }

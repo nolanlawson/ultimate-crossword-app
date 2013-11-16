@@ -26,6 +26,10 @@ angular.module('ultimate-crossword', [
                 templateUrl : 'views/search.html',
                 controller: 'SearchController'
             })
+            .when('/random', {
+                templateUrl: 'views/main.html',
+                controller: 'RandomController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
