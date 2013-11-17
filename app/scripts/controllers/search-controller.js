@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('ultimate-crossword')
-    .controller('SearchController', ['$scope', '$route', 'blocks', '$http', 'constants', 'search', 'pouch',
+    .controller('SearchController', ['$scope', '$route', 'blocks', '$http', 'constants', 'search', 'pouch', '$location',
         'blockFetcher',
-        function ($scope, $route, blocksService, $http, constants, searchService, pouch, blockFetcherService) {
+        function ($scope, $route, blocksService, $http, constants, searchService, pouch, $location, blockFetcherService) {
 
             $scope.pouch = pouch;
             $scope.blocksService = blocksService;
@@ -12,18 +12,23 @@ angular.module('ultimate-crossword')
             $scope.initialLoadComplete = false;
             $scope.hintsToHighlight = {};
 
-            // ensure that the search text appears in the search box
-            $scope.q = decodeURIComponent($route.current.params.q);
-            searchService.q = $scope.q;
-
-
             // thanks mozilla:
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions?
             // redirectlocale=en-US&redirectslug=JavaScript%2FGuide%2FRegular_Expressions
             function escapeRegExp(str){
                 return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
             }
-            var cheapHighlighter = new RegExp('\\b' + escapeRegExp($scope.q) + '\\b', 'gi');
+
+            // this is the "my guesses" mode, where we just re-use the search controller for convenience
+            $scope.myGuessesMode = ($location.path() === '/myguesses');
+
+            if (!$scope.myGuessesMode) {
+                // ensure that the search text appears in the search box
+                $scope.q = decodeURIComponent($route.current.params.q);
+                searchService.q = $scope.q;
+
+                $scope.cheapHighlighter = new RegExp('\\b' + escapeRegExp($scope.q) + '\\b', 'gi');
+            }
 
             var intermediateResults = {};
 
@@ -36,9 +41,10 @@ angular.module('ultimate-crossword')
                 // Do cheap, regex-based highlighting because Solr's highlighting feature would be overkill
                 // (too much bandwidth used, have to store hints, have to merge them, etc.)
 
+
                 block.hintsWithCounts.forEach(function(hintWithCount){
                     var hint = hintWithCount[0];
-                    if (hint.match(cheapHighlighter)) {
+                    if (hint.match($scope.cheapHighlighter)) {
                         $scope.hintsToHighlight[(hint)] = true;
                     }
                 });
@@ -70,7 +76,9 @@ angular.module('ultimate-crossword')
 
                     block.docType = solrDoc.docType;
 
-                    addCheapHighlighting(block);
+                    if (!$scope.myGuessesMode) {
+                        addCheapHighlighting(block);
+                    }
 
                     block.blockIds = (block.docType === 'related' ? block.ids : [solrDoc.id, '12345']);
                     block.count    = (block.docType === 'related' ? block.count : block.soloHintCount);
@@ -124,7 +132,6 @@ angular.module('ultimate-crossword')
 
             function performSolrSearch() {
 
-                $scope.searchInProgress = true;
 
                 var params = {
                     q          : $scope.q,
@@ -170,7 +177,62 @@ angular.module('ultimate-crossword')
 
             };
 
+            function loadMyGuesses() {
+                // sort all guess Ids
+
+                // todo: show related blocks here as well, I guess
+                var guesses = _.chain(pouch.getUserGuesses()).pairs().map(function createFakeSolrDoc(pair){
+                    var guessId = pair[0];
+                    var guessValue = pair[1];
+
+                    var valueForSorting;
+
+                    var isRelated = guessId.indexOf('~') !== -1;
+                    if (isRelated) { // related block
+                        valueForSorting = _.map(guessId.split('~'), function(n){ return parseInt(n, 10);});
+                    } else {
+                        valueForSorting = [parseInt(guessId, 10)];
+                    }
+
+                    // fake a solr doc here
+                    return {
+                        id : guessId,
+                        valueForSorting : valueForSorting,
+                        docType : (isRelated ? 'related' : 'summary'),
+                        guessValue : guessValue
+                    };
+                }).filter(function guessIsNonEmpty(doc){return doc.guessValue;}).value();
+
+                guesses.sort(function(left, right){
+                    // sort normally, lexicographically
+                    var leftVal = left.valueForSorting;
+                    var rightVal = right.valueForSorting;
+                    if (leftVal[0] === rightVal[0]) {
+                        return (leftVal.length < 2 ? -1 : leftVal[1]) - (rightVal.length < 2 ? -1 : rightVal[1]);
+                    }
+                    return leftVal[0] - rightVal[0];
+                });
+
+                // fake a response from solr
+                intermediateResults.numFound = guesses.length;
+
+                intermediateResults.solrDocs = guesses;
+
+                performCouchSummariesSearch();
+
+            }
+
+
             if (!$scope.initialLoadComplete) {
-                performSolrSearch();
+                $scope.searchInProgress = true;
+
+                if ($scope.myGuessesMode) {
+
+                    pouch.addOnGuessesReadyListener(function(){
+                        loadMyGuesses();
+                    });
+                } else { // search mode
+                    performSolrSearch();
+                }
             }
         }]);

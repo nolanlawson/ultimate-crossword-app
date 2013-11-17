@@ -5,8 +5,9 @@ html
   include mixins/block-input
   body
     include blocks/navbar
-  h2.section-title
-    span Search for {{q}}
+  h2.section-title(ng-switch on="myGuessesMode")
+    span(ng-switch-when="true") My guesses
+    span(ng-switch-default) Search for {{q}}
 
   .ajax-loader(ng-hide="initialLoadComplete")
   .alert.alert-info(ng-show="initialLoadComplete && !results.length")

@@ -155,13 +155,11 @@ tr.related-block-row {
 /**
  * Block table styling
  */
-.hints-with-counts {
-  & > ul {
+ul.hints-with-counts {
+  margin-left : 0;
+  & > li {
     margin-left : 0;
-    & > li {
-      margin-left : 0;
-      list-style: none;
-    }
+    list-style: none;
   }
 }
 
@@ -271,6 +269,10 @@ ul.horizontal-navbar li {
   padding-right: 10px;
   line-height:40px;
   color : #fff;
+
+  & > i {
+    padding-right : 8px;
+  }
 }
 
 .search-query {

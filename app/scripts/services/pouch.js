@@ -27,6 +27,21 @@ function PouchService(constants, $rootScope, $window, $cookieStore) {
     self.createOrLoadDb($cookieStore.get('username') || 'user');
 }
 
+PouchService.prototype.addOnGuessesReadyListener = function(callback){
+    var self = this;
+
+    if (self.dbReady) {
+        if (self.isDirty()) {
+            // wait until guesses have been flushed
+            self.updateGuesses(callback);
+        } else {
+            callback();
+        }
+    } else {
+        self.onDbReadyListener = callback;
+    }
+};
+
 PouchService.prototype.notifyShouldUpdate = function(){
     var self = this;
 
@@ -77,7 +92,7 @@ PouchService.prototype.onEndSync = function() {
     }, self.constants.saveDelay);
 };
 
-PouchService.prototype.updateGuesses = function() {
+PouchService.prototype.updateGuesses = function(callback) {
     var self = this;
     if (!self.dbReady) {
         self.debug('db is not ready');
@@ -109,6 +124,9 @@ PouchService.prototype.updateGuesses = function() {
 
                     _.extend(self.doc, newDoc);
                     self.updateLastDocFromDb();
+                    if (callback) {
+                        callback();
+                    }
                 }
 
                 self.onEndSync();
@@ -133,9 +151,9 @@ PouchService.prototype.createOrLoadDb = function(username) {
 
     function onDbReady() {
         self.dbReady = true;
-
-        self.$rootScope.$apply(); // update angular display
-
+        if (self.onDbReadyListener) {
+            self.onDbReadyListener();
+        }
     }
 
     // single database, single document
@@ -162,6 +180,15 @@ PouchService.prototype.createOrLoadDb = function(username) {
             onDbReady();
         }
     });
+};
+
+PouchService.prototype.getUserGuesses = function() {
+    var self = this;
+
+    if (!self.dbReady || !self.lastDocFromDb) {
+        return {};
+    }
+    return self.lastDocFromDb.guesses;
 };
 
 angular.module('ultimate-crossword').service('pouch', ['constants', '$rootScope', '$window', '$cookieStore', PouchService]);

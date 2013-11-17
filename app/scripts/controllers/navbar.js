@@ -18,9 +18,9 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
             var qAsInt = parseInt(q, 10);
 
             // for now, only accept block ids
-            if (!isNaN(q)) {
+            if (!isNaN(qAsInt)) {
                 $location.path('/block/' + qAsInt);
-            } else {
+            } else if (q) {
                 // perform search
                 $location.path('/search/' + encodeURIComponent(q));
             }
@@ -40,6 +40,7 @@ angular.module('ultimate-crossword').controller('NavbarController', [ '$scope', 
         $scope.tabs = [
             new Tab('home', 'Top'),
             new Tab('random', 'Random!'),
+            new Tab('myguesses', 'My guesses'),
             new Tab('faq', 'FAQs'),
             new Tab('about', 'About')
         ];

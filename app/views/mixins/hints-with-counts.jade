@@ -1,16 +1,19 @@
 mixin hints-with-counts(blockOrRelatedBlock, highlight)
-  td.hints-with-counts
-    ul
-      li(ng-repeat='hintWithCount in #{blockOrRelatedBlock}.hintsWithCounts')
-        if highlight
-          span(ng-class="{'bold-text' : hintsToHighlight && hintsToHighlight[hintWithCount[0]]}") {{hintWithCount[0]}}
-        else
-          span {{hintWithCount[0]}}
-        span.label.pull-right(ng-show='hintWithCount[1] > 1')
-          | &times;{{hintWithCount[1]}}
-    button.btn(href='#',
-        ng-class='{disabled : fetchingBlockHints}',
-        ng-show='#{blockOrRelatedBlock}.hintsInNextPage > 0',
-        ng-click='fetchBlockHints(#{blockOrRelatedBlock})')
-      | Show {{#{blockOrRelatedBlock}.hintsInNextPage | number}} more&nbsp;
-      i.icon-refresh(ng-show='#{blockOrRelatedBlock}.fetchingBlockHints')
+  td(ng-switch on="#{blockOrRelatedBlock}.hintsWithCounts.length")
+    span.muted(ng-switch-when="0")
+      | ({{(#{blockOrRelatedBlock}.followingHintCount + #{blockOrRelatedBlock}.precedingHintCount) | number}} hints in related blocks)
+    div(ng-switch-default)
+      ul.hints-with-counts
+        li(ng-repeat='hintWithCount in #{blockOrRelatedBlock}.hintsWithCounts')
+          if highlight
+            span(ng-class="{'bold-text' : hintsToHighlight && hintsToHighlight[hintWithCount[0]]}") {{hintWithCount[0]}}
+          else
+            span {{hintWithCount[0]}}
+          span.label.pull-right(ng-show='hintWithCount[1] > 1')
+            | &times;{{hintWithCount[1]}}
+      button.btn(href='#',
+          ng-class='{disabled : fetchingBlockHints}',
+          ng-show='#{blockOrRelatedBlock}.hintsInNextPage > 0',
+          ng-click='fetchBlockHints(#{blockOrRelatedBlock})')
+        | Show {{#{blockOrRelatedBlock}.hintsInNextPage | number}} more&nbsp;
+        i.icon-refresh(ng-show='#{blockOrRelatedBlock}.fetchingBlockHints')

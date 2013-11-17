@@ -30,6 +30,11 @@ angular.module('ultimate-crossword', [
                 templateUrl: 'views/main.html',
                 controller: 'RandomController'
             })
+            .when('/myguesses', {
+                // re-use the search ontroller; it's easier
+                templateUrl : 'views/search.html',
+                controller: 'SearchController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
