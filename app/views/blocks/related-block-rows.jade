@@ -22,7 +22,7 @@ tr.related-block-row(ng-show='block.expanded && block.moreRelatedBlocks > 0')
   td
     button.btn(style='width: 100%;',href='#',ng-click="loadMoreRelated(block)",
         ng-class="{'disabled' : block.loadingRelated}")
-      span.ellipsize
-        | Show {{block.nextPageSize}} more ({{block.moreRelatedBlocks}} remaining)&hellip;
+      span
+        | Show {{block.nextPageSize}} more&nbsp;
       i.icon-chevron-down
 
