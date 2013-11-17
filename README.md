@@ -12,7 +12,7 @@ License
 Summary
 --------
 
-The Ultimate Crossword is a webapp based on an XKCD comic.  Details can be found on [the "about" page][2].
+The Ultimate Crossword is a webapp based on an XKCD comic.  Details can be found on [the FAQs page][2].
 
 Building
 ---------
@@ -26,4 +26,4 @@ grunt
 
 
 [1]: http://sam.zoy.org/wtfpl/
-[2]: https://ultimatecrossword.net/#/about
+[2]: https://ultimatecrossword.net/#/faq
