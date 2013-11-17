@@ -27,5 +27,24 @@ html
               li: a(href='http://pouchdb.com/') PouchDB
               li: a(href='https://lucene.apache.org/solr/') Solr
               li: a(href='http://yeoman.io/') Yeoman
+            h4 Changelog
+              p
+                ul.changelog
+                  li
+                    strong 1.0.0
+                    ul: li Initial release.
+                  li
+                    strong 1.1.0
+                    ul
+                      li Added "Random!" page.
+                      li Added "My guesses" page.
+                      li
+                        | Removed syncing of user data with remote CouchDB and the "other people guessed..." feature.
+                        | I realized it
+                        | just opens up the app to misuse by malicious people.  Someone could easily combine all
+                        | the users' guesses, reverse-engineer the original blocks based on the hints,
+                        | and then match the guesses with people's email addresses in the leaked file.
+                        | I don't want to do any more damage than was already done.
+                        | So now, user data is only stored locally.
     small.pull-right.muted Page built on !{new Date().toString()}.
 
