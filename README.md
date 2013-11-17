@@ -26,4 +26,4 @@ grunt
 
 
 [1]: http://sam.zoy.org/wtfpl/
-[2]: https://ultimatecrossword.net/#/faq
+[2]: http://ultimatecrossword.net/#/faq
