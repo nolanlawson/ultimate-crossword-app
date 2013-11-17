@@ -53,6 +53,7 @@ angular.module('ultimate-crossword')
                         block.fetched = true;
                         var totalRelatedBlocks = (block.followingBlockCount + block.precedingBlockCount);
                         block.moreRelatedBlocks = totalRelatedBlocks - block.relatedBlocks.length;
+                        block.nextPageSize = Math.min(constants.maxNumRelated, block.moreRelatedBlocks);
                     })
                     .error(function(){
                         block.loadingRelated = false;
