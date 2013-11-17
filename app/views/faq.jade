@@ -7,9 +7,9 @@ html
         .span8.offset2.section-content
             h4 Who made this?
             p
-              | You and I did, with some help from Adobe. &nbsp;
+              | You and I did, with some help from Adobe. &#032;
               a(href='http://arstechnica.com/security/2013/11/how-an-epic-blunder-by-adobe-could-strengthen-hand-of-password-crackers/')
-                | They accidentally leaked &nbsp;
+                | They accidentally leaked &#032;
               | 153 million encrypted user passwords and hints, which is where the data for this "crossword puzzle" comes from.
             p
               | I got the idea from this XKCD 
@@ -18,8 +18,8 @@ html
               div: a(href='http://xkcd.com/1286/'): img(src="http://imgs.xkcd.com/comics/encryptic.png",width=473,height=541)
             h4 How does it work?
             p
-              | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't&nbsp;
-              em hash &nbsp;
+              | When Adobe stored their users' passwords, they encrypted them (which is good).  Unfortunately, they didn't&#032;
+              em hash &#032;
               | them, and they kept the password hints in clear text.
             p
               | Basically, their encryption algorithm split passwords into sequences of 8 characters, each of which
@@ -27,36 +27,36 @@ html
               | repeated across all passwords.  This creates an interesting byproduct.
             p
               | Look at the cartoon above.  If we know that "weather vane sword" and "favorite of 12 apostles" are hints for
-              | the same block, then the only 8-letter solution that fits both is&nbsp;
+              | the same block, then the only 8-letter solution that fits both is&#032;
               span.monospace-font matthias
-              | . (The first hint is a reference to the&nbsp;
-              a(href='https://en.wikipedia.org/wiki/Redwall') Redwall&nbsp;
+              | . (The first hint is a reference to the&#032;
+              a(href='https://en.wikipedia.org/wiki/Redwall') Redwall&#032;
               | books.)
             p
-              | Now, if we assume "name1" is a hint for&nbsp;
+              | Now, if we assume "name1" is a hint for&#032;
               span.monospace-font matthias1
-              | , then we've not only solved&nbsp;
+              | , then we've not only solved&#032;
               span.monospace-font matthias
-              | , but also&nbsp;
+              | , but also&#032;
               span.monospace-font 1
               | .  Combine this with "duh", which is probably
-              | a hint for&nbsp;
+              | a hint for&#032;
               span.monospace-font password
-              | &nbsp;(all too common),
-              | and we've successfully cracked the 5th password as&nbsp;
+              | &#032;(all too common),
+              | and we've successfully cracked the 5th password as&#032;
               span.monospace-font password1
               | , even though there's no hint!
             p
-              | Neat, huh?&nbsp;
+              | Neat, huh?&#032;
               a(href='http://www.explainxkcd.com/wiki/index.php?title=1286') A lot of XKCD readers think so, too.
             h4 Aren't you compromising people's personal information?
             p
               | Unless someone manages to guess Adobe's cipher key with brute force,
               | the hintless passwords are all safe.  (Adobe wisely seems to have stopped using hints shortly before
               | the file was leaked.)
-              | Regardless, though, &nbsp;
+              | Regardless, though, &#032;
               a(href='http://helpx.adobe.com/x-productkb/policy-pricing/customer-alert.html?PID=3662453') change your password
-              | &nbsp; if you haven't already.
+              | &#032; if you haven't already.
             p
               | As for the passwords with hints, many of them are ridiculously easy to guess (that's the
               | problem with hints), so we'd be kidding
@@ -75,25 +75,25 @@ html
               | I can make a crossword puzzle out of your database, then your security sucks.
             h4 So what can users do to improve their password security?
             p
-              | First off, passwords like &nbsp;
+              | First off, passwords like &#032;
               a(href='#/block/1029') matthew
-              | , &nbsp;
+              | , &#032;
               a(href='#/block/5016') adobe69
-              | , and even &nbsp;
-              a(href='#/block/3700') keroppi&nbsp;
+              | , and even &#032;
+              a(href='#/block/3700') keroppi&#032;
               | just aren't cutting it, folks.  Human memory has its limits, though, so
               | we can't expect everyone to remember passwords like
               span.monospace-font MySup3rS3cUreP4sSw0rd~2012!
               | . We need a better system.
             p
-              | I wrote&nbsp;
-              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') a blog post &nbsp;
+              | I wrote&#032;
+              a(href='http://nolanlawson.com/2012/12/01/personal-password-security-that-actually-works/') a blog post &#032;
               | about the system I use for my own passwords, which costs nothing and requires no special technical knowledge.
-              | (TL;DR: use &nbsp;
+              | (TL;DR: use &#032;
               a(href='https://www.dropbox.com/') Dropbox
-              | &nbsp; and &nbsp;
+              | &#032; and &#032;
               a(href='https://github.com/zdia/gorilla/wiki') Password Gorilla
-              | .)  Your passwords end up as a random string of characters (e.g. &nbsp;
+              | .)  Your passwords end up as a random string of characters (e.g. &#032;
               span.monospace-font Mt^cdxE973N$C\@=
               | ), they're always different, and you don't have to memorize them.
             p
@@ -105,12 +105,12 @@ html
               | Salt and hash your user passwords.  Make the salt different every time.
               | Use a cryptographically-strong random number generator.
             p
-              | And most importantly, ignore everything I just wrote, because&nbsp;
-              em you should never try to do security yourself.&nbsp;
+              | And most importantly, ignore everything I just wrote, because&#032;
+              em you should never try to do security yourself.&#032;
               | Instead, use a well-established library for your language or framework.  Security is easy to screw up, so
               | leave the hard stuff to the experts.
             p
-              | Example: for a framework- and language-agnostic solution, you could try &nbsp;
+              | Example: for a framework- and language-agnostic solution, you could try &#032;
               a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in user authentication feature
-              | .  It does PBKDF2 and cookie expiration and other fancy stuff all out of the &nbsp;
+              | .  It does PBKDF2 and cookie expiration and other fancy stuff all out of the &#032;
               | box, and you can talk to it using plain ol' AJAX.  Throw in some SSL, and you're good to go!
