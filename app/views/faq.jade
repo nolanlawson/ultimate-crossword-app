@@ -107,11 +107,10 @@ html
             p
               | And most importantly, ignore everything I just wrote, because&nbsp;
               em you should never try to do security yourself.&nbsp;
-              | Instead, use a well-established library for your language or framework.  Security is easy to screw up, so leave the hard stuff to the experts.
+              | Instead, use a well-established library for your language or framework.  Security is easy to screw up, so
+              | leave the hard stuff to the experts.
             p
-              | For instance, this site uses&nbsp;
-              a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in security feature&nbsp;
-              | for user authentication, which does PBKDF2 and cookie expiration and other fancy stuff that I don't even
-              | need to understand, so I can't screw it up.
-
-            
+              | Example: for a framework- and language-agnostic solution, you could try &nbsp;
+              a(href='https://wiki.apache.org/couchdb/Security_Features_Overview') CouchDB's built-in user authentication feature
+              | .  It does PBKDF2 and cookie expiration and other fancy stuff all out of the &nbsp;
+              | box, and you can talk to it using plain ol' AJAX.  Throw in some SSL, and you're good to go!
